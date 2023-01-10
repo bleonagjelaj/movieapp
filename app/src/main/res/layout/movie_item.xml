@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/movie_item_layout_height"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/movieCoverCard"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/movie_cover_card_height"
+        app:cardCornerRadius="@dimen/movie_cover_card_corner_radius"
+        android:layout_marginHorizontal="@dimen/default_margin_horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+        <ImageView
+            android:id="@+id/movieCoverImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@color/colorPrimary"/>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/moviePublishDateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textColor="@color/white"
+        android:textSize="@dimen/movie_publish_date_text_size"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="@+id/movieCoverCard"
+        app:layout_constraintTop_toBottomOf="@+id/movieCoverCard"
+        tools:text="July 2019" />
+
+    <TextView
+        android:id="@+id/movieGenreText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:layout_marginHorizontal="@dimen/default_margin_horizontal"
+        android:textAlignment="textStart"
+        android:textColor="@color/white"
+        android:textSize="@dimen/movie_genre_text_size"
+        android:hyphenationFrequency="full"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/movieCoverCard"
+        app:layout_constraintStart_toStartOf="@+id/movieCoverCard"
+        tools:text="Action / Adventure / Animation / Dra" />
+</androidx.constraintlayout.widget.ConstraintLayout>
