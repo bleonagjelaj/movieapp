@@ -36,14 +36,12 @@
         app:layout_constraintTop_toTopOf="@+id/movieSearch"
         app:tint="@color/maroon" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/movieRecycler"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/movieViewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/movie_recycler_margin_top"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/movieSearch"
-        tools:itemCount="1"
-        tools:listitem="@layout/movie_item" />
+        app:layout_constraintTop_toBottomOf="@+id/movieSearch" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
