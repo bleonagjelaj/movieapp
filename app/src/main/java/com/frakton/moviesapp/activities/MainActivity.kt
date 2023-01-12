@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[MoviesViewModel::class.java]
         lifecycleScope.launch{
             viewModel.loadMovies()?.observe(this@MainActivity) {
-                Log.d(TAG, "onCreate: erdhi listaaaaaaa ${it.get(0).id}")
+                //TODO:set data to movies view pager adapter
             }
         }
     }

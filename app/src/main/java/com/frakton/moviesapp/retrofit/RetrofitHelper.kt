@@ -1,8 +1,10 @@
 package com.frakton.moviesapp.retrofit
 
 import com.frakton.moviesapp.utils.Constants
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -17,16 +19,25 @@ object RetrofitHelper {
             .add(KotlinJsonAdapterFactory())
             .build()
 
-        val okHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
+        val interceptor = Interceptor { chain ->
+            val url = chain.request().url().newBuilder()
+                .addQueryParameter("api_key", Constants.MOVIES_API_KEY)
+                .build()
             val request = chain.request().newBuilder()
-                .addHeader("Authorization", "${Constants.MOVIES_API_KEY}")
+                .url(url)
                 .addHeader("Content-Type", "application/json")
                 .build()
             chain.proceed(request)
         }
+
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .build()
+
         return Retrofit.Builder().baseUrl(baseUrl)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .client(okHttpClient.build())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
+            .client(okHttpClient)
             .build()
     }
 

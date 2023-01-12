@@ -11,7 +11,7 @@ class MoviesRepository {
     suspend fun getMoviesFromApi(): MutableLiveData<List<Movies>>? {
         var movies: MutableLiveData<List<Movies>>? = null
         MoviesApiServiceImpl.getMoviesFromApi().collect {
-            Log.d(TAG, "getMoviesFromApi: ${it?.page}")
+            Log.d(TAG, "got movies from api: ${it?.totalResults}")
             movies = MutableLiveData(it?.movies)
         }
         return movies
