@@ -1,15 +1,20 @@
 package com.frakton.moviesapp.repositories
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.frakton.moviesapp.models.MoviesResponse
-import com.frakton.moviesapp.retrofit.RetrofitHelper
-
+import com.frakton.moviesapp.models.Movies
+import com.frakton.moviesapp.retrofit.MoviesApiServiceImpl
 
 class MoviesRepository {
-    private var moviesLiveData: MutableLiveData<ArrayList<MoviesResponse>> = MutableLiveData()
-    private var moviesList: ArrayList<MoviesResponse> = ArrayList()
+    private val TAG = "MoviesRepository"
 
-    suspend fun getMoviesFromApi(): MoviesResponse? {
-        return RetrofitHelper.getMoviesApiService()?.getMovies()
+    suspend fun getMoviesFromApi(): MutableLiveData<List<Movies>>? {
+        var movies: MutableLiveData<List<Movies>>? = null
+        MoviesApiServiceImpl.getMoviesFromApi().collect {
+            Log.d(TAG, "getMoviesFromApi: ${it?.page}")
+            movies = MutableLiveData(it?.movies)
+        }
+        return movies
     }
+
 }
