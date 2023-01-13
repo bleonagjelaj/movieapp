@@ -11,7 +11,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 object RetrofitHelper {
-    private const val baseUrl = "https://developers.themoviedb.org/"
+    private const val baseUrl = "https://api.themoviedb.org/"
 
     private var moviesApi: MoviesApiService? = null
 
