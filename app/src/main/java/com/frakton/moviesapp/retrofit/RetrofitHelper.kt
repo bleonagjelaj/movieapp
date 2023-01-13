@@ -6,6 +6,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
@@ -20,7 +21,7 @@ object RetrofitHelper {
             .build()
 
         val interceptor = Interceptor { chain ->
-            val url = chain.request().url().newBuilder()
+            val url = chain.request().url.newBuilder()
                 .addQueryParameter("api_key", Constants.MOVIES_API_KEY)
                 .build()
             val request = chain.request().newBuilder()
@@ -30,8 +31,12 @@ object RetrofitHelper {
             chain.proceed(request)
         }
 
+        val loggingInterceptor = HttpLoggingInterceptor()
+            .setLevel(HttpLoggingInterceptor.Level.BODY)
+
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(interceptor)
+            .addInterceptor(loggingInterceptor)
             .build()
 
         return Retrofit.Builder().baseUrl(baseUrl)

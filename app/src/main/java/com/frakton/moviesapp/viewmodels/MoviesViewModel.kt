@@ -2,7 +2,7 @@ package com.frakton.moviesapp.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.frakton.moviesapp.models.Movies
+import com.frakton.moviesapp.models.Movie
 import com.frakton.moviesapp.repositories.MoviesRepository
 
 
@@ -12,7 +12,7 @@ class MoviesViewModel: ViewModel() {
         repository = MoviesRepository()
     }
 
-    suspend fun loadMovies(): MutableLiveData<List<Movies>>? {
+    suspend fun loadMovies(): MutableLiveData<List<Movie>>? {
         return repository?.getMoviesFromApi()
     }
 }

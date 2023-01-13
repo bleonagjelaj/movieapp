@@ -5,44 +5,49 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class MoviesResponse(
-    @Json(name = "page")
-    val page: Int? = null,
+    val page: Long? = null,
     @Json(name = "results")
-    val movies: List<Movies>? = null,
+    val movies: List<Movie>? = null,
     @Json(name = "total_results")
-    val totalResults: Int? = null,
+    val totalResults: Long,
     @Json(name = "total_pages")
-    val totalPages: Int? = null
+    val totalPages: Long
 )
 
 @JsonClass(generateAdapter = true)
-data class Movies(
+data class Movie (
     @Json(name = "poster_path")
     val posterPath: String? = null,
-    @Json(name = "adult")
-    val isAdult: Boolean = false,
-    @Json(name = "overview")
+
+    val adult: Boolean? = false,
     val overview: String? = null,
+
     @Json(name = "release_date")
-    val release_date: String? = null,
+    val releaseDate: String? = null,
+
     @Json(name = "genre_ids")
-    val genreIds: List<Int>? = null,
-    @Json(name = "id")
-    val id: Int? = null,
+    val genreIDS: List<Int>? = null,
+
+    val id: Long? = null,
+
     @Json(name = "original_title")
-    val original_title: String? = null,
+    val originalTitle: String? = null,
+
     @Json(name = "original_language")
-    val original_language: String? = null,
-    @Json(name = "title")
+    val originalLanguage: String? = null,
+
     val title: String? = null,
+
     @Json(name = "backdrop_path")
-    val backdrop_path: String? = null,
-    @Json(name = "popularity")
-    val popularity: Long? = null,
+    val backdropPath: String? = null,
+
+    val popularity: Double? = null,
+
     @Json(name = "vote_count")
-    val vote_count: Int? = null,
-    @Json(name = "video")
-    val hasVideo: Boolean = false,
+    val voteCount: Long? = null,
+
+    val video: Boolean? = false,
+
     @Json(name = "vote_average")
-    val vote_average: Long? = null
+    val voteAverage: Double? = null
 )
