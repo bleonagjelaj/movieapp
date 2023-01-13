@@ -3,9 +3,9 @@
     <dimen name="default_margin_horizontal">30dp</dimen>
     <dimen name="search_view_margin_top">15dp</dimen>
     <dimen name="movie_recycler_margin_top">40dp</dimen>
-    <dimen name="movie_genre_text_size">20sp</dimen>
-    <dimen name="movie_publish_date_text_size">18sp</dimen>
-    <dimen name="movie_cover_card_height">400dp</dimen>
+    <dimen name="movie_genre_text_size">22sp</dimen>
+    <dimen name="movie_publish_date_text_size">20sp</dimen>
+    <dimen name="movie_cover_card_height">500dp</dimen>
     <dimen name="movie_cover_card_corner_radius">20dp</dimen>
     <dimen name="movie_item_layout_height">470dp</dimen>
     <dimen name="filter_button_size">40dp</dimen>
