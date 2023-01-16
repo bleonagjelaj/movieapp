@@ -1,18 +1,26 @@
 package com.frakton.moviesapp.repositories
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.frakton.moviesapp.models.Movie
-import com.frakton.moviesapp.retrofit.MoviesApiServiceImpl
 
 class MoviesRepository {
     private val TAG = "MoviesRepository"
 
-    suspend fun getMoviesFromApi(): MutableLiveData<List<Movie>>? {
-        var movies: MutableLiveData<List<Movie>>? = null
-        MoviesApiServiceImpl.getMoviesFromApi().collect {
-            movies = MutableLiveData(it?.movies)
-        }
-        return movies
+    fun getMoviesFromApi(): LiveData<PagingData<Movie>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = false,
+                initialLoadSize = 2
+            ),
+            pagingSourceFactory = {
+                MoviePagingSource()
+            }, initialKey = 1
+        ).liveData
     }
 
 }

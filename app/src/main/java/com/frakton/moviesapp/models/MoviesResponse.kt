@@ -15,7 +15,7 @@ data class MoviesResponse(
 )
 
 @JsonClass(generateAdapter = true)
-data class Movie (
+data class Movie(
     @Json(name = "poster_path")
     val posterPath: String? = null,
 
