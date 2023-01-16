@@ -26,7 +26,7 @@ data class Movie (
     val releaseDate: String? = null,
 
     @Json(name = "genre_ids")
-    val genreIDS: List<Int>? = null,
+    val genreIds: List<Int>? = null,
 
     val id: Long? = null,
 

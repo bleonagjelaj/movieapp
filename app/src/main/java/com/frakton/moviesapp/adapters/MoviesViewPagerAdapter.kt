@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.frakton.moviesapp.R
 import com.frakton.moviesapp.databinding.MovieItemBinding
+import com.frakton.moviesapp.enums.MovieGenreEnum
 import com.frakton.moviesapp.models.Movie
 import com.frakton.moviesapp.utils.Constants
 import com.squareup.picasso.Picasso
@@ -37,6 +38,18 @@ class MoviesViewPagerAdapter : RecyclerView.Adapter<MoviesViewPagerAdapter.Movie
             movieItemBinding.moviePublishDateText.text = movie.releaseDate?.let { formatDate(it) }
             setMovieCoverImage(movieItemBinding.movieCoverImage, movie.posterPath ?: movie.backdropPath ?: "")
             movieItemBinding.movieRating.rating = (movie.voteAverage ?: 0F) / 2F
+            movieItemBinding.movieGenreText.text = getGenres(movie.genreIds)
+        }
+
+        private fun getGenres(genreIds: List<Int>?): String {
+            var genresString = ""
+            genreIds?.forEachIndexed { i: Int, genreId: Int ->
+                genresString += MovieGenreEnum.getGenreById(genreId)
+                if (genreIds.lastIndex != i) {
+                    genresString += " | "
+                }
+            }
+            return genresString
         }
 
         private fun setMovieCoverImage(movieCoverImage: ImageView, posterPath: String) {
