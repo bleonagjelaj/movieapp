@@ -13,7 +13,7 @@ import com.frakton.moviesapp.enums.MovieGenreEnum
 import com.frakton.moviesapp.models.Movie
 import com.frakton.moviesapp.utils.Constants
 import com.squareup.picasso.Picasso
-import java.time.LocalDate
+import java.text.SimpleDateFormat
 
 class MoviesViewPagerAdapter : RecyclerView.Adapter<MoviesViewPagerAdapter.MoviesViewPagerHolder>() {
     var moviesList = ArrayList<Movie>()
@@ -61,10 +61,9 @@ class MoviesViewPagerAdapter : RecyclerView.Adapter<MoviesViewPagerAdapter.Movie
                 .into(movieCoverImage)
         }
 
-        @RequiresApi(Build.VERSION_CODES.O)
         private fun formatDate(releaseDate: String): String {
-            val date = LocalDate.parse(releaseDate)
-            return "${date.year} ${date.month}"
+            val date = SimpleDateFormat("yyyy-mm-dd").parse(releaseDate)
+            return SimpleDateFormat("yyyy MMM").format(date)
         }
     }
 }
