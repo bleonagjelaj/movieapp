@@ -63,7 +63,7 @@ class MoviesViewPagerAdapter : RecyclerView.Adapter<MoviesViewPagerAdapter.Movie
 
         private fun formatDate(releaseDate: String): String {
             val date = SimpleDateFormat("yyyy-mm-dd").parse(releaseDate)
-            return SimpleDateFormat("yyyy MMM").format(date)
+            return SimpleDateFormat("MMM yyyy").format(date)
         }
     }
 }
