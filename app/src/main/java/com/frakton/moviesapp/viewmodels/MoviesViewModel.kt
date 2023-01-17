@@ -18,4 +18,7 @@ class MoviesViewModel : ViewModel() {
 
     fun loadMovies(): LiveData<PagingData<Movie>>? =
         repository?.getMoviesFromApi()?.cachedIn(viewModelScope)
+
+    fun searchMovies(movieTitle: String): LiveData<PagingData<Movie>>? =
+        repository?.searchMovies(movieTitle)
 }
