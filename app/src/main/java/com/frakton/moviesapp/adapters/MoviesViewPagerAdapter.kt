@@ -29,7 +29,8 @@ class MoviesViewPagerAdapter :
     inner class MoviesViewPagerHolder(private val movieItemBinding: MovieItemBinding) :
         ViewHolder(movieItemBinding.root) {
         fun bind(movie: Movie) {
-            movieItemBinding.moviePublishDateText.text = movie.releaseDate?.let { formatDate(it) }
+            movieItemBinding.moviePublishDateText.text =
+                if (movie.releaseDate.isNullOrBlank()) "" else formatDate(movie.releaseDate)
             setMovieCoverImage(
                 movieItemBinding.movieCoverImage,
                 movie.posterPath ?: movie.backdropPath ?: ""

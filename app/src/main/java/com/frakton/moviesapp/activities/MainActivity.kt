@@ -2,12 +2,11 @@ package com.frakton.moviesapp.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.frakton.moviesapp.adapters.MoviesViewPagerAdapter
 import com.frakton.moviesapp.databinding.ActivityMainBinding
 import com.frakton.moviesapp.viewmodels.MoviesViewModel
-import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,22 +22,34 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[MoviesViewModel::class.java]
         moviesViewPagerAdapter = MoviesViewPagerAdapter()
         loadMovies()
-        setSearchListener()
+        setSearchListeners()
     }
 
     private fun loadMovies() {
-        lifecycleScope.launch {
-            viewModel.loadMovies()?.observe(this@MainActivity) {
-                binding.movieViewPager.adapter = moviesViewPagerAdapter
-                it?.let {
-                    moviesViewPagerAdapter.submitData(lifecycle, it)
-                }
+        viewModel.loadMovies()?.observe(this@MainActivity) {
+            binding.movieViewPager.adapter = moviesViewPagerAdapter
+            it?.let {
+                moviesViewPagerAdapter.submitData(lifecycle, it)
+
             }
         }
     }
 
-    private fun setSearchListener() {
-        //TODO: Add search listener
+    private fun setSearchListeners() {
+        binding.movieSearch.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if(newText.isNullOrBlank()) {
+                    loadMovies()
+                } else {
+                    searchByTitle(newText)
+                }
+                return false
+            }
+        })
     }
 
     private fun searchByTitle(movieTitle: String) {
