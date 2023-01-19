@@ -13,9 +13,11 @@ class MoviesMapper {
             movieGenres = getGenres(dto.genreIds),
             moviePosterPath = getMoviePosterPath(dto.posterPath ?: dto.backdropPath ?: ""),
             movieReleaseDate = formatReleaseDate(dto.releaseDate),
-            movieRating = (dto.voteAverage ?: 0F) / 2F
+            movieRating = divideMovieRateInHalf(dto.voteAverage)
         )
     }
+
+    private fun divideMovieRateInHalf(voteAverage: Float?) = (voteAverage ?: 0F) / 2F
 
     private fun getMoviePosterPath(posterPath: String) = "${Constants.MOVIES_IMAGE_URL}$posterPath"
 
