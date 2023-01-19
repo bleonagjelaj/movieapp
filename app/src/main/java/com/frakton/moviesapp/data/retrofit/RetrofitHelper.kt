@@ -1,6 +1,6 @@
-package com.frakton.moviesapp.retrofit
+package com.frakton.moviesapp.data.retrofit
 
-import com.frakton.moviesapp.utils.Constants
+import com.frakton.moviesapp.util.Constants
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -12,8 +12,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 object RetrofitHelper {
     private const val baseUrl = "https://api.themoviedb.org/"
-
-    private var moviesApi: MoviesApiService? = null
 
     private fun getInstance(): Retrofit {
         val moshi = Moshi.Builder()
@@ -46,10 +44,6 @@ object RetrofitHelper {
             .build()
     }
 
-    fun getMoviesApiService(): MoviesApiService? {
-        if (moviesApi == null) {
-            moviesApi = getInstance().create(MoviesApiService::class.java)
-        }
-        return moviesApi
-    }
+    fun getMoviesApiService(): MoviesApiService =
+        getInstance().create(MoviesApiService::class.java)
 }

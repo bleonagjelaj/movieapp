@@ -2,11 +2,12 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
     namespace 'com.frakton.moviesapp'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.frakton.moviesapp"
@@ -78,4 +79,13 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.8'
 
     implementation 'androidx.paging:paging-runtime:3.1.1'
+
+    //Hilt
+    implementation 'com.google.dagger:hilt-android:2.44'
+    kapt 'com.google.dagger:hilt-android-compiler:2.44'
+    implementation 'androidx.activity:activity-ktx:1.6.1'
+}
+
+kapt {
+    correctErrorTypes = true
 }

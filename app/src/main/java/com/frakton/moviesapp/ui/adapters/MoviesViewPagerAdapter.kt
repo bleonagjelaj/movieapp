@@ -1,5 +1,6 @@
-package com.frakton.moviesapp.adapters
+package com.frakton.moviesapp.ui.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -8,14 +9,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.frakton.moviesapp.R
 import com.frakton.moviesapp.databinding.MovieItemBinding
-import com.frakton.moviesapp.enums.MovieGenreEnum
-import com.frakton.moviesapp.models.Movie
-import com.frakton.moviesapp.utils.Constants
+import com.frakton.moviesapp.domain.enums.MovieGenreEnum
+import com.frakton.moviesapp.data.retrofit.models.response.MovieDataModel
+import com.frakton.moviesapp.util.Constants
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 
 class MoviesViewPagerAdapter :
-    PagingDataAdapter<Movie, MoviesViewPagerAdapter.MoviesViewPagerHolder>(MovieComparator) {
+    PagingDataAdapter<MovieDataModel, MoviesViewPagerAdapter.MoviesViewPagerHolder>(MovieComparator) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewPagerHolder {
         val binding = MovieItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -23,12 +24,14 @@ class MoviesViewPagerAdapter :
     }
 
     override fun onBindViewHolder(holder: MoviesViewPagerHolder, position: Int) {
-        getItem(position)?.let { holder.bind(it) }
+        getItem(position)?.let { holder.bind(it)
+
+            Log.d("belonatag", "loadMovies: a po vjen nbind $it")}
     }
 
     inner class MoviesViewPagerHolder(private val movieItemBinding: MovieItemBinding) :
         ViewHolder(movieItemBinding.root) {
-        fun bind(movie: Movie) {
+        fun bind(movie: MovieDataModel) {
             movieItemBinding.moviePublishDateText.text =
                 if (movie.releaseDate.isNullOrBlank()) "" else formatDate(movie.releaseDate)
             setMovieCoverImage(
@@ -65,12 +68,12 @@ class MoviesViewPagerAdapter :
         }
     }
 
-    object MovieComparator : DiffUtil.ItemCallback<Movie>() {
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+    object MovieComparator : DiffUtil.ItemCallback<MovieDataModel>() {
+        override fun areItemsTheSame(oldItem: MovieDataModel, newItem: MovieDataModel): Boolean {
             return oldItem.originalTitle == newItem.originalTitle
         }
 
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        override fun areContentsTheSame(oldItem: MovieDataModel, newItem: MovieDataModel): Boolean {
             return oldItem == newItem
         }
     }

@@ -1,4 +1,4 @@
-package com.frakton.moviesapp.activities
+package com.frakton.moviesapp.ui.activities
 
 import android.content.Intent
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.frakton.moviesapp.enums
+package com.frakton.moviesapp.domain.enums
 
 enum class MovieGenreEnum(val genreId: Int, val genre: String) {
     Action(28, "Action"),

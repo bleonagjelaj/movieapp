@@ -1,6 +1,7 @@
-package com.frakton.moviesapp.retrofit
+package com.frakton.moviesapp.data.retrofit
 
-import com.frakton.moviesapp.models.MoviesResponse
+import com.frakton.moviesapp.data.retrofit.models.response.MoviesResponse
+import dagger.Binds
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
