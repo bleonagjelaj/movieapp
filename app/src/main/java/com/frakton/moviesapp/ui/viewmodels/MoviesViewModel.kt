@@ -23,14 +23,14 @@ class MoviesViewModel @Inject constructor(
 
     fun loadMovies() =
         viewModelScope.launch {
-            getMoviesUseCase.invoke(MovieParams.GetMoviesParams(1)).collect {
+            getMoviesUseCase.invoke().collect {
                 movieData.value = it
             }
         }
 
     fun searchMovies(movieTitle: String) =
         viewModelScope.launch {
-            searchMovieUseCase.invoke(MovieParams.SearchMovieParams(1, movieTitle)).collect {
+            searchMovieUseCase.invoke(MovieParams.SearchMovieParams(movieTitle)).collect {
                 movieData.value = it
             }
         }
