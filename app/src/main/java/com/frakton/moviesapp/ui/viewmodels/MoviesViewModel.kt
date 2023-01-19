@@ -1,11 +1,9 @@
 package com.frakton.moviesapp.ui.viewmodels
 
-import android.util.Log
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.frakton.moviesapp.data.retrofit.models.response.MovieDataModel
 import com.frakton.moviesapp.domain.MovieParams
 import com.frakton.moviesapp.domain.usecases.GetMoviesUseCase
@@ -21,11 +19,19 @@ class MoviesViewModel @Inject constructor(
     private val searchMovieUseCase: SearchMovieUseCase
 ) : ViewModel() {
 
-    suspend fun loadMovies(): LiveData<PagingData<MovieDataModel>> =
-                getMoviesUseCase.invoke(MovieParams.GetMoviesParams(1)).cachedIn(viewModelScope)
+    val movieData = MutableLiveData<PagingData<MovieDataModel>>()
 
-    suspend fun searchMovies(movieTitle: String): LiveData<PagingData<MovieDataModel>>  =
-        searchMovieUseCase.invoke(MovieParams.SearchMovieParams(1, movieTitle)).cachedIn(viewModelScope)
+    fun loadMovies() =
+        viewModelScope.launch {
+            getMoviesUseCase.invoke(MovieParams.GetMoviesParams(1)).collect {
+                movieData.value = it
+            }
+        }
 
-
+    fun searchMovies(movieTitle: String) =
+        viewModelScope.launch {
+            searchMovieUseCase.invoke(MovieParams.SearchMovieParams(1, movieTitle)).collect {
+                movieData.value = it
+            }
+        }
 }

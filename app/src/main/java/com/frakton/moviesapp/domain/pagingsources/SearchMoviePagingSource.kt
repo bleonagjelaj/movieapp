@@ -2,10 +2,8 @@ package com.frakton.moviesapp.domain.pagingsources
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.frakton.moviesapp.data.retrofit.models.response.MovieDataModel
-import com.frakton.moviesapp.data.retrofit.RetrofitHelper
 import com.frakton.moviesapp.data.retrofit.models.request.SearchMovieRequest
-import com.frakton.moviesapp.domain.interactors.GetMoviesInteractor
+import com.frakton.moviesapp.data.retrofit.models.response.MovieDataModel
 import com.frakton.moviesapp.domain.interactors.SearchMovieInteractor
 
 class SearchMoviePagingSource(

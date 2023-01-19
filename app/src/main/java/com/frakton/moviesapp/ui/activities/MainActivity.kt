@@ -4,12 +4,10 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.lifecycleScope
 import com.frakton.moviesapp.databinding.ActivityMainBinding
 import com.frakton.moviesapp.ui.adapters.MoviesViewPagerAdapter
 import com.frakton.moviesapp.ui.viewmodels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -23,20 +21,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         moviesViewPagerAdapter = MoviesViewPagerAdapter()
-        loadMovies()
         setSearchListeners()
+        setViewModelObservers()
+        viewModel.loadMovies()
     }
 
-    private fun loadMovies() {
-        lifecycleScope.launch{
-            viewModel.loadMovies()?.observe(this@MainActivity) {
-                binding.movieViewPager.adapter = moviesViewPagerAdapter
-                it?.let {
-                    moviesViewPagerAdapter.submitData(lifecycle, it)
-                }
+    private fun setViewModelObservers() {
+        viewModel.movieData.observe(this@MainActivity) {
+            binding.movieViewPager.adapter = moviesViewPagerAdapter
+            it?.let {
+                moviesViewPagerAdapter.submitData(lifecycle, it)
             }
         }
-
     }
 
     private fun setSearchListeners() {
@@ -47,20 +43,12 @@ class MainActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrBlank()) {
-                    loadMovies()
+                    viewModel.loadMovies()
                 } else {
-                    searchByTitle(newText)
+                    viewModel.searchMovies(newText)
                 }
                 return false
             }
         })
-    }
-
-    private fun searchByTitle(movieTitle: String) {
-        lifecycleScope.launch {
-            viewModel.searchMovies(movieTitle)?.observe(this@MainActivity) {
-                moviesViewPagerAdapter.submitData(lifecycle, it)
-            }
-        }
     }
 }

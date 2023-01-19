@@ -8,9 +8,9 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.frakton.moviesapp.R
+import com.frakton.moviesapp.data.retrofit.models.response.MovieDataModel
 import com.frakton.moviesapp.databinding.MovieItemBinding
 import com.frakton.moviesapp.domain.enums.MovieGenreEnum
-import com.frakton.moviesapp.data.retrofit.models.response.MovieDataModel
 import com.frakton.moviesapp.util.Constants
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
@@ -24,9 +24,11 @@ class MoviesViewPagerAdapter :
     }
 
     override fun onBindViewHolder(holder: MoviesViewPagerHolder, position: Int) {
-        getItem(position)?.let { holder.bind(it)
+        getItem(position)?.let {
+            holder.bind(it)
 
-            Log.d("belonatag", "loadMovies: a po vjen nbind $it")}
+            Log.d("belonatag", "loadMovies: a po vjen nbind $it")
+        }
     }
 
     inner class MoviesViewPagerHolder(private val movieItemBinding: MovieItemBinding) :

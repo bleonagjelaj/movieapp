@@ -1,5 +1,5 @@
 package com.frakton.moviesapp.data.retrofit.models.request
 
-data class GetMoviesRequest (
+data class GetMoviesRequest(
     val page: Int
 )

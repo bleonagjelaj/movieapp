@@ -28,7 +28,7 @@ object MoviesAppModule {
     @Provides
     @Singleton
     fun provideMovieApiSource(moviesApiService: MoviesApiService)
-    :MoviesApiSource {
+            : MoviesApiSource {
         return MoviesApiSource(moviesApiService)
     }
 
@@ -55,13 +55,13 @@ object MoviesAppModule {
 
     @Provides
     @Singleton
-    fun provideGetMoviesUseCase(moviesRepository: MoviesRepository): GetMoviesUseCase{
+    fun provideGetMoviesUseCase(moviesRepository: MoviesRepository): GetMoviesUseCase {
         return GetMoviesUseCase(moviesRepository)
     }
 
     @Provides
     @Singleton
-    fun provideSearchMovieUseCase(moviesRepository: MoviesRepository): SearchMovieUseCase{
+    fun provideSearchMovieUseCase(moviesRepository: MoviesRepository): SearchMovieUseCase {
         return SearchMovieUseCase(moviesRepository)
     }
 
