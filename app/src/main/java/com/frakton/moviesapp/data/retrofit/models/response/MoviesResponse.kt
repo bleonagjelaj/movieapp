@@ -23,7 +23,7 @@ data class MovieDataModel(
     val releaseDate: String? = null,
     @Json(name = "genre_ids")
     val genreIds: List<Int>? = null,
-    val id: Long? = null,
+    val id: Long,
     @Json(name = "original_title")
     val originalTitle: String? = null,
     @Json(name = "original_language")

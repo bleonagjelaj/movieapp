@@ -1,6 +1,7 @@
 package com.frakton.moviesapp.domain.models
 
-data class MoviesModel(
+data class MovieModel(
+    val movieId: Long,
     val moviePosterPath: String,
     val movieGenres: String,
     val movieReleaseDate: String,
