@@ -12,9 +12,9 @@
         android:id="@+id/movieSearch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin_horizontal"
+        android:layout_marginStart="@dimen/spacing_3.75x"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="@dimen/search_view_margin_top"
+        android:layout_marginTop="@dimen/spacing_2x"
         android:background="@drawable/bg_white_rounded"
         app:defaultQueryHint="@string/search"
         app:iconifiedByDefault="true"
@@ -26,9 +26,9 @@
     <ImageView
         android:id="@+id/filterButton"
         android:padding="3dp"
-        android:layout_width="@dimen/filter_button_size"
-        android:layout_height="@dimen/filter_button_size"
-        android:layout_marginHorizontal="@dimen/default_margin_horizontal"
+        android:layout_width="@dimen/spacing_5x"
+        android:layout_height="@dimen/spacing_5x"
+        android:layout_marginHorizontal="@dimen/spacing_3.75x"
         app:layout_constraintBottom_toBottomOf="@+id/movieSearch"
         android:src="@drawable/ic_filter"
         android:background="@drawable/dark_grey_circle"
@@ -40,7 +40,7 @@
         android:id="@+id/movieViewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/movie_recycler_margin_top"
+        android:layout_marginTop="@dimen/spacing_4x"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/movieSearch" />
 
