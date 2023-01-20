@@ -28,7 +28,7 @@ class MoviesViewPagerAdapter :
     inner class MoviesViewPagerHolder(private val movieItemBinding: MovieItemBinding) :
         ViewHolder(movieItemBinding.root) {
         fun bind(movie: MovieModel) {
-            with(movieItemBinding){
+            with(movieItemBinding) {
                 moviePublishDateText.text = movie.movieReleaseDate
                 setMovieCoverImage(movieCoverImage, movie.moviePosterPath)
                 movieRating.rating = movie.movieRating
