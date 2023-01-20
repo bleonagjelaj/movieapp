@@ -28,10 +28,12 @@ class MoviesViewPagerAdapter :
     inner class MoviesViewPagerHolder(private val movieItemBinding: MovieItemBinding) :
         ViewHolder(movieItemBinding.root) {
         fun bind(movie: MovieModel) {
-            movieItemBinding.moviePublishDateText.text = movie.movieReleaseDate
-            setMovieCoverImage(movieItemBinding.movieCoverImage, movie.moviePosterPath)
-            movieItemBinding.movieRating.rating = movie.movieRating
-            movieItemBinding.movieGenreText.text = movie.movieGenres
+            with(movieItemBinding){
+                moviePublishDateText.text = movie.movieReleaseDate
+                setMovieCoverImage(movieCoverImage, movie.moviePosterPath)
+                movieRating.rating = movie.movieRating
+                movieGenreText.text = movie.movieGenres
+            }
         }
 
         private fun setMovieCoverImage(movieCoverImage: ImageView, posterPath: String) {

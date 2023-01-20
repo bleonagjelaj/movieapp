@@ -12,7 +12,6 @@ class SearchMoviePagingSource(
     private val movieTitle: String,
     private val moviesMapper: MoviesMapper
 ) : PagingSource<Int, MovieModel>() {
-
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieModel> {
         return try {
             val position = params.key ?: 1
@@ -22,8 +21,8 @@ class SearchMoviePagingSource(
                 prevKey = if (position == 1) null else position - 1,
                 nextKey = position + 1
             )
-        } catch (e: Exception) {
-            LoadResult.Error(e)
+        } catch (exception: Exception) {
+            LoadResult.Error(exception)
         }
     }
 

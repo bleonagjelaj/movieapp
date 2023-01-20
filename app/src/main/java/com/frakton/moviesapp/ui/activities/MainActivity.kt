@@ -27,9 +27,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setViewModelObservers() {
-        viewModel.movieData.observe(this@MainActivity) {
+        viewModel.movieData.observe(this@MainActivity) { moviePagingData ->
             binding.movieViewPager.adapter = moviesViewPagerAdapter
-            it?.let {
+            moviePagingData?.let {
                 moviesViewPagerAdapter.submitData(lifecycle, it)
             }
         }

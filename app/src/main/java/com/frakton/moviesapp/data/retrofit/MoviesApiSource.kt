@@ -7,7 +7,6 @@ import javax.inject.Inject
 class MoviesApiSource @Inject constructor(
     private val moviesApiService: MoviesApiService?
 ) {
-
     suspend fun getMoviesFromApi(request: GetMoviesRequest) =
         moviesApiService?.getMovies(request.page)
 

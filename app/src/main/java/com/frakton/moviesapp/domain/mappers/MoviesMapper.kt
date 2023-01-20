@@ -4,16 +4,19 @@ import com.frakton.moviesapp.data.retrofit.models.response.MovieDataModel
 import com.frakton.moviesapp.domain.enums.MovieGenreEnum
 import com.frakton.moviesapp.domain.models.MovieModel
 import com.frakton.moviesapp.util.Constants
+import com.frakton.moviesapp.util.EMPTY
 import com.frakton.moviesapp.util.formatDateString
 
 class MoviesMapper {
-    fun map(dto: MovieDataModel): MovieModel {
+    fun map(movieDataModel: MovieDataModel): MovieModel {
         return MovieModel(
-            movieId = dto.id,
-            movieGenres = getGenres(dto.genreIds),
-            moviePosterPath = getMoviePosterPath(dto.posterPath ?: dto.backdropPath ?: ""),
-            movieReleaseDate = formatReleaseDate(dto.releaseDate),
-            movieRating = divideMovieRateInHalf(dto.voteAverage)
+            movieId = movieDataModel.id,
+            movieGenres = getGenres(movieDataModel.genreIds),
+            moviePosterPath = getMoviePosterPath(
+                movieDataModel.posterPath ?: movieDataModel.backdropPath ?: String.EMPTY
+            ),
+            movieReleaseDate = formatReleaseDate(movieDataModel.releaseDate),
+            movieRating = divideMovieRateInHalf(movieDataModel.voteAverage)
         )
     }
 
