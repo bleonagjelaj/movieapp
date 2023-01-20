@@ -11,6 +11,4 @@
     <dimen name="filter_button_size">40dp</dimen>
     <dimen name="movie_publish_date_text_margin_top">14dp</dimen>
     <dimen name="movie_rating_margin_end">-15dp</dimen>
-    <dimen name="movie_genre_text_margin_top">15dp</dimen>
-    <dimen name="movie_genre_text_width">350dp</dimen>
 </resources>

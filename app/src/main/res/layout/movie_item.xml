@@ -51,18 +51,17 @@
 
     <TextView
         android:id="@+id/movieGenreText"
-        android:layout_width="@dimen/movie_genre_text_width"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/default_margin_horizontal"
+        android:ellipsize="end"
         android:hyphenationFrequency="full"
         android:maxLines="1"
         android:textAlignment="textStart"
         android:textColor="@color/white"
         android:textSize="@dimen/movie_genre_text_size"
-        android:ellipsize="end"
-        android:layout_marginTop="@dimen/movie_genre_text_margin_top"
-        app:layout_constraintEnd_toEndOf="@+id/movieCoverCard"
-        app:layout_constraintStart_toStartOf="@+id/movieCoverCard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/movieRating"
         tools:text="Action / Adventure / Animation / Dra" />
 </androidx.constraintlayout.widget.ConstraintLayout>
