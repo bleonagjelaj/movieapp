@@ -18,7 +18,7 @@ class MoviePagingSource @Inject constructor(
             val position = params.key ?: 1
             val response = getMoviesInteractor.invoke(GetMoviesRequest(position))
             LoadResult.Page(
-                data = response?.results?.map(moviesMapper::map)!!,
+                data = response.results?.map(moviesMapper::map)!!,
                 prevKey = if (position == 1) null else position - 1,
                 nextKey = position + 1
             )

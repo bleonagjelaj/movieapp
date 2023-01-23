@@ -7,9 +7,9 @@ import com.frakton.moviesapp.domain.MovieInteractors
 import javax.inject.Inject
 
 class GetMoviesInteractor @Inject constructor(
-    private val moviesApiSource: MoviesApiSource?
+    private val moviesApiSource: MoviesApiSource
 ) : MovieInteractors.GetMovies {
-    override suspend fun invoke(input: GetMoviesRequest): MoviesResponse? {
-        return moviesApiSource?.getMoviesFromApi(input)
+    override suspend fun invoke(input: GetMoviesRequest): MoviesResponse {
+        return moviesApiSource.getMoviesFromApi(input)
     }
 }
