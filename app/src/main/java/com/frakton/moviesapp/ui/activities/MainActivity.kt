@@ -4,9 +4,12 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import com.frakton.moviesapp.R
 import com.frakton.moviesapp.databinding.ActivityMainBinding
 import com.frakton.moviesapp.ui.adapters.MoviesViewPagerAdapter
 import com.frakton.moviesapp.ui.viewmodels.MoviesViewModel
+import com.frakton.moviesapp.util.gone
+import com.frakton.moviesapp.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,11 +30,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setViewModelObservers() {
-        viewModel.movieData.observe(this@MainActivity) { moviePagingData ->
+        viewModel.movieData.observe(this) { moviePagingData ->
             binding.movieViewPager.adapter = moviesViewPagerAdapter
             moviePagingData?.let {
-                moviesViewPagerAdapter.submitData(lifecycle, it)
             }
+            if(moviePagingData != null) {
+                binding.errorMessage.gone()
+                moviesViewPagerAdapter.submitData(lifecycle, moviePagingData)
+            } else {
+                binding.errorMessage.visible()
+                binding.errorMessage.text = getString(R.string.no_results)
+            }
+        }
+        viewModel.loadingMoviesError.observe(this) { errorMessage ->
+            binding.errorMessage.visible()
+            binding.errorMessage.text = errorMessage
         }
     }
 

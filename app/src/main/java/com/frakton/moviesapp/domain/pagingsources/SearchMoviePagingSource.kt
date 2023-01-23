@@ -11,8 +11,8 @@ import dagger.assisted.AssistedInject
 
 class SearchMoviePagingSource @AssistedInject constructor(
     private val searchMovieInteractor: SearchMovieInteractor,
-    @Assisted private val movieTitle: String,
-    private val moviesMapper: MoviesMapper
+    private val moviesMapper: MoviesMapper,
+    @Assisted private val movieTitle: String
 ) : PagingSource<Int, MovieModel>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieModel> {
         return try {
