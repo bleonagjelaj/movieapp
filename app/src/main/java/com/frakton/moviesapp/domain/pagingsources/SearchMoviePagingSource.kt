@@ -37,7 +37,7 @@ class SearchMoviePagingSource(
         private val searchMovieInteractor: SearchMovieInteractor,
         private val moviesMapper: MoviesMapper
     ) {
-        fun create(movieTitle: String) =
+        fun createSearchMoviePagingSource(movieTitle: String) =
             SearchMoviePagingSource(searchMovieInteractor, moviesMapper, movieTitle)
     }
 }

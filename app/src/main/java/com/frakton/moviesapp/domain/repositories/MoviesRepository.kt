@@ -18,16 +18,17 @@ class MoviesRepository @Inject constructor(
 
     fun getMoviesFromApi(): Flow<PagingData<MovieModel>> {
         return Pager(
-            config = getPagingConfig(), pagingSourceFactory = {
-                moviesPagingSource
-            }, initialKey = Constants.MOVIE_PAGER_INITIAL_KEY
+            config = getPagingConfig(),
+            pagingSourceFactory = { moviesPagingSource },
+            initialKey = Constants.MOVIE_PAGER_INITIAL_KEY
         ).flow
     }
 
     fun searchMovies(movieTitle: String): Flow<PagingData<MovieModel>> {
         return Pager(
-            config = getPagingConfig(), pagingSourceFactory = {
-                searchMoviePagingSourceFactory.create(movieTitle)
+            config = getPagingConfig(),
+            pagingSourceFactory = {
+                searchMoviePagingSourceFactory.createSearchMoviePagingSource(movieTitle)
             }, initialKey = Constants.MOVIE_PAGER_INITIAL_KEY
         ).flow
     }
