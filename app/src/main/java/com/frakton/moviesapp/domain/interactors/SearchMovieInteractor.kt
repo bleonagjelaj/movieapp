@@ -8,6 +8,6 @@ import com.frakton.moviesapp.domain.MovieInteractors
 class SearchMovieInteractor(private val moviesApiSource: MoviesApiSource?) :
     MovieInteractors.SearchMovie {
     override suspend fun invoke(input: SearchMovieRequest): MoviesResponse? {
-        return moviesApiSource?.searchMovie(input)?.body()
+        return moviesApiSource?.searchMovie(input)
     }
 }

@@ -10,6 +10,6 @@ class GetMoviesInteractor @Inject constructor(
     private val moviesApiSource: MoviesApiSource?
 ) : MovieInteractors.GetMovies {
     override suspend fun invoke(input: GetMoviesRequest): MoviesResponse? {
-        return moviesApiSource?.getMoviesFromApi(input)?.body()
+        return moviesApiSource?.getMoviesFromApi(input)
     }
 }
