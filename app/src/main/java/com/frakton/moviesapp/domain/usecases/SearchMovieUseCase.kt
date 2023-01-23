@@ -1,5 +1,6 @@
 package com.frakton.moviesapp.domain.usecases
 
+import android.util.Log
 import com.frakton.moviesapp.domain.MovieParams
 import com.frakton.moviesapp.domain.UseCases
 import com.frakton.moviesapp.domain.repositories.MoviesRepository
@@ -17,7 +18,6 @@ class SearchMovieUseCase @Inject constructor(
             moviesRepository.searchMovies(input.movieTitle).collect { movieData ->
                 emit(Resource.Success(movieData))
             }
-
         } catch (exception: HttpException) {
             emit(
                 Resource.Error(

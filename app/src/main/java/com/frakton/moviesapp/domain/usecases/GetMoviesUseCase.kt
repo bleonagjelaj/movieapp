@@ -19,7 +19,6 @@ class GetMoviesUseCase @Inject constructor(
                 moviesRepository.getMoviesFromApi().collect { movieData ->
                     emit(Resource.Success(movieData))
                 }
-
             } catch (exception: Exception) {
                 emit(Resource.Error(exception.localizedMessage))
             }
