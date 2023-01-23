@@ -18,7 +18,7 @@ class SearchMoviePagingSource(
             val position = params.key ?: 1
             val response = searchMovieInteractor.invoke(SearchMovieRequest(position, movieTitle))
             LoadResult.Page(
-                data = response?.results?.map(moviesMapper::map)!!,
+                data = response.results.map(moviesMapper::map),
                 prevKey = if (position == 1) null else position - 1,
                 nextKey = position + 1
             )
