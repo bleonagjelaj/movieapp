@@ -7,6 +7,8 @@ import com.frakton.moviesapp.domain.repositories.MoviesRepository
 import com.frakton.moviesapp.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 
@@ -19,8 +21,14 @@ class GetMoviesUseCase @Inject constructor(
                 moviesRepository.getMoviesFromApi().collect { movieData ->
                     emit(Resource.Success(movieData))
                 }
-            } catch (exception: Exception) {
-                emit(Resource.Error(exception.localizedMessage))
+            } catch (exception: HttpException) {
+                emit(
+                    Resource.Error(
+                        exception.localizedMessage ?: exception.message ?: ("Unexpected error occurred")
+                    )
+                )
+            } catch (exception: IOException) {
+                emit(Resource.Error("Couldn't reach server. Check your internet connection."))
             }
         }
     }
