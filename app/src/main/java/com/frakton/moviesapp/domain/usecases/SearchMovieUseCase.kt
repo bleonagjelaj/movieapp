@@ -1,6 +1,5 @@
 package com.frakton.moviesapp.domain.usecases
 
-import android.util.Log
 import com.frakton.moviesapp.domain.MovieParams
 import com.frakton.moviesapp.domain.UseCases
 import com.frakton.moviesapp.domain.repositories.MoviesRepository
