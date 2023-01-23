@@ -19,9 +19,11 @@ class SearchMovieUseCase @Inject constructor(
             }
 
         } catch (exception: HttpException) {
-            emit(Resource.Error(
-                exception.localizedMessage ?: exception.message ?: ("Unexpected error occurred")
-            ))
+            emit(
+                Resource.Error(
+                    exception.localizedMessage ?: exception.message ?: ("Unexpected error occurred")
+                )
+            )
         } catch (exception: IOException) {
             emit(Resource.Error("Couldn't reach server. Check your internet connection."))
         }

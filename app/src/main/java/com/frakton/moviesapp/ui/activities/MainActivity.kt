@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             binding.movieViewPager.adapter = moviesViewPagerAdapter
             moviePagingData?.let {
             }
-            if(moviePagingData != null) {
+            if (moviePagingData != null) {
                 binding.errorMessage.gone()
                 moviesViewPagerAdapter.submitData(lifecycle, moviePagingData)
             } else {
