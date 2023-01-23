@@ -6,13 +6,12 @@ import com.frakton.moviesapp.data.retrofit.models.request.SearchMovieRequest
 import com.frakton.moviesapp.domain.interactors.SearchMovieInteractor
 import com.frakton.moviesapp.domain.mappers.MoviesMapper
 import com.frakton.moviesapp.domain.models.MovieModel
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
+import javax.inject.Inject
 
-class SearchMoviePagingSource @AssistedInject constructor(
+class SearchMoviePagingSource(
     private val searchMovieInteractor: SearchMovieInteractor,
     private val moviesMapper: MoviesMapper,
-    @Assisted private val movieTitle: String
+    private val movieTitle: String
 ) : PagingSource<Int, MovieModel>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieModel> {
         return try {
@@ -33,4 +32,12 @@ class SearchMoviePagingSource @AssistedInject constructor(
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
         }
+
+    class Factory @Inject constructor(
+        private val searchMovieInteractor: SearchMovieInteractor,
+        private val moviesMapper: MoviesMapper
+    ) {
+        fun create(movieTitle: String) =
+            SearchMoviePagingSource(searchMovieInteractor, moviesMapper, movieTitle)
+    }
 }
