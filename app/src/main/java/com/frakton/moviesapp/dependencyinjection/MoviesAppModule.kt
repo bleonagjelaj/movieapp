@@ -6,6 +6,7 @@ import com.frakton.moviesapp.data.retrofit.RetrofitHelper
 import com.frakton.moviesapp.domain.interactors.GetMoviesInteractor
 import com.frakton.moviesapp.domain.interactors.SearchMovieInteractor
 import com.frakton.moviesapp.domain.mappers.MoviesMapper
+import com.frakton.moviesapp.domain.pagingsources.MoviePagingSource
 import com.frakton.moviesapp.domain.repositories.MoviesRepository
 import com.frakton.moviesapp.domain.usecases.GetMoviesUseCase
 import com.frakton.moviesapp.domain.usecases.SearchMovieUseCase
@@ -52,11 +53,9 @@ object MoviesAppModule {
     @Provides
     @Singleton
     fun provideMovieRepository(
-        getMoviesInteractor: GetMoviesInteractor,
-        searchMovieInteractor: SearchMovieInteractor,
-        moviesMapper: MoviesMapper
+        moviesPagingSource: MoviePagingSource
     ): MoviesRepository {
-        return MoviesRepository(getMoviesInteractor, searchMovieInteractor, moviesMapper)
+        return MoviesRepository(moviesPagingSource)
     }
 
     @Provides
@@ -77,5 +76,14 @@ object MoviesAppModule {
         getMoviesUseCase: GetMoviesUseCase, searchMovieUseCase: SearchMovieUseCase
     ): MoviesViewModel {
         return MoviesViewModel(getMoviesUseCase, searchMovieUseCase)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMoviesPagingSource(
+        getMoviesInteractor: GetMoviesInteractor,
+        moviesMapper: MoviesMapper
+    ): MoviePagingSource {
+        return MoviePagingSource(getMoviesInteractor, moviesMapper)
     }
 }

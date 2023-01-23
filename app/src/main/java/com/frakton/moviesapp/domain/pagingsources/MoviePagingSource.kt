@@ -6,8 +6,9 @@ import com.frakton.moviesapp.data.retrofit.models.request.GetMoviesRequest
 import com.frakton.moviesapp.domain.interactors.GetMoviesInteractor
 import com.frakton.moviesapp.domain.mappers.MoviesMapper
 import com.frakton.moviesapp.domain.models.MovieModel
+import javax.inject.Inject
 
-class MoviePagingSource(
+class MoviePagingSource @Inject constructor(
     private val getMoviesInteractor: GetMoviesInteractor,
     private val moviesMapper: MoviesMapper
 ) : PagingSource<Int, MovieModel>() {
