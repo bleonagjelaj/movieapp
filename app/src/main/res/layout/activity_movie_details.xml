@@ -34,7 +34,7 @@
             tools:text="Lion The King \n (2019)" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/moviePosterImage"
             android:layout_width="@dimen/movie_cover_image_width"
             android:layout_height="@dimen/movie_cover_image_height"
             android:layout_marginTop="@dimen/spacing_2.5x"
@@ -55,7 +55,7 @@
             android:stepSize="0.5"
             android:theme="@style/MovieRating"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            app:layout_constraintTop_toBottomOf="@+id/moviePosterImage" />
 
         <TextView
             android:id="@+id/maxRating"
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_0.75x"
             android:textColor="@color/white"
-            android:textSize="@dimen/movie_description_text_size"
+            android:textSize="@dimen/text_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/genresRecycleView" />
@@ -119,6 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
+            android:maxLines="1"
             android:textSize="@dimen/text_small"
             app:layout_constraintStart_toEndOf="@+id/productionTitle"
             app:layout_constraintBottom_toBottomOf="@+id/productionTitle" />
@@ -140,6 +141,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
+            android:maxLines="1"
             android:textSize="@dimen/text_small"
             app:layout_constraintStart_toEndOf="@+id/budgetTitle"
             app:layout_constraintBottom_toBottomOf="@+id/budgetTitle" />
@@ -161,6 +163,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
+            android:maxLines="1"
             android:textSize="@dimen/text_small"
             app:layout_constraintStart_toEndOf="@+id/revenueTitle"
             app:layout_constraintBottom_toBottomOf="@+id/revenueTitle" />
@@ -182,6 +185,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
+            android:maxLines="1"
             android:textSize="@dimen/text_small"
             app:layout_constraintStart_toEndOf="@+id/releaseDateTitle"
             app:layout_constraintBottom_toBottomOf="@+id/releaseDateTitle" />

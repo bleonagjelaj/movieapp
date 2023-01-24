@@ -24,18 +24,18 @@ class MovieDetailsMapper {
                 movieDetailsDataModel.productionCompanies
             ),
             budget = getBudgetString(movieDetailsDataModel.budget),
-            revenue = movieDetailsDataModel.revenue?.toString() ?: String.EMPTY,
+            revenue = "  ${movieDetailsDataModel.revenue}",
             releaseDate = movieDetailsDataModel.releaseDate ?: String.EMPTY
         )
     }
 
     private fun getBudgetString(budget: Long?) =
-        "$$budget"
+        "  $$budget"
 
     private fun getProductionCompanyString(productionCompanies: List<ProductionCompany>?): String {
-        var productionCompanyString = ""
+        var productionCompanyString = "  "
         productionCompanies?.forEach { productionCompany ->
-            productionCompanyString += productionCompany.name
+            productionCompanyString += " ${productionCompany.name}"
         }
         return productionCompanyString
     }
@@ -51,5 +51,5 @@ class MovieDetailsMapper {
     private fun getMoviePosterPath(posterPath: String?) = "${Constants.MOVIES_IMAGE_URL}$posterPath"
 
     private fun getMovieReleaseYearFromDate(releaseDate: String?) =
-        releaseDate?.getYearFromDate() ?: String.EMPTY
+        "  ${releaseDate?.getYearFromDate()}"
 }
