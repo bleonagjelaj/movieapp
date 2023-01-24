@@ -3,12 +3,16 @@ package com.frakton.moviesapp.dependencyinjection
 import com.frakton.moviesapp.data.retrofit.MoviesApiService
 import com.frakton.moviesapp.data.retrofit.MoviesApiSource
 import com.frakton.moviesapp.data.retrofit.RetrofitHelper
+import com.frakton.moviesapp.domain.interactors.GetMovieDetailsInteractor
 import com.frakton.moviesapp.domain.interactors.GetMoviesInteractor
 import com.frakton.moviesapp.domain.interactors.SearchMovieInteractor
+import com.frakton.moviesapp.domain.mappers.MovieDetailsMapper
 import com.frakton.moviesapp.domain.mappers.MoviesMapper
 import com.frakton.moviesapp.domain.pagingsources.MoviePagingSource
 import com.frakton.moviesapp.domain.pagingsources.SearchMoviePagingSource
+import com.frakton.moviesapp.domain.repositories.MovieDetailsRepository
 import com.frakton.moviesapp.domain.repositories.MoviesRepository
+import com.frakton.moviesapp.domain.usecases.GetMovieDetailsUseCase
 import com.frakton.moviesapp.domain.usecases.GetMoviesUseCase
 import com.frakton.moviesapp.domain.usecases.SearchMovieUseCase
 import com.frakton.moviesapp.ui.viewmodels.MoviesViewModel
@@ -49,7 +53,19 @@ object MoviesAppModule {
 
     @Provides
     @Singleton
+    fun provideGetMovieDetailsInteractor(
+        moviesApiSource: MoviesApiSource
+    ): GetMovieDetailsInteractor {
+        return GetMovieDetailsInteractor(moviesApiSource)
+    }
+
+    @Provides
+    @Singleton
     fun provideMoviesMapper(): MoviesMapper = MoviesMapper()
+
+    @Provides
+    @Singleton
+    fun provideMovieDetailsMapper(): MovieDetailsMapper = MovieDetailsMapper()
 
     @Provides
     @Singleton
@@ -62,6 +78,15 @@ object MoviesAppModule {
 
     @Provides
     @Singleton
+    fun provideMovieDetailsRepository(
+        getMovieDetailsInteractor: GetMovieDetailsInteractor,
+        moviesMapper: MovieDetailsMapper
+    ): MovieDetailsRepository {
+        return MovieDetailsRepository(getMovieDetailsInteractor, moviesMapper)
+    }
+
+    @Provides
+    @Singleton
     fun provideGetMoviesUseCase(moviesRepository: MoviesRepository): GetMoviesUseCase {
         return GetMoviesUseCase(moviesRepository)
     }
@@ -70,6 +95,13 @@ object MoviesAppModule {
     @Singleton
     fun provideSearchMovieUseCase(moviesRepository: MoviesRepository): SearchMovieUseCase {
         return SearchMovieUseCase(moviesRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetMovieDetailsUseCase(moviesDetailsRepository: MovieDetailsRepository):
+            GetMovieDetailsUseCase {
+        return GetMovieDetailsUseCase(moviesDetailsRepository)
     }
 
     @Provides

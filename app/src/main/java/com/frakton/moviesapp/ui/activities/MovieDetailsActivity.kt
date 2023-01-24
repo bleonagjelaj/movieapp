@@ -1,13 +1,15 @@
 package com.frakton.moviesapp.ui.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.frakton.moviesapp.databinding.ActivityMovieDetailsBinding
 import com.frakton.moviesapp.ui.viewmodels.MovieDetailsViewModel
-import com.frakton.moviesapp.ui.viewmodels.MoviesViewModel
 import com.frakton.moviesapp.util.Constants
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MovieDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieDetailsBinding
     private val viewModel: MovieDetailsViewModel by viewModels()
@@ -26,8 +28,8 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun setViewModelObservers() {
-        viewModel.movieDetails.observe(this) {
-            //TODO: show movie details
+        viewModel.movieDetails.observe(this) { movieDetailsModel ->
+            Log.d("belonatag", "setViewModelObservers: $movieDetailsModel")
         }
     }
 }

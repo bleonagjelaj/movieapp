@@ -3,11 +3,9 @@ package com.frakton.moviesapp.ui.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.ImageView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.frakton.moviesapp.R
 import com.frakton.moviesapp.databinding.MovieItemBinding
@@ -55,7 +53,7 @@ class MoviesViewPagerAdapter(private val movieItemClickCallback: MovieItemClickC
         override fun onClick(movieItemView: View?) {
             val itemPosition = bindingAdapterPosition
             val movieItem = getItem(itemPosition)
-            if(movieItem != null) {
+            if (movieItem != null) {
                 movieItemClickCallback.onMovieItemClicked(movieItem.movieId)
             }
         }

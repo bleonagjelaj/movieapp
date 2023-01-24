@@ -1,5 +1,6 @@
 package com.frakton.moviesapp.data.retrofit
 
+import com.frakton.moviesapp.data.retrofit.models.request.GetMovieDetailsRequest
 import com.frakton.moviesapp.data.retrofit.models.request.GetMoviesRequest
 import com.frakton.moviesapp.data.retrofit.models.request.SearchMovieRequest
 import javax.inject.Inject
@@ -10,4 +11,7 @@ class MoviesApiSource @Inject constructor(private val moviesApiService: MoviesAp
 
     suspend fun searchMovie(request: SearchMovieRequest) =
         moviesApiService.searchMovies(request.page, request.movieTitle)
+
+    suspend fun getMovieWithId(request: GetMovieDetailsRequest) =
+        moviesApiService.getMovieWithId(request.movieId)
 }
