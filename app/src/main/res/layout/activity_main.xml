@@ -51,6 +51,7 @@
         android:visibility="gone"
         android:gravity="center"
         android:textColor="@color/white"
+        android:paddingHorizontal="@dimen/spacing_1x"
         android:textSize="@dimen/spacing_2x"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
