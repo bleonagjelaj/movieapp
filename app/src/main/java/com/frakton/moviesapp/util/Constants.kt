@@ -6,4 +6,5 @@ object Constants {
     const val PAGE_SIZE = 20
     const val MOVIE_PAGER_INITIAL_LOAD_SIZE = 30
     const val MOVIE_PAGER_INITIAL_KEY = 1
+    const val MOVIE_ID_EXTRA: String = "movieId"
 }

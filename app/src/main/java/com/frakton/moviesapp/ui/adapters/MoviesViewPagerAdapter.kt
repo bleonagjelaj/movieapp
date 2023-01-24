@@ -1,17 +1,21 @@
 package com.frakton.moviesapp.ui.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
 import android.widget.ImageView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.frakton.moviesapp.R
 import com.frakton.moviesapp.databinding.MovieItemBinding
+import com.frakton.moviesapp.domain.callbacks.MovieItemClickCallback
 import com.frakton.moviesapp.domain.models.MovieModel
 import com.squareup.picasso.Picasso
 
-class MoviesViewPagerAdapter :
+class MoviesViewPagerAdapter(private val movieItemClickCallback: MovieItemClickCallback) :
     PagingDataAdapter<MovieModel, MoviesViewPagerAdapter.MoviesViewPagerHolder>(MovieComparator) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewPagerHolder {
@@ -26,7 +30,11 @@ class MoviesViewPagerAdapter :
     }
 
     inner class MoviesViewPagerHolder(private val movieItemBinding: MovieItemBinding) :
-        ViewHolder(movieItemBinding.root) {
+        ViewHolder(movieItemBinding.root), View.OnClickListener {
+        init {
+            itemView.setOnClickListener(this)
+        }
+
         fun bind(movie: MovieModel) {
             with(movieItemBinding) {
                 moviePublishDateText.text = movie.movieReleaseDate
@@ -42,6 +50,14 @@ class MoviesViewPagerAdapter :
                 .placeholder(R.drawable.ic_image)
                 .error(R.drawable.ic_image_not_supported)
                 .into(movieCoverImage)
+        }
+
+        override fun onClick(movieItemView: View?) {
+            val itemPosition = bindingAdapterPosition
+            val movieItem = getItem(itemPosition)
+            if(movieItem != null) {
+                movieItemClickCallback.onMovieItemClicked(movieItem.movieId)
+            }
         }
     }
 

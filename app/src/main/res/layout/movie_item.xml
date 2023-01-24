@@ -59,7 +59,7 @@
         android:maxLines="1"
         android:textAlignment="textStart"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_medium"
+        android:textSize="@dimen/movie_genres_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/movieRating"
