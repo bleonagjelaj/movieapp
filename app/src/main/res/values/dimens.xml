@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="spacing_minus_0.25x">-2dp</dimen>
+    <dimen name="spacing_0.25x">2dp</dimen>
     <dimen name="spacing_0.5x">4dp</dimen>
     <dimen name="spacing_0.75x">6dp</dimen>
     <dimen name="spacing_1x">8dp</dimen>
@@ -16,6 +17,7 @@
     <dimen name="spacing_7.5x">60dp</dimen>
     <dimen name="text_large">30sp</dimen>
     <dimen name="movie_genres_text_size">22sp</dimen>
+    <dimen name="genre_item_text_size">16sp</dimen>
     <dimen name="text_medium">25sp</dimen>
     <dimen name="text_small">20sp</dimen>
     <dimen name="movie_cover_card_height">500dp</dimen>

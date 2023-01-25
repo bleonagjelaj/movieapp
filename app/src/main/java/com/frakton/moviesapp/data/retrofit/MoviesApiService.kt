@@ -21,5 +21,5 @@ interface MoviesApiService {
     suspend fun getMovieWithId(@Path("movieId") movieId: Long): MovieDetailsResponse
 
     @GET("/3/movie/{movie_id}/videos")
-    suspend fun getMovieTrailerVideos(@Path("movieId") movieId: Long): MovieTrailerVideosResponse
+    suspend fun getMovieTrailerVideos(@Path("movie_id") movieId: Long): MovieTrailerVideosResponse
 }

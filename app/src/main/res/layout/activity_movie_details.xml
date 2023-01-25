@@ -93,6 +93,14 @@
             tools:itemCount="2"
             tools:listitem="@layout/genre_item" />
 
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/movieTrailersViewPager"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/genresRecycleView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <TextView
             android:id="@+id/movieDescription"
             android:layout_width="0dp"
@@ -102,7 +110,7 @@
             android:textSize="@dimen/text_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/genresRecycleView" />
+            app:layout_constraintTop_toBottomOf="@+id/movieTrailersViewPager" />
 
         <TextView
             android:id="@+id/productionTitle"
