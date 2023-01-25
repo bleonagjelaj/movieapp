@@ -14,4 +14,7 @@ class MoviesApiSource @Inject constructor(private val moviesApiService: MoviesAp
 
     suspend fun getMovieWithId(request: GetMovieDetailsRequest) =
         moviesApiService.getMovieWithId(request.movieId)
+
+    suspend fun getMovieTrailerVideos(request: GetMovieDetailsRequest) =
+        moviesApiService.getMovieTrailerVideos(request.movieId)
 }

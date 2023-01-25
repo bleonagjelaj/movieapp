@@ -1,6 +1,7 @@
 package com.frakton.moviesapp.data.retrofit
 
 import com.frakton.moviesapp.data.retrofit.models.response.MovieDetailsResponse
+import com.frakton.moviesapp.data.retrofit.models.response.MovieTrailerVideosResponse
 import com.frakton.moviesapp.data.retrofit.models.response.MoviesResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -18,4 +19,7 @@ interface MoviesApiService {
 
     @GET("/3/movie/{movieId}")
     suspend fun getMovieWithId(@Path("movieId") movieId: Long): MovieDetailsResponse
+
+    @GET("/3/movie/{movie_id}/videos")
+    suspend fun getMovieTrailerVideos(@Path("movieId") movieId: Long): MovieTrailerVideosResponse
 }

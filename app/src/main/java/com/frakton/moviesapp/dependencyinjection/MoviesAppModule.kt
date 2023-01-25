@@ -4,15 +4,18 @@ import com.frakton.moviesapp.data.retrofit.MoviesApiService
 import com.frakton.moviesapp.data.retrofit.MoviesApiSource
 import com.frakton.moviesapp.data.retrofit.RetrofitHelper
 import com.frakton.moviesapp.domain.interactors.GetMovieDetailsInteractor
+import com.frakton.moviesapp.domain.interactors.GetMovieTrailerVideosInteractor
 import com.frakton.moviesapp.domain.interactors.GetMoviesInteractor
 import com.frakton.moviesapp.domain.interactors.SearchMovieInteractor
 import com.frakton.moviesapp.domain.mappers.MovieDetailsMapper
+import com.frakton.moviesapp.domain.mappers.MovieTrailerVideosMapper
 import com.frakton.moviesapp.domain.mappers.MoviesMapper
 import com.frakton.moviesapp.domain.pagingsources.MoviePagingSource
 import com.frakton.moviesapp.domain.pagingsources.SearchMoviePagingSource
 import com.frakton.moviesapp.domain.repositories.MovieDetailsRepository
 import com.frakton.moviesapp.domain.repositories.MoviesRepository
 import com.frakton.moviesapp.domain.usecases.GetMovieDetailsUseCase
+import com.frakton.moviesapp.domain.usecases.GetMovieTrailerVideosUseCase
 import com.frakton.moviesapp.domain.usecases.GetMoviesUseCase
 import com.frakton.moviesapp.domain.usecases.SearchMovieUseCase
 import com.frakton.moviesapp.ui.viewmodels.MoviesViewModel
@@ -61,11 +64,23 @@ object MoviesAppModule {
 
     @Provides
     @Singleton
+    fun provideGetMovieTrailerVideosInteractor(
+        moviesApiSource: MoviesApiSource
+    ): GetMovieTrailerVideosInteractor {
+        return GetMovieTrailerVideosInteractor(moviesApiSource)
+    }
+
+    @Provides
+    @Singleton
     fun provideMoviesMapper(): MoviesMapper = MoviesMapper()
 
     @Provides
     @Singleton
     fun provideMovieDetailsMapper(): MovieDetailsMapper = MovieDetailsMapper()
+
+    @Provides
+    @Singleton
+    fun provideMovieTrailerVideosMapper(): MovieTrailerVideosMapper = MovieTrailerVideosMapper()
 
     @Provides
     @Singleton
@@ -80,9 +95,16 @@ object MoviesAppModule {
     @Singleton
     fun provideMovieDetailsRepository(
         getMovieDetailsInteractor: GetMovieDetailsInteractor,
-        moviesMapper: MovieDetailsMapper
+        getMovieTrailerVideosInteractor: GetMovieTrailerVideosInteractor,
+        movieDetailsMapper: MovieDetailsMapper,
+        movieTrailerVideosMapper: MovieTrailerVideosMapper
     ): MovieDetailsRepository {
-        return MovieDetailsRepository(getMovieDetailsInteractor, moviesMapper)
+        return MovieDetailsRepository(
+            getMovieDetailsInteractor,
+            getMovieTrailerVideosInteractor,
+            movieDetailsMapper,
+            movieTrailerVideosMapper
+        )
     }
 
     @Provides
@@ -102,6 +124,13 @@ object MoviesAppModule {
     fun provideGetMovieDetailsUseCase(moviesDetailsRepository: MovieDetailsRepository):
             GetMovieDetailsUseCase {
         return GetMovieDetailsUseCase(moviesDetailsRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetMovieTrailerVideosUseCase(moviesDetailsRepository: MovieDetailsRepository):
+            GetMovieTrailerVideosUseCase {
+        return GetMovieTrailerVideosUseCase(moviesDetailsRepository)
     }
 
     @Provides

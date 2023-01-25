@@ -33,6 +33,9 @@ class MovieDetailsActivity : AppCompatActivity() {
         viewModel.movieDetails.observe(this) { movieDetailsModel ->
             showMovieDetails(movieDetailsModel)
         }
+        viewModel.movieTrailerVideos.observe(this) { movieTrailerVideosModel ->
+            //TODO: show videos in UI
+        }
     }
 
     private fun showMovieDetails(movieDetailsModel: MovieDetailsModel) {
