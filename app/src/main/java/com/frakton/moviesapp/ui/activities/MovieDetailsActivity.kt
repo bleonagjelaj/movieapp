@@ -36,9 +36,8 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun showMovieDetails(movieDetailsModel: MovieDetailsModel) {
-        binding.movieDescriptionTitle.text =
-            "${movieDetailsModel.title}\n(${movieDetailsModel.releaseYear})"
-        binding.movieDescriptionTitle.text = movieDetailsModel.description
+        binding.movieTitle.text = "${movieDetailsModel.title}\n(${movieDetailsModel.releaseYear})"
+        binding.movieDescription.text = movieDetailsModel.description
         setMoviePosterImage(movieDetailsModel.posterPath, binding.moviePosterImage)
         binding.ratingNumber.text = movieDetailsModel.rating.toString()
         binding.movieRating.rating = movieDetailsModel.rating / 2F

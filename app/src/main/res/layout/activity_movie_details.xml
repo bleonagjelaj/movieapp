@@ -22,12 +22,13 @@
             app:tint="@color/white" />
 
         <TextView
-            android:id="@+id/movieId"
-            android:layout_width="wrap_content"
+            android:id="@+id/movieTitle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/white"
             android:textSize="@dimen/text_large"
+            android:layout_marginHorizontal="@dimen/spacing_7x"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -39,9 +40,10 @@
             android:layout_height="@dimen/movie_cover_image_height"
             android:layout_marginTop="@dimen/spacing_2.5x"
             android:background="@color/lilac"
+            android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movieId" />
+            app:layout_constraintTop_toBottomOf="@+id/movieTitle" />
 
         <RatingBar
             android:id="@+id/movieRating"
@@ -72,7 +74,7 @@
             android:id="@+id/ratingNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/rating_number_margin_bottom"
+            android:layout_marginBottom="@dimen/spacing_minus_0.25x"
             android:textColor="@color/white"
             android:textSize="@dimen/text_medium"
             android:textStyle="bold"
@@ -92,7 +94,7 @@
             tools:listitem="@layout/genre_item" />
 
         <TextView
-            android:id="@+id/movieDescriptionTitle"
+            android:id="@+id/movieDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_0.75x"
@@ -112,17 +114,19 @@
             android:textSize="@dimen/text_small"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movieDescriptionTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/movieDescription" />
 
         <TextView
             android:id="@+id/productionText"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:layout_marginStart="@dimen/spacing_0.5x"
             android:maxLines="1"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_small"
-            app:layout_constraintStart_toEndOf="@+id/productionTitle"
-            app:layout_constraintBottom_toBottomOf="@+id/productionTitle" />
+            app:layout_constraintBottom_toBottomOf="@+id/productionTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/productionTitle" />
 
         <TextView
             android:id="@+id/budgetTitle"
@@ -138,13 +142,15 @@
 
         <TextView
             android:id="@+id/budgetText"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:layout_marginStart="@dimen/spacing_0.5x"
             android:maxLines="1"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_small"
-            app:layout_constraintStart_toEndOf="@+id/budgetTitle"
-            app:layout_constraintBottom_toBottomOf="@+id/budgetTitle" />
+            app:layout_constraintBottom_toBottomOf="@+id/budgetTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/budgetTitle" />
 
         <TextView
             android:id="@+id/revenueTitle"
@@ -160,13 +166,15 @@
 
         <TextView
             android:id="@+id/revenueText"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:layout_marginStart="@dimen/spacing_0.5x"
             android:maxLines="1"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_small"
-            app:layout_constraintStart_toEndOf="@+id/revenueTitle"
-            app:layout_constraintBottom_toBottomOf="@+id/revenueTitle" />
+            app:layout_constraintBottom_toBottomOf="@+id/revenueTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/revenueTitle" />
 
         <TextView
             android:id="@+id/releaseDateTitle"
@@ -182,12 +190,14 @@
 
         <TextView
             android:id="@+id/releaseDateText"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:layout_marginStart="@dimen/spacing_0.5x"
             android:maxLines="1"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_small"
-            app:layout_constraintStart_toEndOf="@+id/releaseDateTitle"
-            app:layout_constraintBottom_toBottomOf="@+id/releaseDateTitle" />
+            app:layout_constraintBottom_toBottomOf="@+id/releaseDateTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/releaseDateTitle" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

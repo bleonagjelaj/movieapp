@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="spacing_minus_0.25x">-2dp</dimen>
+    <dimen name="spacing_0.5x">4dp</dimen>
     <dimen name="spacing_0.75x">6dp</dimen>
     <dimen name="spacing_1x">8dp</dimen>
     <dimen name="spacing_1.5x">10dp</dimen>
@@ -11,6 +13,7 @@
     <dimen name="spacing_5x">40dp</dimen>
     <dimen name="spacing_minus_6x">-48dp</dimen>
     <dimen name="spacing_7x">56dp</dimen>
+    <dimen name="spacing_7.5x">60dp</dimen>
     <dimen name="text_large">30sp</dimen>
     <dimen name="movie_genres_text_size">22sp</dimen>
     <dimen name="text_medium">25sp</dimen>
@@ -19,5 +22,4 @@
     <dimen name="movie_item_layout_height">470dp</dimen>
     <dimen name="movie_cover_image_width">250dp</dimen>
     <dimen name="movie_cover_image_height">400dp</dimen>
-    <dimen name="rating_number_margin_bottom">-3dp</dimen>
 </resources>
