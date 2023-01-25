@@ -22,4 +22,8 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
+
+    <style name="MovieRating" parent="Theme.AppCompat">
+        <item name="colorControlActivated">@color/dull_orange</item>
+    </style>
 </resources>
