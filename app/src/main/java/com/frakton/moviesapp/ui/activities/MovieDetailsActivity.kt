@@ -11,7 +11,7 @@ import com.frakton.moviesapp.databinding.ActivityMovieDetailsBinding
 import com.frakton.moviesapp.domain.callbacks.TrailerItemClickCallback
 import com.frakton.moviesapp.domain.models.MovieDetailsModel
 import com.frakton.moviesapp.ui.adapters.MovieGenresRecyclerAdapter
-import com.frakton.moviesapp.ui.adapters.TrailersPagerAdapter
+import com.frakton.moviesapp.ui.adapters.TrailersViewPagerAdapter
 import com.frakton.moviesapp.ui.viewmodels.MovieDetailsViewModel
 import com.frakton.moviesapp.util.Constants
 import com.frakton.moviesapp.util.gone
@@ -29,7 +29,7 @@ class MovieDetailsActivity : AppCompatActivity(), TrailerItemClickCallback {
     private val TAG = "MovieDetailsActivity"
     private lateinit var binding: ActivityMovieDetailsBinding
     private val viewModel: MovieDetailsViewModel by viewModels()
-    private lateinit var trailersPagerAdapter: TrailersPagerAdapter
+    private lateinit var trailersViewPagerAdapter: TrailersViewPagerAdapter
     private var activePlayer: YouTubePlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +47,6 @@ class MovieDetailsActivity : AppCompatActivity(), TrailerItemClickCallback {
         binding.closeTrailerVideoButton.setOnClickListener {
             activePlayer?.pause()
             binding.movieTrailersViewPager.visible()
-            binding.movieTrailersTabLayout.visible()
         }
     }
 
@@ -57,13 +56,13 @@ class MovieDetailsActivity : AppCompatActivity(), TrailerItemClickCallback {
             viewModel.getMovieTrailerVideos(movieDetailsModel.id)
         }
         viewModel.movieTrailerVideos.observe(this) { movieTrailerVideos ->
-            trailersPagerAdapter.setData(movieTrailerVideos)
+            trailersViewPagerAdapter.setData(movieTrailerVideos)
         }
     }
 
     private fun initMovieTrailersAdapter() {
-        trailersPagerAdapter = TrailersPagerAdapter(this)
-        binding.movieTrailersViewPager.adapter = trailersPagerAdapter
+        trailersViewPagerAdapter = TrailersViewPagerAdapter(this)
+        binding.movieTrailersViewPager.adapter = trailersViewPagerAdapter
         TabLayoutMediator(
             binding.movieTrailersTabLayout, binding.movieTrailersViewPager
         ) { tab, position -> }.attach()
@@ -119,7 +118,6 @@ class MovieDetailsActivity : AppCompatActivity(), TrailerItemClickCallback {
 
     override fun onTrailerItemClicked(trailerKey: String) {
         binding.movieTrailersViewPager.gone()
-        binding.movieTrailersTabLayout.gone()
         activePlayer?.loadVideo(trailerKey)
         activePlayer?.play()
     }

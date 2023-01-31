@@ -12,8 +12,8 @@ import com.frakton.moviesapp.domain.callbacks.TrailerItemClickCallback
 import com.frakton.moviesapp.domain.models.TrailerDetails
 import com.squareup.picasso.Picasso
 
-class TrailersPagerAdapter(private val trailerItemClickCallback: TrailerItemClickCallback) :
-    RecyclerView.Adapter<TrailersPagerAdapter.MovieTrailersViewHolder>() {
+class TrailersViewPagerAdapter(private val trailerItemClickCallback: TrailerItemClickCallback) :
+    RecyclerView.Adapter<TrailersViewPagerAdapter.MovieTrailersViewHolder>() {
     private var movieTrailersList = listOf<TrailerDetails>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieTrailersViewHolder {

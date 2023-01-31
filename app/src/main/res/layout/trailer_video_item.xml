@@ -9,8 +9,8 @@
     <ImageView
         android:id="@+id/videoThumbnail"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
-        android:scaleType="fitXY"
+        android:layout_height="300dp"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
