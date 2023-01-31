@@ -8,6 +8,7 @@
     <dimen name="spacing_1.75x">14dp</dimen>
     <dimen name="spacing_2x">16dp</dimen>
     <dimen name="spacing_2.5x">20sp</dimen>
+    <dimen name="spacing_3x">24sp</dimen>
     <dimen name="spacing_3.75x">30dp</dimen>
     <dimen name="spacing_4x">40dp</dimen>
     <dimen name="spacing_5x">40dp</dimen>

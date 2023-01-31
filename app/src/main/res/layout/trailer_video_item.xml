@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:background="@color/lilac">
+    android:background="@color/lilac"
+    android:gravity="center">
 
     <ImageView
         android:id="@+id/videoThumbnail"
@@ -15,4 +15,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/playTrailerVideoButton"
+        android:layout_width="@dimen/spacing_7.5x"
+        android:layout_height="@dimen/spacing_7.5x"
+        android:src="@drawable/ic_play_circle"
+        app:layout_constraintBottom_toBottomOf="@+id/videoThumbnail"
+        app:layout_constraintEnd_toEndOf="@+id/videoThumbnail"
+        app:layout_constraintStart_toStartOf="@+id/videoThumbnail"
+        app:layout_constraintTop_toTopOf="@+id/videoThumbnail"
+        app:tint="@color/white" />
 </androidx.constraintlayout.widget.ConstraintLayout>
