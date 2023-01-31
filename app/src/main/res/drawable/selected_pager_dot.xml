@@ -4,10 +4,12 @@
     <item>
         <shape
             android:innerRadius="0dp"
-            android:shape="ring"
-            android:thickness="@dimen/spacing_0.5x"
+            android:shape="rectangle"
+            android:thickness="@dimen/selected_dot_indicator_thickness"
             android:useLevel="false">
             <solid android:color="@color/dull_orange"/>
+            <corners android:radius="@dimen/selected_dot_indicator_radius" />
+            <size android:height="@dimen/selected_dot_indicator_height"/>
         </shape>
     </item>
 </layer-list>
