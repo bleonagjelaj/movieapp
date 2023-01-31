@@ -4,7 +4,7 @@ import androidx.paging.PagingData
 import com.frakton.moviesapp.domain.base.BaseUseCase
 import com.frakton.moviesapp.domain.models.MovieDetailsModel
 import com.frakton.moviesapp.domain.models.MovieModel
-import com.frakton.moviesapp.domain.models.MovieTrailerVideosModel
+import com.frakton.moviesapp.domain.models.TrailersVideosModel
 import kotlinx.coroutines.flow.Flow
 
 interface UseCases {
@@ -18,5 +18,5 @@ interface UseCases {
         BaseUseCase<MovieParams.GetMovieDetailsParams, Flow<MovieDetailsModel>>
 
     interface GetMovieVideoTrailers :
-        BaseUseCase<MovieParams.GetMovieDetailsParams, Flow<MovieTrailerVideosModel>>
+        BaseUseCase<MovieParams.GetMovieDetailsParams, Flow<TrailersVideosModel>>
 }

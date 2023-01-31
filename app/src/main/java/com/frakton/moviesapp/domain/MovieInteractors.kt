@@ -13,6 +13,7 @@ interface MovieInteractors {
     interface SearchMovie : BaseInputOutputInteractor<SearchMovieRequest, MoviesResponse>
     interface GetMovieDetails :
         BaseInputOutputInteractor<GetMovieDetailsRequest, MovieDetailsResponse>
+
     interface GetMovieTrailerVideos :
         BaseInputOutputInteractor<GetMovieDetailsRequest, MovieTrailerVideosResponse>
 }

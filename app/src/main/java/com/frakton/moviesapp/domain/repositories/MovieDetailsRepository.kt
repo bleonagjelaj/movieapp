@@ -7,7 +7,7 @@ import com.frakton.moviesapp.domain.interactors.GetMovieTrailerVideosInteractor
 import com.frakton.moviesapp.domain.mappers.MovieDetailsMapper
 import com.frakton.moviesapp.domain.mappers.MovieTrailerVideosMapper
 import com.frakton.moviesapp.domain.models.MovieDetailsModel
-import com.frakton.moviesapp.domain.models.MovieTrailerVideosModel
+import com.frakton.moviesapp.domain.models.TrailersVideosModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -30,7 +30,7 @@ class MovieDetailsRepository @Inject constructor(
         )
     }
 
-    fun getMovieTrailerVideos(input: MovieParams.GetMovieDetailsParams): Flow<MovieTrailerVideosModel> =
+    fun getMovieTrailerVideos(input: MovieParams.GetMovieDetailsParams): Flow<TrailersVideosModel> =
         flow {
             emit(
                 movieTrailerVideosMapper.map(

@@ -8,10 +8,10 @@ data class MovieTrailerVideosResponse(
 
 data class MovieVideoResults(
     val name: String,
-    val id: String
-/*    val key: String,
-    val site: String,
-    val size: Long,
+    val id: String,
+    val key: String,
+    val site: String
+/*     val size: Long,
     val type: String,
     val official: Boolean,
     @Json(name = "published_at")

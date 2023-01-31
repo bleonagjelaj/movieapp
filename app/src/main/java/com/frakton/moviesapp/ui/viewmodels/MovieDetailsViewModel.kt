@@ -5,11 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.frakton.moviesapp.domain.MovieParams
 import com.frakton.moviesapp.domain.models.MovieDetailsModel
-import com.frakton.moviesapp.domain.models.MovieTrailerVideosModel
+import com.frakton.moviesapp.domain.models.TrailerDetails
 import com.frakton.moviesapp.domain.usecases.GetMovieDetailsUseCase
 import com.frakton.moviesapp.domain.usecases.GetMovieTrailerVideosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,9 +19,9 @@ class MovieDetailsViewModel @Inject constructor(
 ) : ViewModel() {
     private val _movieDetails = MutableLiveData<MovieDetailsModel>()
     val movieDetails: MutableLiveData<MovieDetailsModel> = _movieDetails
-
-    private val _movieTrailerVideos = MutableLiveData<MovieTrailerVideosModel>()
-    val movieTrailerVideos: MutableLiveData<MovieTrailerVideosModel> = _movieTrailerVideos
+    private val youTubeSite = "YouTube"
+    private val _movieTrailerVideos = MutableLiveData<List<TrailerDetails>>()
+    val movieTrailerVideos: MutableLiveData<List<TrailerDetails>> = _movieTrailerVideos
 
     fun getMovieDetails(movieId: Long) {
         viewModelScope.launch {
@@ -37,7 +36,8 @@ class MovieDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             getMovieTrailerVideosUseCase(MovieParams.GetMovieDetailsParams(movieId))
                 .collect { movieTrailerVideosResponse ->
-                    _movieTrailerVideos.value = movieTrailerVideosResponse
+                    _movieTrailerVideos.value =
+                        movieTrailerVideosResponse.trailerVideos.filter { it.site == youTubeSite }
                 }
         }
     }

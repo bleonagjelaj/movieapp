@@ -6,7 +6,7 @@ import com.frakton.moviesapp.data.retrofit.models.response.MovieTrailerVideosRes
 import com.frakton.moviesapp.domain.MovieInteractors
 import javax.inject.Inject
 
-class GetMovieTrailerVideosInteractor  @Inject constructor(
+class GetMovieTrailerVideosInteractor @Inject constructor(
     private val moviesApiSource: MoviesApiSource
 ) : MovieInteractors.GetMovieTrailerVideos {
     override suspend operator fun invoke(input: GetMovieDetailsRequest): MovieTrailerVideosResponse {
