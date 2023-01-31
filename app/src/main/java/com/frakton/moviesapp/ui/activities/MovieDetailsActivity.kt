@@ -16,6 +16,7 @@ import com.frakton.moviesapp.ui.viewmodels.MovieDetailsViewModel
 import com.frakton.moviesapp.util.Constants
 import com.frakton.moviesapp.util.gone
 import com.frakton.moviesapp.util.visible
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerFragment
@@ -41,16 +42,12 @@ class MovieDetailsActivity : AppCompatActivity(), TrailerItemClickCallback {
         setClickListeners()
     }
 
-    override fun onDestroy() {
-        activePlayer?.pause()
-        super.onDestroy()
-    }
-
     private fun setClickListeners() {
         binding.closeButton.setOnClickListener { finish() }
         binding.closeTrailerVideoButton.setOnClickListener {
             activePlayer?.pause()
             binding.movieTrailersViewPager.visible()
+            binding.movieTrailersTabLayout.visible()
         }
     }
 
@@ -67,20 +64,21 @@ class MovieDetailsActivity : AppCompatActivity(), TrailerItemClickCallback {
     private fun initMovieTrailersAdapter() {
         trailersPagerAdapter = TrailersPagerAdapter(this)
         binding.movieTrailersViewPager.adapter = trailersPagerAdapter
+        TabLayoutMediator(
+            binding.movieTrailersTabLayout, binding.movieTrailersViewPager
+        ) { tab, position -> }.attach()
         initYoutubePlayer()
     }
 
     private fun initYoutubePlayer() {
         val youtubeFragment = YouTubePlayerFragment()
-        fragmentManager.beginTransaction()
-            .replace(R.id.youtubeFragmentContainer, youtubeFragment)
+        fragmentManager.beginTransaction().replace(R.id.youtubeFragmentContainer, youtubeFragment)
             .commit()
-        youtubeFragment.initialize(Constants.YOUTUBE_API_KEY,
+        youtubeFragment.initialize(
+            Constants.YOUTUBE_API_KEY,
             object : YouTubePlayer.OnInitializedListener {
                 override fun onInitializationSuccess(
-                    provider: YouTubePlayer.Provider,
-                    player: YouTubePlayer,
-                    wasRestored: Boolean
+                    provider: YouTubePlayer.Provider, player: YouTubePlayer, wasRestored: Boolean
                 ) {
                     activePlayer = player
                     activePlayer?.setShowFullscreenButton(false)
@@ -88,8 +86,7 @@ class MovieDetailsActivity : AppCompatActivity(), TrailerItemClickCallback {
                 }
 
                 override fun onInitializationFailure(
-                    provider: YouTubePlayer.Provider,
-                    result: YouTubeInitializationResult
+                    provider: YouTubePlayer.Provider, result: YouTubeInitializationResult
                 ) {
                     Log.d(TAG, "onInitializationFailure: $result")
                 }
@@ -122,6 +119,7 @@ class MovieDetailsActivity : AppCompatActivity(), TrailerItemClickCallback {
 
     override fun onTrailerItemClicked(trailerKey: String) {
         binding.movieTrailersViewPager.gone()
+        binding.movieTrailersTabLayout.gone()
         activePlayer?.loadVideo(trailerKey)
         activePlayer?.play()
     }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="spacing_minus_0.25x">-2dp</dimen>
+    <dimen name="spacing_0.25x">2dp</dimen>
     <dimen name="spacing_0.5x">4dp</dimen>
     <dimen name="spacing_0.75x">6dp</dimen>
     <dimen name="spacing_1x">8dp</dimen>
@@ -23,4 +24,5 @@
     <dimen name="movie_cover_card_height">500dp</dimen>
     <dimen name="movie_cover_image_width">250dp</dimen>
     <dimen name="movie_cover_image_height">400dp</dimen>
+    <dimen name="default_dot_indicator_thickness">2.5dp</dimen>
 </resources>
