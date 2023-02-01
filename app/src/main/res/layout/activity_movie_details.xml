@@ -61,7 +61,7 @@
             app:layout_constraintTop_toBottomOf="@+id/moviePosterImage" />
 
         <TextView
-            android:id="@+id/maxRating"
+            android:id="@+id/ratingNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/max_rating"
@@ -70,18 +70,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/movieRating"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/movieRating" />
-
-        <TextView
-            android:id="@+id/ratingNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_minus_0.25x"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_medium"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/maxRating"
-            app:layout_constraintEnd_toStartOf="@id/maxRating"
-            tools:text="7.2" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/genresRecycleView"
@@ -135,8 +123,8 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/movieTrailersTabLayout"
-            android:layout_width="@dimen/spacing_8.75x"
-            android:layout_height="@dimen/spacing_0.75x"
+            android:layout_width="@dimen/spacing_9.5x"
+            android:layout_height="@dimen/spacing_1.75x"
             android:layout_marginTop="@dimen/spacing_0.75x"
             android:backgroundTint="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -144,9 +132,10 @@
             app:layout_constraintTop_toBottomOf="@+id/youtubeFragmentContainer"
             app:tabBackground="@drawable/tab_pager_selector"
             app:tabGravity="center"
-            app:tabIndicatorColor="@color/dull_orange"
+            app:tabIndicator="@drawable/selected_pager_dot"
+            app:tabIndicatorColor="@color/white"
             app:tabIndicatorGravity="center"
-            app:tabMaxWidth="@dimen/spacing_1.75x"
+            app:tabMaxWidth="@dimen/spacing_2x"
             app:tabMode="scrollable" />
 
         <TextView
@@ -154,13 +143,13 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_marginTop="@dimen/spacing_1.25x"
+            android:background="@drawable/overline"
+            android:ellipsize="end"
+            android:gravity="bottom"
+            android:maxLines="1"
             android:text="@string/production"
             android:textColor="@color/white"
             android:textSize="@dimen/text_small"
-            android:ellipsize="end"
-            android:gravity="bottom"
-            android:background="@drawable/overline"
-            android:maxLines="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movieTrailersTabLayout" />
 
@@ -169,13 +158,13 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_marginTop="@dimen/spacing_0.75x"
+            android:background="@drawable/overline"
+            android:ellipsize="end"
+            android:gravity="bottom"
+            android:maxLines="1"
             android:text="@string/budget"
             android:textColor="@color/white"
             android:textSize="@dimen/text_small"
-            android:ellipsize="end"
-            android:gravity="bottom"
-            android:background="@drawable/overline"
-            android:maxLines="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/productionText" />
 
@@ -184,12 +173,12 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_marginTop="@dimen/spacing_0.75x"
-            android:text="@string/revenue"
-            android:textColor="@color/white"
+            android:background="@drawable/overline"
             android:ellipsize="end"
             android:gravity="bottom"
-            android:background="@drawable/overline"
             android:maxLines="1"
+            android:text="@string/revenue"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_small"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/budgetText" />
@@ -199,11 +188,11 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_marginTop="@dimen/spacing_0.75x"
-            android:text="@string/release_date"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:gravity="bottom"
             android:background="@drawable/overline"
+            android:ellipsize="end"
+            android:gravity="bottom"
+            android:maxLines="1"
+            android:text="@string/release_date"
             android:textColor="@color/white"
             android:textSize="@dimen/text_small"
             app:layout_constraintStart_toStartOf="parent"

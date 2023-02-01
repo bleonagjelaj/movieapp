@@ -98,19 +98,19 @@ class MovieDetailsActivity : AppCompatActivity(), TrailerItemClickCallback {
         binding.movieDescription.text = movieDetailsModel.description
         setMoviePosterImage(movieDetailsModel.posterPath)
         setMovieGenres(movieDetailsModel.genres)
-        binding.ratingNumber.text = movieDetailsModel.rating.toString()
+        binding.ratingNumber.text = formatRatingNumberText(movieDetailsModel.rating)
         binding.movieRating.rating = movieDetailsModel.rating / 2F
-        binding.productionText.text =formatMovieDetailText(
+        binding.productionText.text = formatMovieDetailText(
             getString(R.string.production),
             String.TWO_CHAR_SPACE,
             movieDetailsModel.productionCompany
         )
         binding.budgetText.text = formatMovieDetailText(
             getString(R.string.budget),
-                String.TWO_CHAR_SPACE,
-                movieDetailsModel.budget
-            )
-        binding.revenueText.text =formatMovieDetailText(
+            String.TWO_CHAR_SPACE,
+            movieDetailsModel.budget
+        )
+        binding.revenueText.text = formatMovieDetailText(
             getString(R.string.revenue),
             String.TWO_CHAR_SPACE,
             movieDetailsModel.revenue
@@ -121,6 +121,9 @@ class MovieDetailsActivity : AppCompatActivity(), TrailerItemClickCallback {
             movieDetailsModel.releaseDate
         )
     }
+
+    private fun formatRatingNumberText(ratingNumber: Float) =
+        ratingNumber.toString().makeTextBiggerAndBold().append(getString(R.string.max_rating))
 
     private fun formatMovieDetailText(detailTitle: String, separator: String, detailText: String) =
         detailTitle.makeTextBold().append(separator).append(detailText)
