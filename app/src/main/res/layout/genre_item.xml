@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/spacing_7.5x"
+    android:layout_height="@dimen/spacing_3.5x"
     android:layout_marginHorizontal="@dimen/spacing_0.5x"
     android:layout_marginBottom="@dimen/spacing_1.25x"
     android:backgroundTint="@color/dull_orange"
@@ -16,9 +16,9 @@
         android:layout_gravity="center"
         android:layout_marginHorizontal="@dimen/spacing_0.75x"
         android:gravity="center"
-        android:hyphenationFrequency="full"
+        android:ellipsize="end"
         android:maxLines="2"
         android:textColor="@color/white"
-        android:textSize="@dimen/genre_item_text_size"
+        android:textSize="@dimen/text_small"
         tools:text="Science Fiction" />
 </androidx.cardview.widget.CardView>

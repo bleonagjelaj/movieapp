@@ -56,7 +56,6 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_3.75x"
         android:ellipsize="end"
-        android:hyphenationFrequency="full"
         android:maxLines="1"
         android:textAlignment="textStart"
         android:textColor="@color/white"

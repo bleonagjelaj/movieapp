@@ -9,6 +9,7 @@
     android:paddingVertical="@dimen/spacing_3.75x">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/movieDetailsContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -108,18 +109,21 @@
             android:id="@+id/youtubeFragmentContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_1.25x"
+            android:layout_marginTop="@dimen/spacing_0.75x"
+            android:background="@android:color/black"
+            android:paddingTop="@dimen/spacing_2.5x"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movieDescription" />
 
         <ImageView
             android:id="@+id/closeTrailerVideoButton"
-            android:layout_width="@dimen/spacing_3x"
-            android:layout_height="@dimen/spacing_3x"
+            android:layout_width="@dimen/spacing_2.75x"
+            android:layout_height="@dimen/spacing_2.75x"
+            android:layout_marginTop="@dimen/spacing_0.5x"
             android:src="@drawable/ic_close"
-            app:layout_constraintEnd_toEndOf="@+id/youtubeFragmentContainer"
-            app:layout_constraintTop_toTopOf="@+id/youtubeFragmentContainer"
+            app:layout_constraintEnd_toEndOf="@+id/movieDescription"
+            app:layout_constraintTop_toBottomOf="@+id/movieDescription"
             app:tint="@color/white" />
 
         <androidx.viewpager2.widget.ViewPager2
@@ -146,99 +150,63 @@
             app:tabMode="scrollable" />
 
         <TextView
-            android:id="@+id/productionTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/productionText"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
             android:layout_marginTop="@dimen/spacing_1.25x"
             android:text="@string/production"
             android:textColor="@color/white"
             android:textSize="@dimen/text_small"
-            android:textStyle="bold"
+            android:ellipsize="end"
+            android:gravity="bottom"
+            android:background="@drawable/overline"
+            android:maxLines="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movieTrailersTabLayout" />
 
         <TextView
-            android:id="@+id/productionText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_0.5x"
-            android:maxLines="1"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_small"
-            app:layout_constraintBottom_toBottomOf="@+id/productionTitle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/productionTitle" />
-
-        <TextView
-            android:id="@+id/budgetTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/budgetText"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
             android:layout_marginTop="@dimen/spacing_0.75x"
             android:text="@string/budget"
             android:textColor="@color/white"
             android:textSize="@dimen/text_small"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/productionTitle" />
-
-        <TextView
-            android:id="@+id/budgetText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_0.5x"
+            android:ellipsize="end"
+            android:gravity="bottom"
+            android:background="@drawable/overline"
             android:maxLines="1"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_small"
-            app:layout_constraintBottom_toBottomOf="@+id/budgetTitle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/budgetTitle" />
-
-        <TextView
-            android:id="@+id/revenueTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_0.75x"
-            android:text="@string/revenue"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_small"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/budgetTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/productionText" />
 
         <TextView
             android:id="@+id/revenueText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_0.5x"
-            android:maxLines="1"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_small"
-            app:layout_constraintBottom_toBottomOf="@+id/revenueTitle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/revenueTitle" />
-
-        <TextView
-            android:id="@+id/releaseDateTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
             android:layout_marginTop="@dimen/spacing_0.75x"
-            android:text="@string/release_date"
+            android:text="@string/revenue"
             android:textColor="@color/white"
+            android:ellipsize="end"
+            android:gravity="bottom"
+            android:background="@drawable/overline"
+            android:maxLines="1"
             android:textSize="@dimen/text_small"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/revenueTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/budgetText" />
 
         <TextView
             android:id="@+id/releaseDateText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_0.5x"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginTop="@dimen/spacing_0.75x"
+            android:text="@string/release_date"
+            android:ellipsize="end"
             android:maxLines="1"
+            android:gravity="bottom"
+            android:background="@drawable/overline"
             android:textColor="@color/white"
             android:textSize="@dimen/text_small"
-            app:layout_constraintBottom_toBottomOf="@+id/releaseDateTitle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/releaseDateTitle" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/revenueText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

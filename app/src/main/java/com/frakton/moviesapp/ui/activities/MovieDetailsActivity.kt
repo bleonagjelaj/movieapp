@@ -2,7 +2,6 @@ package com.frakton.moviesapp.ui.activities
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,9 +12,7 @@ import com.frakton.moviesapp.domain.models.MovieDetailsModel
 import com.frakton.moviesapp.ui.adapters.MovieGenresRecyclerAdapter
 import com.frakton.moviesapp.ui.adapters.TrailersViewPagerAdapter
 import com.frakton.moviesapp.ui.viewmodels.MovieDetailsViewModel
-import com.frakton.moviesapp.util.Constants
-import com.frakton.moviesapp.util.gone
-import com.frakton.moviesapp.util.visible
+import com.frakton.moviesapp.util.*
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
@@ -93,27 +90,50 @@ class MovieDetailsActivity : AppCompatActivity(), TrailerItemClickCallback {
     }
 
     private fun showMovieDetails(movieDetailsModel: MovieDetailsModel) {
-        binding.movieTitle.text = "${movieDetailsModel.title}\n(${movieDetailsModel.releaseYear})"
+        binding.movieTitle.text = formatMovieDetailText(
+            movieDetailsModel.title,
+            String.NEW_LINE,
+            movieDetailsModel.releaseYear
+        )
         binding.movieDescription.text = movieDetailsModel.description
-        setMoviePosterImage(movieDetailsModel.posterPath, binding.moviePosterImage)
+        setMoviePosterImage(movieDetailsModel.posterPath)
         setMovieGenres(movieDetailsModel.genres)
         binding.ratingNumber.text = movieDetailsModel.rating.toString()
         binding.movieRating.rating = movieDetailsModel.rating / 2F
-        binding.productionText.text = movieDetailsModel.productionCompany
-        binding.budgetText.text = movieDetailsModel.budget
-        binding.revenueText.text = movieDetailsModel.revenue
-        binding.releaseDateText.text = movieDetailsModel.releaseDate
+        binding.productionText.text =formatMovieDetailText(
+            getString(R.string.production),
+            String.TWO_CHAR_SPACE,
+            movieDetailsModel.productionCompany
+        )
+        binding.budgetText.text = formatMovieDetailText(
+            getString(R.string.budget),
+                String.TWO_CHAR_SPACE,
+                movieDetailsModel.budget
+            )
+        binding.revenueText.text =formatMovieDetailText(
+            getString(R.string.revenue),
+            String.TWO_CHAR_SPACE,
+            movieDetailsModel.revenue
+        )
+        binding.releaseDateText.text = formatMovieDetailText(
+            getString(R.string.release_date),
+            String.TWO_CHAR_SPACE,
+            movieDetailsModel.releaseDate
+        )
     }
+
+    private fun formatMovieDetailText(detailTitle: String, separator: String, detailText: String) =
+        detailTitle.makeTextBold().append(separator).append(detailText)
 
     private fun setMovieGenres(genres: List<String>) {
         val genresAdapter = MovieGenresRecyclerAdapter()
         binding.genresRecycleView.adapter = genresAdapter
-        binding.genresRecycleView.layoutManager = GridLayoutManager(this, 4)
+        binding.genresRecycleView.layoutManager = GridLayoutManager(this, 5)
         genresAdapter.setData(genres)
     }
 
-    private fun setMoviePosterImage(moviePosterPath: String, moviePosterImage: ImageView) {
-        Picasso.get().load(moviePosterPath).into(moviePosterImage)
+    private fun setMoviePosterImage(moviePosterPath: String) {
+        Picasso.get().load(moviePosterPath).into(binding.moviePosterImage)
     }
 
     override fun onTrailerItemClicked(trailerKey: String) {
