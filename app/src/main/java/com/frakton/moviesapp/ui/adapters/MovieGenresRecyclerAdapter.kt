@@ -27,7 +27,7 @@ class MovieGenresRecyclerAdapter :
     inner class MovieGenresViewHolder(private val genreBinding: GenreItemBinding) :
         RecyclerView.ViewHolder(genreBinding.root) {
         fun bind(genre: String) {
-            genreBinding.genre.text = genre
+            genreBinding.root.text = genre
         }
     }
 }
