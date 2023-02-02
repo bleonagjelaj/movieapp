@@ -92,7 +92,7 @@ class MovieDetailsActivity : AppCompatActivity(), TrailerItemClickCallback {
     }
 
     private fun showMovieDetails(movieDetailsModel: MovieDetailsModel) {
-        binding.movieTitle.text = formatMovieDetailText(
+        binding.movieTitle.text = viewModel.formatMovieDetailText(
             movieDetailsModel.title,
             String.NEW_LINE,
             movieDetailsModel.releaseYear
@@ -100,35 +100,32 @@ class MovieDetailsActivity : AppCompatActivity(), TrailerItemClickCallback {
         binding.movieDescription.text = movieDetailsModel.description
         setMoviePosterImage(movieDetailsModel.posterPath)
         setMovieGenres(movieDetailsModel.genres)
-        binding.ratingNumber.text = formatRatingNumberText(movieDetailsModel.rating)
+        binding.ratingNumber.text = viewModel.formatRatingNumberText(
+            movieDetailsModel.rating,
+            getString(R.string.max_rating)
+        )
         binding.movieRating.rating = movieDetailsModel.rating / 2F
-        binding.productionText.text = formatMovieDetailText(
+        binding.productionText.text = viewModel.formatMovieDetailText(
             getString(R.string.production),
             String.TWO_CHAR_SPACE,
             movieDetailsModel.productionCompany
         )
-        binding.budgetText.text = formatMovieDetailText(
+        binding.budgetText.text = viewModel.formatMovieDetailText(
             getString(R.string.budget),
             String.TWO_CHAR_SPACE,
             movieDetailsModel.budget
         )
-        binding.revenueText.text = formatMovieDetailText(
+        binding.revenueText.text = viewModel.formatMovieDetailText(
             getString(R.string.revenue),
             String.TWO_CHAR_SPACE,
             movieDetailsModel.revenue
         )
-        binding.releaseDateText.text = formatMovieDetailText(
+        binding.releaseDateText.text = viewModel.formatMovieDetailText(
             getString(R.string.release_date),
             String.TWO_CHAR_SPACE,
             movieDetailsModel.releaseDate
         )
     }
-
-    private fun formatRatingNumberText(ratingNumber: Float) =
-        ratingNumber.toString().makeTextBiggerAndBold().append(getString(R.string.max_rating))
-
-    private fun formatMovieDetailText(detailTitle: String, separator: String, detailText: String) =
-        detailTitle.makeTextBold().append(separator).append(detailText)
 
     private fun setMovieGenres(genres: List<String>) {
         val genresAdapter = MovieGenresRecyclerAdapter()

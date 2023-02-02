@@ -109,6 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_0.75x"
             android:background="@android:color/black"
+            android:layout_marginHorizontal="@dimen/spacing_2x"
             android:paddingTop="@dimen/spacing_2.5x"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
