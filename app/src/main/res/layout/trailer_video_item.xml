@@ -21,9 +21,10 @@
         android:layout_width="@dimen/spacing_7.5x"
         android:layout_height="@dimen/spacing_7.5x"
         android:src="@drawable/ic_play_circle"
+        android:background="@drawable/gray_circle_background"
         app:layout_constraintBottom_toBottomOf="@+id/videoThumbnail"
         app:layout_constraintEnd_toEndOf="@+id/videoThumbnail"
         app:layout_constraintStart_toStartOf="@+id/videoThumbnail"
         app:layout_constraintTop_toTopOf="@+id/videoThumbnail"
-        app:tint="@color/white" />
+        app:tint="@color/dull_orange" />
 </androidx.constraintlayout.widget.ConstraintLayout>
