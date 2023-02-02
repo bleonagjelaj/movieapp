@@ -19,6 +19,8 @@ import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerFragment
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import jp.wasabeef.picasso.transformations.BlurTransformation
+import jp.wasabeef.picasso.transformations.gpu.VignetteFilterTransformation
 
 
 @AndroidEntryPoint
@@ -137,6 +139,16 @@ class MovieDetailsActivity : AppCompatActivity(), TrailerItemClickCallback {
 
     private fun setMoviePosterImage(moviePosterPath: String) {
         Picasso.get().load(moviePosterPath).into(binding.moviePosterImage)
+        setBackgroundImage(moviePosterPath)
+    }
+
+    private fun setBackgroundImage(moviePosterPath: String) {
+        val vignetteTransformation = VignetteFilterTransformation(this)
+        val blurTransformation = BlurTransformation(this, 70)
+        Picasso.get().load(moviePosterPath)
+            .transform(vignetteTransformation)
+            .transform(blurTransformation)
+            .into(binding.backgroundImage)
     }
 
     override fun onTrailerItemClicked(trailerKey: String) {

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparent"
-    android:paddingHorizontal="@dimen/spacing_2x"
-    android:paddingVertical="@dimen/spacing_3.75x">
+    android:background="@color/transparent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/movieDetailsContainer"
@@ -14,9 +12,19 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:id="@+id/backgroundImage"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
             android:id="@+id/closeButton"
-            android:layout_width="@dimen/spacing_5x"
-            android:layout_height="@dimen/spacing_5x"
+            android:layout_width="@dimen/spacing_3.5x"
+            android:layout_height="@dimen/spacing_3.5x"
+            android:layout_marginTop="@dimen/spacing_3.75x"
+            android:layout_marginStart="@dimen/spacing_2x"
             android:src="@drawable/ic_close"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -29,6 +37,7 @@
             android:layout_marginHorizontal="@dimen/spacing_7x"
             android:gravity="center"
             android:textColor="@color/white"
+            android:layout_marginTop="@dimen/spacing_3.75x"
             android:textSize="@dimen/text_large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +59,6 @@
             android:id="@+id/movieRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_minus_6x"
             android:numStars="5"
             android:rating="3"
             android:scaleX=".6"
@@ -64,9 +72,9 @@
             android:id="@+id/ratingNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/max_rating"
             android:textColor="@color/white"
             android:textSize="@dimen/text_small"
+            android:layout_marginEnd="@dimen/spacing_2x"
             app:layout_constraintBottom_toBottomOf="@+id/movieRating"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/movieRating" />
@@ -76,6 +84,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginHorizontal="@dimen/spacing_2x"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movieRating"
@@ -88,6 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_0.75x"
             android:textColor="@color/white"
+            android:layout_marginHorizontal="@dimen/spacing_2x"
             android:textSize="@dimen/text_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -118,6 +128,7 @@
             android:id="@+id/movieTrailersViewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/spacing_2x"
             app:layout_constraintBottom_toBottomOf="@+id/youtubeFragmentContainer"
             app:layout_constraintTop_toTopOf="@+id/youtubeFragmentContainer" />
 
@@ -143,6 +154,7 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_marginTop="@dimen/spacing_1.25x"
+            android:layout_marginHorizontal="@dimen/spacing_2x"
             android:background="@drawable/overline"
             android:ellipsize="end"
             android:gravity="bottom"
@@ -158,6 +170,7 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_marginTop="@dimen/spacing_0.75x"
+            android:layout_marginHorizontal="@dimen/spacing_2x"
             android:background="@drawable/overline"
             android:ellipsize="end"
             android:gravity="bottom"
@@ -173,6 +186,7 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_marginTop="@dimen/spacing_0.75x"
+            android:layout_marginHorizontal="@dimen/spacing_2x"
             android:background="@drawable/overline"
             android:ellipsize="end"
             android:gravity="bottom"
@@ -188,14 +202,17 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_marginTop="@dimen/spacing_0.75x"
+            android:layout_marginHorizontal="@dimen/spacing_2x"
             android:background="@drawable/overline"
+            android:layout_marginBottom="@dimen/spacing_3.75x"
             android:ellipsize="end"
             android:gravity="bottom"
             android:maxLines="1"
             android:text="@string/release_date"
             android:textColor="@color/white"
             android:textSize="@dimen/text_small"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/revenueText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+</ScrollView>
