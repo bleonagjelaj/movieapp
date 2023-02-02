@@ -5,7 +5,7 @@
         <shape
             android:innerRadius="0dp"
             android:shape="ring"
-            android:thickness="@dimen/spacing_0.5x"
+            android:thickness="@dimen/default_pager_dot_thickness"
             android:useLevel="false">
             <solid android:color="@android:color/darker_gray"/>
         </shape>

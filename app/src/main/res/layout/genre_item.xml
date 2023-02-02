@@ -3,18 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/spacing_3.5x"
+    android:layout_height="@dimen/spacing_4x"
     android:layout_marginHorizontal="@dimen/spacing_0.5x"
     android:layout_marginBottom="@dimen/spacing_1.25x"
     android:backgroundTint="@color/dull_orange"
-    app:cardCornerRadius="@dimen/spacing_1.25x">
+    app:cardCornerRadius="@dimen/spacing_1x">
 
     <TextView
         android:id="@+id/genre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginHorizontal="@dimen/spacing_0.75x"
+        android:layout_marginHorizontal="@dimen/spacing_0.25x"
         android:gravity="center"
         android:ellipsize="end"
         android:maxLines="2"

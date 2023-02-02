@@ -59,11 +59,10 @@
             android:id="@+id/movieRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:numStars="5"
-            android:rating="3"
-            android:scaleX=".6"
-            android:scaleY=".6"
-            android:stepSize="0.5"
+            android:layout_marginStart="@dimen/spacing_2x"
+            android:rating="3.5"
+            android:transformPivotX="0dp"
+            android:transformPivotY="40dp"
             android:theme="@style/MovieRating"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/moviePosterImage" />
@@ -84,7 +83,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginHorizontal="@dimen/spacing_2x"
+            android:layout_marginHorizontal="@dimen/spacing_1.5x"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movieRating"
@@ -135,7 +134,7 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/movieTrailersTabLayout"
-            android:layout_width="@dimen/spacing_9.5x"
+            android:layout_width="@dimen/spacing_8x"
             android:layout_height="@dimen/spacing_1.75x"
             android:layout_marginTop="@dimen/spacing_0.75x"
             android:backgroundTint="@android:color/transparent"
@@ -147,7 +146,7 @@
             app:tabIndicator="@drawable/selected_pager_dot"
             app:tabIndicatorColor="@color/white"
             app:tabIndicatorGravity="center"
-            app:tabMaxWidth="@dimen/spacing_2x"
+            app:tabMaxWidth="@dimen/spacing_1.5x"
             app:tabMode="scrollable" />
 
         <TextView

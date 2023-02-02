@@ -31,7 +31,7 @@
         android:maxLines="1"
         android:layout_marginTop="@dimen/spacing_1.75x"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_small"
+        android:textSize="@dimen/text_large"
         app:layout_constraintStart_toStartOf="@+id/movieCoverCard"
         app:layout_constraintTop_toTopOf="@+id/movieRating"
         tools:text="July 2019" />
@@ -40,12 +40,9 @@
         android:id="@+id/movieRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:numStars="5"
         android:rating="3"
-        android:scaleX=".6"
-        android:scaleY=".6"
-        android:layout_marginEnd="@dimen/spacing_minus_6x"
-        android:stepSize="0.5"
+        android:transformPivotX="250dp"
+        android:transformPivotY="30dp"
         android:theme="@style/MovieRating"
         app:layout_constraintEnd_toEndOf="@+id/movieCoverCard"
         app:layout_constraintTop_toBottomOf="@+id/movieCoverCard" />

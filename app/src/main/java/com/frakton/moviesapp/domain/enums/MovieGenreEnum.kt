@@ -15,7 +15,7 @@ enum class MovieGenreEnum(val genreId: Int, val genre: String) {
     Music(10402, "Music"),
     Mystery(9648, "Mystery"),
     Romance(10749, "Romance"),
-    Science_Fiction(878, "Science Fiction"),
+    Science_Fiction(878, "Sci-Fi"),
     TV_Movie(10770, "TV Movie"),
     Thriller(53, "Thriller"),
     War(10752, "War"),
