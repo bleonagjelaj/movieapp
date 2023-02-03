@@ -2,11 +2,14 @@ package com.frakton.moviesapp.ui.activities
 
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.frakton.moviesapp.R
-import com.frakton.moviesapp.databinding.ActivityMovieDetailsBinding
+import com.frakton.moviesapp.databinding.MovieDetailsFragmentBinding
 import com.frakton.moviesapp.domain.callbacks.TrailerItemClickCallback
 import com.frakton.moviesapp.domain.models.MovieDetailsModel
 import com.frakton.moviesapp.ui.adapters.MovieGenresRecyclerAdapter
@@ -22,27 +25,35 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.picasso.transformations.BlurTransformation
 import jp.wasabeef.picasso.transformations.gpu.VignetteFilterTransformation
 
-
 @AndroidEntryPoint
-class MovieDetailsActivity : AppCompatActivity(), TrailerItemClickCallback {
+class MovieDetailsFragment(private val movieId: Long) : Fragment(), TrailerItemClickCallback {
     private val TAG = "MovieDetailsActivity"
-    private lateinit var binding: ActivityMovieDetailsBinding
+    private lateinit var binding: MovieDetailsFragmentBinding
     private val viewModel: MovieDetailsViewModel by viewModels()
     private lateinit var trailersViewPagerAdapter: TrailersViewPagerAdapter
     private var activePlayer: YouTubePlayer? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMovieDetailsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        viewModel.getMovieDetails(intent.getLongExtra(Constants.MOVIE_ID_EXTRA, -1))
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = MovieDetailsFragmentBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.getMovieDetails(movieId)
         initMovieTrailersAdapter()
         setViewModelObservers()
         setClickListeners()
     }
 
     private fun setClickListeners() {
-        binding.closeButton.setOnClickListener { finish() }
+        binding.closeButton.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+        }
         binding.closeTrailerVideoButton.setOnClickListener {
             activePlayer?.pause()
             binding.movieTrailersViewPager.visible()
@@ -50,11 +61,11 @@ class MovieDetailsActivity : AppCompatActivity(), TrailerItemClickCallback {
     }
 
     private fun setViewModelObservers() {
-        viewModel.movieDetails.observe(this) { movieDetailsModel ->
+        viewModel.movieDetails.observe(this.viewLifecycleOwner) { movieDetailsModel ->
             showMovieDetails(movieDetailsModel)
             viewModel.getMovieTrailerVideos(movieDetailsModel.id)
         }
-        viewModel.movieTrailerVideos.observe(this) { movieTrailerVideos ->
+        viewModel.movieTrailerVideos.observe(this.viewLifecycleOwner) { movieTrailerVideos ->
             trailersViewPagerAdapter.setData(movieTrailerVideos)
         }
     }
@@ -62,16 +73,17 @@ class MovieDetailsActivity : AppCompatActivity(), TrailerItemClickCallback {
     private fun initMovieTrailersAdapter() {
         trailersViewPagerAdapter = TrailersViewPagerAdapter(this)
         binding.movieTrailersViewPager.adapter = trailersViewPagerAdapter
-        TabLayoutMediator(
-            binding.movieTrailersTabLayout, binding.movieTrailersViewPager
-        ) { tab, position -> }.attach()
+        TabLayoutMediator(binding.movieTrailersTabLayout, binding.movieTrailersViewPager) { _, _ ->
+            //do nothing here
+        }.attach()
         initYoutubePlayer()
     }
 
     private fun initYoutubePlayer() {
         val youtubeFragment = YouTubePlayerFragment()
-        fragmentManager.beginTransaction().replace(R.id.youtubeFragmentContainer, youtubeFragment)
-            .commit()
+        activity?.fragmentManager?.beginTransaction()
+            ?.replace(R.id.youtubeFragmentContainer, youtubeFragment)
+            ?.commit()
         youtubeFragment.initialize(
             Constants.YOUTUBE_API_KEY,
             object : YouTubePlayer.OnInitializedListener {
@@ -130,7 +142,7 @@ class MovieDetailsActivity : AppCompatActivity(), TrailerItemClickCallback {
     private fun setMovieGenres(genres: List<String>) {
         val genresAdapter = MovieGenresRecyclerAdapter()
         binding.genresRecycleView.adapter = genresAdapter
-        binding.genresRecycleView.layoutManager = GridLayoutManager(this, 5)
+        binding.genresRecycleView.layoutManager = GridLayoutManager(activity, 5)
         genresAdapter.setData(genres)
     }
 
@@ -140,8 +152,8 @@ class MovieDetailsActivity : AppCompatActivity(), TrailerItemClickCallback {
     }
 
     private fun setBackgroundImage(moviePosterPath: String) {
-        val vignetteTransformation = VignetteFilterTransformation(this)
-        val blurTransformation = BlurTransformation(this, 70)
+        val vignetteTransformation = VignetteFilterTransformation(activity)
+        val blurTransformation = BlurTransformation(activity, 70)
         Picasso.get().load(moviePosterPath)
             .transform(vignetteTransformation)
             .transform(blurTransformation)

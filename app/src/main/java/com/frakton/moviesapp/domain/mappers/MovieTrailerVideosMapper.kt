@@ -4,7 +4,7 @@ import com.frakton.moviesapp.data.retrofit.models.response.MovieTrailerVideosRes
 import com.frakton.moviesapp.data.retrofit.models.response.MovieVideoResults
 import com.frakton.moviesapp.domain.models.TrailerDetails
 import com.frakton.moviesapp.domain.models.TrailersVideosModel
-import com.frakton.moviesapp.util.Constants.DEFAULT_THUMBNAIL_POSTFIX
+import com.frakton.moviesapp.util.Constants.DEFAULT_VIDEO_THUMBNAIL_POSTFIX
 import com.frakton.moviesapp.util.Constants.YOUTUBE_THUMBNAILS_URL
 
 class MovieTrailerVideosMapper {
@@ -25,5 +25,5 @@ class MovieTrailerVideosMapper {
     }
 
     private fun getMoviePosterPath(posterPath: String?) =
-        "$YOUTUBE_THUMBNAILS_URL$posterPath${DEFAULT_THUMBNAIL_POSTFIX}"
+        "$YOUTUBE_THUMBNAILS_URL$posterPath${DEFAULT_VIDEO_THUMBNAIL_POSTFIX}"
 }

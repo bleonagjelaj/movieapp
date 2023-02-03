@@ -1,6 +1,5 @@
 package com.frakton.moviesapp.ui.activities
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +11,6 @@ import com.frakton.moviesapp.databinding.ActivityMainBinding
 import com.frakton.moviesapp.domain.callbacks.MovieItemClickCallback
 import com.frakton.moviesapp.ui.adapters.MoviesViewPagerAdapter
 import com.frakton.moviesapp.ui.viewmodels.MoviesViewModel
-import com.frakton.moviesapp.util.Constants
 import com.frakton.moviesapp.util.gone
 import com.frakton.moviesapp.util.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,9 +44,7 @@ class MainActivity : AppCompatActivity() {
     private fun setMoviesViewPagerLoadListener() {
         val movieItemClickCallback = object : MovieItemClickCallback {
             override fun onMovieItemClicked(movieId: Long) {
-                val intent = Intent(this@MainActivity, MovieDetailsActivity::class.java)
-                intent.putExtra(Constants.MOVIE_ID_EXTRA, movieId)
-                startActivity(intent)
+                startMovieDetailsFragment(movieId)
             }
         }
         moviesViewPagerAdapter = MoviesViewPagerAdapter(movieItemClickCallback)
@@ -65,6 +61,12 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         }
+    }
+
+    private fun startMovieDetailsFragment(movieId: Long) {
+        supportFragmentManager.beginTransaction()
+            .add(R.id.movieDetailsFragmentContainer, MovieDetailsFragment(movieId))
+            .commit()
     }
 
     private fun setViewModelObservers() {
