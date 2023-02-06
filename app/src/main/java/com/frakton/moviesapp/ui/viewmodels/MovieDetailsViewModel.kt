@@ -38,8 +38,9 @@ class MovieDetailsViewModel @Inject constructor(
     fun formatRatingNumberText(ratingNumber: Float, maxRating: String): SpannableStringBuilder =
         ratingNumber.toString().makeTextBiggerAndBold().append(maxRating)
 
-    fun formatMovieDetailText(detailTitle: String, separator: String, detailText: String): SpannableStringBuilder =
-        detailTitle.makeTextBold().append(separator).append(detailText)
+    fun formatMovieDetailText(
+        detailTitle: String, separator: String, detailText: String
+    ): SpannableStringBuilder = detailTitle.makeTextBold().append(separator).append(detailText)
 
     fun getMovieTrailerVideos(movieId: Long) {
         viewModelScope.launch {
