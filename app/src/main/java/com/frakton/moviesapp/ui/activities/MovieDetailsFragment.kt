@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.transition.TransitionInflater
 import com.frakton.moviesapp.R
 import com.frakton.moviesapp.databinding.MovieDetailsFragmentBinding
 import com.frakton.moviesapp.domain.callbacks.TrailerItemClickCallback
@@ -25,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.picasso.transformations.BlurTransformation
 import jp.wasabeef.picasso.transformations.gpu.VignetteFilterTransformation
 
+
 @AndroidEntryPoint
 class MovieDetailsFragment(private val movieId: Long) : Fragment(), TrailerItemClickCallback {
     private val TAG = "MovieDetailsActivity"
@@ -39,6 +41,9 @@ class MovieDetailsFragment(private val movieId: Long) : Fragment(), TrailerItemC
         savedInstanceState: Bundle?
     ): View {
         binding = MovieDetailsFragmentBinding.inflate(layoutInflater, container, false)
+        val transitionInflater = TransitionInflater.from(requireContext())
+        enterTransition = transitionInflater.inflateTransition(R.transition.slide_right)
+        exitTransition = transitionInflater.inflateTransition(R.transition.slide_right)
         return binding.root
     }
 
