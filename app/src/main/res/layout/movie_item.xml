@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/movieCoverCard"
         android:layout_width="match_parent"
         android:layout_height="@dimen/movie_cover_card_height"
-        app:cardCornerRadius="@dimen/spacing_2.5x"
         android:layout_marginHorizontal="@dimen/spacing_3.75x"
+        app:cardCornerRadius="@dimen/spacing_2.5x"
         app:cardPreventCornerOverlap="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,16 +20,16 @@
             android:id="@+id/movieCoverImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:background="@color/lilac" />
+            android:background="@color/lilac"
+            android:scaleType="fitXY" />
     </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/moviePublishDateText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLines="1"
         android:layout_marginTop="@dimen/spacing_1.75x"
+        android:maxLines="1"
         android:textColor="@color/white"
         android:textSize="@dimen/text_large"
         app:layout_constraintStart_toStartOf="@+id/movieCoverCard"
@@ -38,12 +38,12 @@
 
     <RatingBar
         android:id="@+id/movieRating"
+        style="@style/MovieRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:rating="3"
+        android:rating="2.5"
         android:transformPivotX="250dp"
         android:transformPivotY="30dp"
-        android:theme="@style/MovieRating"
         app:layout_constraintEnd_toEndOf="@+id/movieCoverCard"
         app:layout_constraintTop_toBottomOf="@+id/movieCoverCard" />
 
