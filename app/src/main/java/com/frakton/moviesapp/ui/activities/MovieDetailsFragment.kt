@@ -152,7 +152,9 @@ class MovieDetailsFragment(private val movieId: Long) : Fragment(), TrailerItemC
     }
 
     private fun setMoviePosterImage(moviePosterPath: String) {
-        Picasso.get().load(moviePosterPath).into(binding.moviePosterImage)
+        Picasso.get().load(moviePosterPath)
+            .error(R.drawable.ic_image_not_supported)
+            .into(binding.moviePosterImage)
         setBackgroundImage(moviePosterPath)
     }
 
