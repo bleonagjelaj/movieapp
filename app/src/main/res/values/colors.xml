@@ -5,7 +5,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="lilac">#6674A5</color>
     <color name="maroon">#8E424D</color>
-    <color name="transparent">#0DA5A3A3</color>
-    <color name="dark_grey">#434343</color>
+    <color name="dark_grey">#272727</color>
     <color name="dull_orange">#D4854D</color>
 </resources>

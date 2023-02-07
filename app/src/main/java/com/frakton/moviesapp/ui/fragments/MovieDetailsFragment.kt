@@ -1,4 +1,4 @@
-package com.frakton.moviesapp.ui.activities
+package com.frakton.moviesapp.ui.fragments
 
 import android.os.Bundle
 import android.util.Log

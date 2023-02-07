@@ -10,6 +10,7 @@ import com.frakton.moviesapp.R
 import com.frakton.moviesapp.databinding.ActivityMainBinding
 import com.frakton.moviesapp.domain.callbacks.MovieItemClickCallback
 import com.frakton.moviesapp.ui.adapters.MoviesViewPagerAdapter
+import com.frakton.moviesapp.ui.fragments.MovieDetailsFragment
 import com.frakton.moviesapp.ui.viewmodels.MoviesViewModel
 import com.frakton.moviesapp.util.gone
 import com.frakton.moviesapp.util.visible
