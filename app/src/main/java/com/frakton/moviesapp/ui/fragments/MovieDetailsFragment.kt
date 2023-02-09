@@ -21,7 +21,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerFragment
-import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.picasso.transformations.BlurTransformation
 import jp.wasabeef.picasso.transformations.gpu.VignetteFilterTransformation
@@ -58,32 +57,40 @@ class MovieDetailsFragment(private val movieId: Long) : Fragment(), TrailerItemC
     }
 
     private fun setClickListeners() {
-        binding.closeButton.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
-        }
-        binding.closeTrailerVideoButton.setOnClickListener {
-            activePlayer?.pause()
-            binding.movieTrailersViewPager.visible()
+        with(binding) {
+            closeButton.setOnClickListener {
+                activity?.supportFragmentManager?.beginTransaction()
+                    ?.remove(this@MovieDetailsFragment)
+                    ?.commit()
+            }
+            closeTrailerVideoButton.setOnClickListener {
+                activePlayer?.pause()
+                movieTrailersViewPager.visible()
+            }
         }
     }
 
     private fun setViewModelObservers() {
-        viewModel.movieDetails.observe(this.viewLifecycleOwner) { movieDetailsModel ->
-            showMovieDetails(movieDetailsModel)
-            viewModel.getMovieTrailerVideos(movieDetailsModel.id)
-        }
-        viewModel.movieTrailerVideos.observe(this.viewLifecycleOwner) { movieTrailerVideos ->
-            trailersViewPagerAdapter.setData(movieTrailerVideos)
+        with(viewModel) {
+            movieDetails.observe(this@MovieDetailsFragment.viewLifecycleOwner) { movieDetailsModel ->
+                showMovieDetails(movieDetailsModel)
+                viewModel.getMovieTrailerVideos(movieDetailsModel.id)
+            }
+            movieTrailerVideos.observe(this@MovieDetailsFragment.viewLifecycleOwner) { movieTrailerVideos ->
+                trailersViewPagerAdapter.setData(movieTrailerVideos)
+            }
         }
     }
 
     private fun initMovieTrailersAdapter() {
         trailersViewPagerAdapter = TrailersViewPagerAdapter(this)
-        binding.movieTrailersViewPager.adapter = trailersViewPagerAdapter
-        TabLayoutMediator(binding.movieTrailersTabLayout, binding.movieTrailersViewPager) { _, _ ->
-            //do nothing here
-        }.attach()
-        initYoutubePlayer()
+        with(binding) {
+            movieTrailersViewPager.adapter = trailersViewPagerAdapter
+            TabLayoutMediator(movieTrailersTabLayout, movieTrailersViewPager) { _, _ ->
+                //do nothing here
+            }.attach()
+            initYoutubePlayer()
+        }
     }
 
     private fun initYoutubePlayer() {
@@ -166,8 +173,8 @@ class MovieDetailsFragment(private val movieId: Long) : Fragment(), TrailerItemC
         val vignetteTransformation = VignetteFilterTransformation(activity)
         val blurTransformation = BlurTransformation(activity, blurTransformationRadius)
         binding.backgroundImage.loadAndTransformImage(
-            moviePosterPath,
-            listOf(vignetteTransformation, blurTransformation)
+            imagePath = moviePosterPath,
+            transformationsList = listOf(vignetteTransformation, blurTransformation)
         )
     }
 

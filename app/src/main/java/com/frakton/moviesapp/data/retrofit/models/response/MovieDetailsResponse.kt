@@ -40,8 +40,8 @@ data class MovieDetailsResponse(
 )
 
 data class Genre(
-    val id: Long,
-    val name: String
+    val id: Long?,
+    val name: String?
 )
 
 data class ProductionCompany(

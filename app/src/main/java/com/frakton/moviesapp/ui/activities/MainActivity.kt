@@ -48,12 +48,13 @@ class MainActivity : AppCompatActivity() {
                 startMovieDetailsFragment(movieId)
             }
         }
-        moviesViewPagerAdapter = MoviesViewPagerAdapter(movieItemClickCallback)
+        moviesViewPagerAdapter =
+            MoviesViewPagerAdapter(movieItemClickCallback = movieItemClickCallback)
         moviesViewPagerAdapter.addLoadStateListener {
             val currentState = it.refresh
             if (currentState is LoadState.Error) {
                 val error = currentState.error
-                onLoadingMoviesError(
+                onLoadingMoviesError(errorMessage =
                     if (error is HttpException) {
                         error.localizedMessage
                     } else {
@@ -77,7 +78,7 @@ class MainActivity : AppCompatActivity() {
                 binding.errorMessage.gone()
                 moviesViewPagerAdapter.submitData(lifecycle, moviePagingData)
             } else {
-                onLoadingMoviesError(getString(R.string.no_results))
+                onLoadingMoviesError(errorMessage = getString(R.string.no_results))
             }
         }
     }
