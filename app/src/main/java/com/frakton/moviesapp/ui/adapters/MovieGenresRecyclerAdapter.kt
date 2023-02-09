@@ -22,6 +22,7 @@ class MovieGenresRecyclerAdapter :
 
     fun setData(genres: List<String>) {
         genresList = genres
+        notifyDataSetChanged()
     }
 
     inner class MovieGenresViewHolder(private val genreBinding: GenreItemBinding) :
