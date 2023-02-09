@@ -10,6 +10,7 @@ import com.frakton.moviesapp.R
 import com.frakton.moviesapp.databinding.ActivityMainBinding
 import com.frakton.moviesapp.domain.callbacks.MovieItemClickCallback
 import com.frakton.moviesapp.ui.adapters.MoviesViewPagerAdapter
+import com.frakton.moviesapp.ui.fragments.FilterFragment
 import com.frakton.moviesapp.ui.fragments.MovieDetailsFragment
 import com.frakton.moviesapp.ui.viewmodels.MoviesViewModel
 import com.frakton.moviesapp.util.gone
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MoviesViewModel by viewModels()
     private lateinit var moviesViewPagerAdapter: MoviesViewPagerAdapter
     private val DELAY_WHILE_SEARCHING = 500L
+    private lateinit var filterFragment: FilterFragment
     private val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +42,16 @@ class MainActivity : AppCompatActivity() {
         setMoviesViewPagerLoadListener()
         setSearchListeners()
         setViewModelObservers()
+        setClickListeners()
+    }
+
+    private fun setClickListeners() {
+        binding.filterButton.setOnClickListener {
+            filterFragment = FilterFragment()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.movieDetailsFragmentContainer, filterFragment)
+                .commit()
+        }
     }
 
     private fun setMoviesViewPagerLoadListener() {
@@ -66,7 +78,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun startMovieDetailsFragment(movieId: Long) {
         supportFragmentManager.beginTransaction()
-            .add(R.id.movieDetailsFragmentContainer, MovieDetailsFragment(movieId))
+            .replace(R.id.movieDetailsFragmentContainer, MovieDetailsFragment(movieId))
             .commit()
     }
 

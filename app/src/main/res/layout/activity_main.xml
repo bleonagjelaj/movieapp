@@ -41,7 +41,7 @@
         android:id="@+id/movieViewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_4x"
+        android:layout_marginTop="@dimen/spacing_5x"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/movieSearch" />
 
