@@ -11,6 +11,7 @@ import com.frakton.moviesapp.R
 import com.frakton.moviesapp.databinding.MovieItemBinding
 import com.frakton.moviesapp.domain.callbacks.MovieItemClickCallback
 import com.frakton.moviesapp.domain.models.MovieModel
+import com.frakton.moviesapp.util.loadImage
 import com.squareup.picasso.Picasso
 
 class MoviesViewPagerAdapter(private val movieItemClickCallback: MovieItemClickCallback) :
@@ -36,18 +37,10 @@ class MoviesViewPagerAdapter(private val movieItemClickCallback: MovieItemClickC
         fun bind(movie: MovieModel) {
             with(movieItemBinding) {
                 moviePublishDateText.text = movie.movieReleaseDate
-                setMovieCoverImage(movieCoverImage, movie.moviePosterPath)
+                movieCoverImage.loadImage(movie.moviePosterPath)
                 movieRating.rating = movie.movieRating
                 movieGenreText.text = movie.movieGenres
             }
-        }
-
-        private fun setMovieCoverImage(movieCoverImage: ImageView, posterPath: String) {
-            Picasso.get()
-                .load(posterPath)
-                .placeholder(R.drawable.ic_image)
-                .error(R.drawable.ic_image_not_supported)
-                .into(movieCoverImage)
         }
 
         override fun onClick(movieItemView: View?) {

@@ -34,6 +34,8 @@ class MovieDetailsFragment(private val movieId: Long) : Fragment(), TrailerItemC
     private val viewModel: MovieDetailsViewModel by viewModels()
     private lateinit var trailersViewPagerAdapter: TrailersViewPagerAdapter
     private var activePlayer: YouTubePlayer? = null
+    private val movieGenresSpanCount = 5
+    private val blurTransformationRadius = 70
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -109,62 +111,64 @@ class MovieDetailsFragment(private val movieId: Long) : Fragment(), TrailerItemC
     }
 
     private fun showMovieDetails(movieDetailsModel: MovieDetailsModel) {
-        binding.movieTitle.text = viewModel.formatMovieDetailText(
-            movieDetailsModel.title,
-            String.NEW_LINE,
-            movieDetailsModel.releaseYear
-        )
-        binding.movieDescription.text = movieDetailsModel.description
-        setMoviePosterImage(movieDetailsModel.posterPath)
-        setMovieGenres(movieDetailsModel.genres)
-        binding.ratingNumber.text = viewModel.formatRatingNumberText(
-            movieDetailsModel.rating,
-            getString(R.string.max_rating)
-        )
-        binding.movieRating.rating = movieDetailsModel.rating / 2F
-        binding.productionText.text = viewModel.formatMovieDetailText(
-            getString(R.string.production),
-            String.TWO_CHAR_SPACE,
-            movieDetailsModel.productionCompany
-        )
-        binding.budgetText.text = viewModel.formatMovieDetailText(
-            getString(R.string.budget),
-            String.TWO_CHAR_SPACE,
-            movieDetailsModel.budget
-        )
-        binding.revenueText.text = viewModel.formatMovieDetailText(
-            getString(R.string.revenue),
-            String.TWO_CHAR_SPACE,
-            movieDetailsModel.revenue
-        )
-        binding.releaseDateText.text = viewModel.formatMovieDetailText(
-            getString(R.string.release_date),
-            String.TWO_CHAR_SPACE,
-            movieDetailsModel.releaseDate
-        )
+        with(binding) {
+            movieTitle.text = viewModel.formatMovieDetailText(
+                movieDetailsModel.title,
+                String.NEW_LINE,
+                movieDetailsModel.releaseYear
+            )
+            movieDescription.text = movieDetailsModel.description
+            setMoviePosterImage(movieDetailsModel.posterPath)
+            setMovieGenres(movieDetailsModel.genres)
+            ratingNumber.text = viewModel.formatRatingNumberText(
+                movieDetailsModel.rating,
+                getString(R.string.max_rating)
+            )
+            movieRating.rating = movieDetailsModel.rating / 2F
+            productionText.text = viewModel.formatMovieDetailText(
+                getString(R.string.production),
+                String.TWO_CHAR_SPACE,
+                movieDetailsModel.productionCompany
+            )
+            budgetText.text = viewModel.formatMovieDetailText(
+                getString(R.string.budget),
+                String.TWO_CHAR_SPACE,
+                movieDetailsModel.budget
+            )
+            revenueText.text = viewModel.formatMovieDetailText(
+                getString(R.string.revenue),
+                String.TWO_CHAR_SPACE,
+                movieDetailsModel.revenue
+            )
+            releaseDateText.text = viewModel.formatMovieDetailText(
+                getString(R.string.release_date),
+                String.TWO_CHAR_SPACE,
+                movieDetailsModel.releaseDate
+            )
+        }
     }
 
     private fun setMovieGenres(genres: List<String>) {
         val genresAdapter = MovieGenresRecyclerAdapter()
-        binding.genresRecycleView.adapter = genresAdapter
-        binding.genresRecycleView.layoutManager = GridLayoutManager(activity, 5)
+        with(binding.genresRecycleView) {
+            adapter = genresAdapter
+            layoutManager = GridLayoutManager(activity, movieGenresSpanCount)
+        }
         genresAdapter.setData(genres)
     }
 
     private fun setMoviePosterImage(moviePosterPath: String) {
-        Picasso.get().load(moviePosterPath)
-            .error(R.drawable.ic_image_not_supported)
-            .into(binding.moviePosterImage)
+        binding.moviePosterImage.loadImage(moviePosterPath)
         setBackgroundImage(moviePosterPath)
     }
 
     private fun setBackgroundImage(moviePosterPath: String) {
         val vignetteTransformation = VignetteFilterTransformation(activity)
-        val blurTransformation = BlurTransformation(activity, 70)
-        Picasso.get().load(moviePosterPath)
-            .transform(vignetteTransformation)
-            .transform(blurTransformation)
-            .into(binding.backgroundImage)
+        val blurTransformation = BlurTransformation(activity, blurTransformationRadius)
+        binding.backgroundImage.loadAndTransformImage(
+            moviePosterPath,
+            listOf(vignetteTransformation, blurTransformation)
+        )
     }
 
     override fun onTrailerItemClicked(trailerKey: String) {
