@@ -10,6 +10,7 @@ import com.frakton.moviesapp.R
 import com.frakton.moviesapp.databinding.TrailerVideoItemBinding
 import com.frakton.moviesapp.domain.callbacks.TrailerItemClickCallback
 import com.frakton.moviesapp.domain.models.TrailerDetails
+import com.frakton.moviesapp.util.loadAndFitImage
 import com.squareup.picasso.Picasso
 
 class TrailersViewPagerAdapter(private val trailerItemClickCallback: TrailerItemClickCallback) :
@@ -41,11 +42,7 @@ class TrailersViewPagerAdapter(private val trailerItemClickCallback: TrailerItem
         }
 
         fun bind(movieTrailer: TrailerDetails) {
-            Picasso.get()
-                .load(movieTrailer.thumbnailPath)
-                .fit()
-                .error(R.drawable.ic_image_not_supported)
-                .into(trailersBinding.videoThumbnail)
+            trailersBinding.videoThumbnail.loadAndFitImage(movieTrailer.thumbnailPath)
         }
 
         override fun onClick(v: View?) {
