@@ -54,8 +54,8 @@ class MainActivity : AppCompatActivity() {
             val currentState = it.refresh
             if (currentState is LoadState.Error) {
                 val error = currentState.error
-                onLoadingMoviesError(errorMessage =
-                    if (error is HttpException) {
+                onLoadingMoviesError(
+                    errorMessage = if (error is HttpException) {
                         error.localizedMessage
                     } else {
                         getString(R.string.could_not_reach_server)
