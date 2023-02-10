@@ -9,58 +9,15 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.activities.MainActivity">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/movieSearch"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_3.75x"
-        android:layout_marginTop="@dimen/spacing_2x"
-        android:layout_marginEnd="@dimen/spacing_1.25x"
-        android:background="@drawable/bg_white_rounded"
-        app:defaultQueryHint="@string/search"
-        app:iconifiedByDefault="true"
-        app:layout_constraintEnd_toStartOf="@+id/filterButton"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:queryHint="@string/search" />
-
-    <ImageView
-        android:id="@+id/filterButton"
-        android:layout_width="@dimen/spacing_5x"
-        android:layout_height="@dimen/spacing_5x"
-        android:layout_marginHorizontal="@dimen/spacing_3.75x"
-        android:background="@drawable/dark_grey_circle"
-        android:padding="@dimen/filter_button_padding"
-        android:src="@drawable/ic_filter"
-        app:layout_constraintBottom_toBottomOf="@+id/movieSearch"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/movieSearch"
-        app:tint="@color/maroon" />
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/movieViewPager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_4x"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/movieSearch" />
-
-    <TextView
-        android:id="@+id/errorMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingHorizontal="@dimen/spacing_1x"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_medium"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <FrameLayout
-        android:id="@+id/movieDetailsFragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/app_nav_graph" />
 </androidx.constraintlayout.widget.ConstraintLayout>
