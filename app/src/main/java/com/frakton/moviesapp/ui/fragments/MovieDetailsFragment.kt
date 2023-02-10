@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.transition.TransitionInflater
 import com.frakton.moviesapp.R
-import com.frakton.moviesapp.databinding.MovieDetailsFragmentBinding
+import com.frakton.moviesapp.databinding.FragmentMovieDetailsBinding
 import com.frakton.moviesapp.domain.callbacks.TrailerItemClickCallback
 import com.frakton.moviesapp.domain.models.MovieDetailsModel
 import com.frakton.moviesapp.ui.adapters.MovieGenresRecyclerAdapter
@@ -21,26 +22,29 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerFragment
-import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.picasso.transformations.BlurTransformation
 import jp.wasabeef.picasso.transformations.gpu.VignetteFilterTransformation
 
 
 @AndroidEntryPoint
-class MovieDetailsFragment(private val movieId: Long) : Fragment(), TrailerItemClickCallback {
+class MovieDetailsFragment : Fragment(), TrailerItemClickCallback {
     private val TAG = "MovieDetailsActivity"
-    private lateinit var binding: MovieDetailsFragmentBinding
+    private lateinit var binding: FragmentMovieDetailsBinding
     private val viewModel: MovieDetailsViewModel by viewModels()
     private lateinit var trailersViewPagerAdapter: TrailersViewPagerAdapter
     private var activePlayer: YouTubePlayer? = null
+    private val movieGenresSpanCount = 5
+    private val blurTransformationRadius = 70
+    private val movieIdArgKey = "movieId"
+    private var movieId: Long = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = MovieDetailsFragmentBinding.inflate(layoutInflater, container, false)
+        binding = FragmentMovieDetailsBinding.inflate(layoutInflater, container, false)
         val transitionInflater = TransitionInflater.from(requireContext())
         enterTransition = transitionInflater.inflateTransition(R.transition.slide_right)
         exitTransition = transitionInflater.inflateTransition(R.transition.slide_right)
@@ -49,6 +53,7 @@ class MovieDetailsFragment(private val movieId: Long) : Fragment(), TrailerItemC
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        arguments?.getLong(movieIdArgKey)?.let { movieIdValue -> movieId = movieIdValue }
         viewModel.getMovieDetails(movieId)
         initMovieTrailersAdapter()
         setViewModelObservers()
@@ -56,32 +61,38 @@ class MovieDetailsFragment(private val movieId: Long) : Fragment(), TrailerItemC
     }
 
     private fun setClickListeners() {
-        binding.closeButton.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
-        }
-        binding.closeTrailerVideoButton.setOnClickListener {
-            activePlayer?.pause()
-            binding.movieTrailersViewPager.visible()
+        with(binding) {
+            closeButton.setOnClickListener {
+                findNavController().navigateUp()
+            }
+            closeTrailerVideoButton.setOnClickListener {
+                activePlayer?.pause()
+                movieTrailersViewPager.visible()
+            }
         }
     }
 
     private fun setViewModelObservers() {
-        viewModel.movieDetails.observe(this.viewLifecycleOwner) { movieDetailsModel ->
-            showMovieDetails(movieDetailsModel)
-            viewModel.getMovieTrailerVideos(movieDetailsModel.id)
-        }
-        viewModel.movieTrailerVideos.observe(this.viewLifecycleOwner) { movieTrailerVideos ->
-            trailersViewPagerAdapter.setData(movieTrailerVideos)
+        with(viewModel) {
+            movieDetails.observe(this@MovieDetailsFragment.viewLifecycleOwner) { movieDetailsModel ->
+                showMovieDetails(movieDetailsModel)
+                viewModel.getMovieTrailerVideos(movieDetailsModel.id)
+            }
+            movieTrailerVideos.observe(this@MovieDetailsFragment.viewLifecycleOwner) { movieTrailerVideos ->
+                trailersViewPagerAdapter.setData(movieTrailerVideos)
+            }
         }
     }
 
     private fun initMovieTrailersAdapter() {
         trailersViewPagerAdapter = TrailersViewPagerAdapter(this)
-        binding.movieTrailersViewPager.adapter = trailersViewPagerAdapter
-        TabLayoutMediator(binding.movieTrailersTabLayout, binding.movieTrailersViewPager) { _, _ ->
-            //do nothing here
-        }.attach()
-        initYoutubePlayer()
+        with(binding) {
+            movieTrailersViewPager.adapter = trailersViewPagerAdapter
+            TabLayoutMediator(movieTrailersTabLayout, movieTrailersViewPager) { _, _ ->
+                //do nothing here
+            }.attach()
+            initYoutubePlayer()
+        }
     }
 
     private fun initYoutubePlayer() {
@@ -109,62 +120,64 @@ class MovieDetailsFragment(private val movieId: Long) : Fragment(), TrailerItemC
     }
 
     private fun showMovieDetails(movieDetailsModel: MovieDetailsModel) {
-        binding.movieTitle.text = viewModel.formatMovieDetailText(
-            movieDetailsModel.title,
-            String.NEW_LINE,
-            movieDetailsModel.releaseYear
-        )
-        binding.movieDescription.text = movieDetailsModel.description
-        setMoviePosterImage(movieDetailsModel.posterPath)
-        setMovieGenres(movieDetailsModel.genres)
-        binding.ratingNumber.text = viewModel.formatRatingNumberText(
-            movieDetailsModel.rating,
-            getString(R.string.max_rating)
-        )
-        binding.movieRating.rating = movieDetailsModel.rating / 2F
-        binding.productionText.text = viewModel.formatMovieDetailText(
-            getString(R.string.production),
-            String.TWO_CHAR_SPACE,
-            movieDetailsModel.productionCompany
-        )
-        binding.budgetText.text = viewModel.formatMovieDetailText(
-            getString(R.string.budget),
-            String.TWO_CHAR_SPACE,
-            movieDetailsModel.budget
-        )
-        binding.revenueText.text = viewModel.formatMovieDetailText(
-            getString(R.string.revenue),
-            String.TWO_CHAR_SPACE,
-            movieDetailsModel.revenue
-        )
-        binding.releaseDateText.text = viewModel.formatMovieDetailText(
-            getString(R.string.release_date),
-            String.TWO_CHAR_SPACE,
-            movieDetailsModel.releaseDate
-        )
+        with(binding) {
+            movieTitle.text = viewModel.formatMovieDetailText(
+                movieDetailsModel.title,
+                String.NEW_LINE,
+                movieDetailsModel.releaseYear
+            )
+            movieDescription.text = movieDetailsModel.description
+            setMoviePosterImage(movieDetailsModel.posterPath)
+            setMovieGenres(movieDetailsModel.genres)
+            ratingNumber.text = viewModel.formatRatingNumberText(
+                movieDetailsModel.rating,
+                getString(R.string.max_rating)
+            )
+            movieRating.rating = movieDetailsModel.rating / 2F
+            productionText.text = viewModel.formatMovieDetailText(
+                getString(R.string.production),
+                String.TWO_CHAR_SPACE,
+                movieDetailsModel.productionCompany
+            )
+            budgetText.text = viewModel.formatMovieDetailText(
+                getString(R.string.budget),
+                String.TWO_CHAR_SPACE,
+                movieDetailsModel.budget
+            )
+            revenueText.text = viewModel.formatMovieDetailText(
+                getString(R.string.revenue),
+                String.TWO_CHAR_SPACE,
+                movieDetailsModel.revenue
+            )
+            releaseDateText.text = viewModel.formatMovieDetailText(
+                getString(R.string.release_date),
+                String.TWO_CHAR_SPACE,
+                movieDetailsModel.releaseDate
+            )
+        }
     }
 
     private fun setMovieGenres(genres: List<String>) {
         val genresAdapter = MovieGenresRecyclerAdapter()
-        binding.genresRecycleView.adapter = genresAdapter
-        binding.genresRecycleView.layoutManager = GridLayoutManager(activity, 5)
+        with(binding.genresRecycleView) {
+            adapter = genresAdapter
+            layoutManager = GridLayoutManager(activity, movieGenresSpanCount)
+        }
         genresAdapter.setData(genres)
     }
 
     private fun setMoviePosterImage(moviePosterPath: String) {
-        Picasso.get().load(moviePosterPath)
-            .error(R.drawable.ic_image_not_supported)
-            .into(binding.moviePosterImage)
+        binding.moviePosterImage.loadImage(moviePosterPath)
         setBackgroundImage(moviePosterPath)
     }
 
     private fun setBackgroundImage(moviePosterPath: String) {
         val vignetteTransformation = VignetteFilterTransformation(activity)
-        val blurTransformation = BlurTransformation(activity, 70)
-        Picasso.get().load(moviePosterPath)
-            .transform(vignetteTransformation)
-            .transform(blurTransformation)
-            .into(binding.backgroundImage)
+        val blurTransformation = BlurTransformation(activity, blurTransformationRadius)
+        binding.backgroundImage.loadAndTransformImage(
+            imagePath = moviePosterPath,
+            transformationsList = listOf(vignetteTransformation, blurTransformation)
+        )
     }
 
     override fun onTrailerItemClicked(trailerKey: String) {

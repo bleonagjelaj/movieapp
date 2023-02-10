@@ -31,6 +31,7 @@
     <dimen name="movie_cover_image_width">200dp</dimen>
     <dimen name="movie_cover_image_height">300dp</dimen>
     <dimen name="default_pager_dot_thickness">3dp</dimen>
+    <dimen name="filter_button_padding">3dp</dimen>
     <dimen name="filter_title_text_size">14sp</dimen>
     <dimen name="filter_spinner_width">150dp</dimen>
     <dimen name="filter_spinner_height">36dp</dimen>

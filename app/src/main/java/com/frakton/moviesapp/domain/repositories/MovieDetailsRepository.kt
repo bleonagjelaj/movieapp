@@ -21,9 +21,9 @@ class MovieDetailsRepository @Inject constructor(
     fun getMovieDetails(input: MovieParams.GetMovieDetailsParams): Flow<MovieDetailsModel> = flow {
         emit(
             movieDetailsMapper.map(
-                getMovieDetailsInteractor(
+                movieDetailsDataModel = getMovieDetailsInteractor(
                     GetMovieDetailsRequest(
-                        input.movieId
+                        movieId = input.movieId
                     )
                 )
             )
@@ -34,9 +34,9 @@ class MovieDetailsRepository @Inject constructor(
         flow {
             emit(
                 movieTrailerVideosMapper.map(
-                    getMovieTrailerVideosInteractor(
+                    movieTrailerVideosResponse = getMovieTrailerVideosInteractor(
                         GetMovieDetailsRequest(
-                            input.movieId
+                            movieId = input.movieId
                         )
                     )
                 )

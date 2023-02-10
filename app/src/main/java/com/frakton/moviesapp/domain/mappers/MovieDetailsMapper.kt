@@ -43,7 +43,7 @@ class MovieDetailsMapper {
     private fun getMovieGenresString(genres: List<Genre>?): List<String> {
         val movieGenresString = ArrayList<String>()
         genres?.forEach { genre ->
-            movieGenresString.add(genre.name)
+            genre.name?.let { genreName -> movieGenresString.add(genreName) }
         }
         return movieGenresString
     }

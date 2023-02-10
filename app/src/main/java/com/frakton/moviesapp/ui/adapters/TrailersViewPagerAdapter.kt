@@ -6,11 +6,10 @@ import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.frakton.moviesapp.R
 import com.frakton.moviesapp.databinding.TrailerVideoItemBinding
 import com.frakton.moviesapp.domain.callbacks.TrailerItemClickCallback
 import com.frakton.moviesapp.domain.models.TrailerDetails
-import com.squareup.picasso.Picasso
+import com.frakton.moviesapp.util.loadAndFitImage
 
 class TrailersViewPagerAdapter(private val trailerItemClickCallback: TrailerItemClickCallback) :
     RecyclerView.Adapter<TrailersViewPagerAdapter.MovieTrailersViewHolder>() {
@@ -41,18 +40,12 @@ class TrailersViewPagerAdapter(private val trailerItemClickCallback: TrailerItem
         }
 
         fun bind(movieTrailer: TrailerDetails) {
-            Picasso.get()
-                .load(movieTrailer.thumbnailPath)
-                .fit()
-                .error(R.drawable.ic_image_not_supported)
-                .into(trailersBinding.videoThumbnail)
+            trailersBinding.videoThumbnail.loadAndFitImage(imagePath = movieTrailer.thumbnailPath)
         }
 
         override fun onClick(v: View?) {
             val trailerItem = movieTrailersList[bindingAdapterPosition]
-            if (trailerItem != null) {
-                trailerItemClickCallback.onTrailerItemClicked(trailerItem.key)
-            }
+            trailerItemClickCallback.onTrailerItemClicked(trailerKey = trailerItem.key)
         }
     }
 }
