@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/blue_red_gradient">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/movieDetailsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/backgroundImage"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/closeButton"
+            android:layout_width="@dimen/spacing_3.5x"
+            android:layout_height="@dimen/spacing_3.5x"
+            android:layout_marginStart="@dimen/spacing_2x"
+            android:layout_marginTop="@dimen/spacing_3.75x"
+            android:src="@drawable/ic_close"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/movieTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_7x"
+            android:layout_marginTop="@dimen/spacing_3.75x"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Lion The King \n (2019)" />
+
+        <ImageView
+            android:id="@+id/moviePosterImage"
+            android:layout_width="@dimen/movie_cover_image_width"
+            android:layout_height="@dimen/movie_cover_image_height"
+            android:layout_marginTop="@dimen/spacing_2.5x"
+            android:background="@color/lilac"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movieTitle" />
+
+        <RatingBar
+            android:id="@+id/movieRating"
+            style="@style/MovieRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_2x"
+            android:rating="2.5"
+            android:transformPivotY="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/moviePosterImage" />
+
+        <TextView
+            android:id="@+id/ratingNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_2x"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintBottom_toBottomOf="@+id/movieRating"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/movieRating" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/genresRecycleView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_1.5x"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movieRating"
+            tools:itemCount="2"
+            tools:listitem="@layout/genre_item" />
+
+        <TextView
+            android:id="@+id/movieDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_2x"
+            android:layout_marginTop="@dimen/spacing_0.75x"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/genresRecycleView" />
+
+        <FrameLayout
+            android:id="@+id/youtubeFragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_2x"
+            android:layout_marginTop="@dimen/spacing_0.75x"
+            android:background="@android:color/black"
+            android:paddingTop="@dimen/spacing_2.5x"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movieDescription" />
+
+        <ImageView
+            android:id="@+id/closeTrailerVideoButton"
+            android:layout_width="@dimen/spacing_2.75x"
+            android:layout_height="@dimen/spacing_2.75x"
+            android:layout_marginTop="@dimen/spacing_0.5x"
+            android:src="@drawable/ic_close"
+            app:layout_constraintEnd_toEndOf="@+id/movieDescription"
+            app:layout_constraintTop_toBottomOf="@+id/movieDescription"
+            app:tint="@color/white" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/movieTrailersViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/spacing_2x"
+            app:layout_constraintBottom_toBottomOf="@+id/youtubeFragmentContainer"
+            app:layout_constraintTop_toTopOf="@+id/youtubeFragmentContainer" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/movieTrailersTabLayout"
+            android:layout_width="@dimen/spacing_8x"
+            android:layout_height="@dimen/spacing_1.75x"
+            android:layout_marginTop="@dimen/spacing_0.75x"
+            android:backgroundTint="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/youtubeFragmentContainer"
+            app:tabBackground="@drawable/tab_pager_selector"
+            app:tabGravity="center"
+            app:tabIndicator="@drawable/selected_pager_dot"
+            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorGravity="center"
+            app:tabMaxWidth="@dimen/spacing_1.5x"
+            app:tabMode="scrollable" />
+
+        <TextView
+            android:id="@+id/productionText"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginHorizontal="@dimen/spacing_2x"
+            android:layout_marginTop="@dimen/spacing_1.25x"
+            android:background="@drawable/overline"
+            android:ellipsize="end"
+            android:gravity="bottom"
+            android:maxLines="1"
+            android:text="@string/production"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movieTrailersTabLayout" />
+
+        <TextView
+            android:id="@+id/budgetText"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginHorizontal="@dimen/spacing_2x"
+            android:layout_marginTop="@dimen/spacing_0.75x"
+            android:background="@drawable/overline"
+            android:ellipsize="end"
+            android:gravity="bottom"
+            android:maxLines="1"
+            android:text="@string/budget"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/productionText" />
+
+        <TextView
+            android:id="@+id/revenueText"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginHorizontal="@dimen/spacing_2x"
+            android:layout_marginTop="@dimen/spacing_0.75x"
+            android:background="@drawable/overline"
+            android:ellipsize="end"
+            android:gravity="bottom"
+            android:maxLines="1"
+            android:text="@string/revenue"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/budgetText" />
+
+        <TextView
+            android:id="@+id/releaseDateText"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginHorizontal="@dimen/spacing_2x"
+            android:layout_marginTop="@dimen/spacing_0.75x"
+            android:layout_marginBottom="@dimen/spacing_3.75x"
+            android:background="@drawable/overline"
+            android:ellipsize="end"
+            android:gravity="bottom"
+            android:maxLines="1"
+            android:text="@string/release_date"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/revenueText" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

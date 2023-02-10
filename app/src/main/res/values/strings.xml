@@ -3,4 +3,9 @@
     <string name="search">Search</string>
     <string name="no_results">No results</string>
     <string name="could_not_reach_server">Couldn\'t reach server.\n Check your internet connection.</string>
+    <string name="max_rating">/10</string>
+    <string name="production">Production:</string>
+    <string name="budget">Budget:</string>
+    <string name="revenue">Revenue:</string>
+    <string name="release_date">Release Date:</string>
 </resources>

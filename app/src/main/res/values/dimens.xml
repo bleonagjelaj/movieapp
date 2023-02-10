@@ -1,15 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="spacing_0.25x">2dp</dimen>
+    <dimen name="spacing_0.5x">4dp</dimen>
+    <dimen name="spacing_0.75x">6dp</dimen>
     <dimen name="spacing_1x">8dp</dimen>
+    <dimen name="spacing_1.25x">10dp</dimen>
+    <dimen name="spacing_1.5x">12dp</dimen>
     <dimen name="spacing_1.75x">14dp</dimen>
     <dimen name="spacing_2x">16dp</dimen>
-    <dimen name="spacing_2.5x">20sp</dimen>
+    <dimen name="spacing_minus_2x">-16dp</dimen>
+    <dimen name="spacing_2.5x">20dp</dimen>
+    <dimen name="spacing_2.75x">22dp</dimen>
+    <dimen name="spacing_3x">24dp</dimen>
+    <dimen name="spacing_3.5x">28dp</dimen>
     <dimen name="spacing_3.75x">30dp</dimen>
+    <dimen name="spacing_minus_3.75x">-30dp</dimen>
     <dimen name="spacing_4x">40dp</dimen>
     <dimen name="spacing_5x">40dp</dimen>
-    <dimen name="spacing_minus_6x">-48dp</dimen>
-    <dimen name="text_medium">22sp</dimen>
-    <dimen name="text_small">20sp</dimen>
+    <dimen name="spacing_7x">56dp</dimen>
+    <dimen name="spacing_7.5x">60dp</dimen>
+    <dimen name="spacing_8x">64dp</dimen>
+    <dimen name="spacing_9.5x">76dp</dimen>
+    <dimen name="movie_genres_text_size">22sp</dimen>
+    <dimen name="text_large">18sp</dimen>
+    <dimen name="text_medium">16sp</dimen>
+    <dimen name="text_small">12sp</dimen>
     <dimen name="movie_cover_card_height">500dp</dimen>
-    <dimen name="movie_item_layout_height">470dp</dimen>
+    <dimen name="movie_cover_image_width">200dp</dimen>
+    <dimen name="movie_cover_image_height">300dp</dimen>
+    <dimen name="default_pager_dot_thickness">3dp</dimen>
+    <dimen name="filter_button_padding">3dp</dimen>
 </resources>
