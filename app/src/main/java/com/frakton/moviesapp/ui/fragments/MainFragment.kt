@@ -49,6 +49,13 @@ class MainFragment : Fragment() {
         setMoviesViewPagerLoadListener()
         setSearchListeners()
         setViewModelObservers()
+        setClickListeners()
+    }
+
+    private fun setClickListeners() {
+        binding.filterButton.setOnClickListener {
+            findNavController(this).navigate(R.id.action_mainFragment_to_filterFragment)
+        }
     }
 
     private fun setMoviesViewPagerLoadListener() {

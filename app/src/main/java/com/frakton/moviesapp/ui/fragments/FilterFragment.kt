@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.frakton.moviesapp.R
 import com.frakton.moviesapp.databinding.FragmentFilterBinding
 import com.frakton.moviesapp.ui.adapters.GenresFiltersRecyclerAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class FilterFragment : Fragment() {
     private lateinit var binding: FragmentFilterBinding
 
@@ -66,7 +68,7 @@ class FilterFragment : Fragment() {
         }
 
         binding.root.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+            findNavController().navigateUp()
         }
 
         binding.filterElementsContainer.setOnClickListener {
