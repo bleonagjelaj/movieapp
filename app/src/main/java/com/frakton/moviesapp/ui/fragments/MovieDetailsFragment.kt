@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.transition.TransitionInflater
 import com.frakton.moviesapp.R
-import com.frakton.moviesapp.databinding.MovieDetailsFragmentBinding
+import com.frakton.moviesapp.databinding.FragmentMovieDetailsBinding
 import com.frakton.moviesapp.domain.callbacks.TrailerItemClickCallback
 import com.frakton.moviesapp.domain.models.MovieDetailsModel
 import com.frakton.moviesapp.ui.adapters.MovieGenresRecyclerAdapter
@@ -30,7 +30,7 @@ import jp.wasabeef.picasso.transformations.gpu.VignetteFilterTransformation
 @AndroidEntryPoint
 class MovieDetailsFragment : Fragment(), TrailerItemClickCallback {
     private val TAG = "MovieDetailsActivity"
-    private lateinit var binding: MovieDetailsFragmentBinding
+    private lateinit var binding: FragmentMovieDetailsBinding
     private val viewModel: MovieDetailsViewModel by viewModels()
     private lateinit var trailersViewPagerAdapter: TrailersViewPagerAdapter
     private var activePlayer: YouTubePlayer? = null
@@ -44,7 +44,7 @@ class MovieDetailsFragment : Fragment(), TrailerItemClickCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = MovieDetailsFragmentBinding.inflate(layoutInflater, container, false)
+        binding = FragmentMovieDetailsBinding.inflate(layoutInflater, container, false)
         val transitionInflater = TransitionInflater.from(requireContext())
         enterTransition = transitionInflater.inflateTransition(R.transition.slide_right)
         exitTransition = transitionInflater.inflateTransition(R.transition.slide_right)
@@ -53,7 +53,7 @@ class MovieDetailsFragment : Fragment(), TrailerItemClickCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.getLong(movieIdArgKey)?.let {movieIdValue -> movieId = movieIdValue }
+        arguments?.getLong(movieIdArgKey)?.let { movieIdValue -> movieId = movieIdValue }
         viewModel.getMovieDetails(movieId)
         initMovieTrailersAdapter()
         setViewModelObservers()

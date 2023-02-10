@@ -20,5 +20,6 @@
     <fragment
         android:id="@+id/movieDetailsFragment"
         android:name="com.frakton.moviesapp.ui.fragments.MovieDetailsFragment"
-        android:label="MovieDetailsFragment" />
+        android:label="MovieDetailsFragment"
+        tools:layout="@layout/fragment_movie_details"/>
 </navigation>
