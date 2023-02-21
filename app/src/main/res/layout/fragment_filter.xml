@@ -31,11 +31,10 @@
 
         <Spinner
             android:id="@+id/sortBySpinner"
+            style="@style/FilterSpinner"
             android:layout_width="@dimen/filter_spinner_width"
             android:layout_height="@dimen/filter_spinner_height"
             android:layout_marginStart="@dimen/spacing_1.5x"
-            android:background="@drawable/rounded_outlined_transparent_background"
-            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sortByTitle" />
 
@@ -77,11 +76,10 @@
 
         <Spinner
             android:id="@+id/filterByYearSpinner"
+            style="@style/FilterSpinner"
             android:layout_width="@dimen/filter_spinner_width"
             android:layout_height="@dimen/filter_spinner_height"
             android:layout_marginStart="@dimen/spacing_1.5x"
-            android:background="@drawable/rounded_outlined_transparent_background"
-            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/filterByYearTitle" />
 
@@ -98,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/spacing_1.75x"
-            android:text="@string/filter_by_year"
+            android:text="@string/filter_by_genres"
             android:textColor="@color/light_grey"
             android:textSize="@dimen/filter_title_text_size"
             app:layout_constraintStart_toStartOf="parent"
@@ -107,17 +105,18 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/genresRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="@dimen/spacing_0.25x"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_2x"
             app:layout_constraintBottom_toTopOf="@+id/clearAllButton"
             app:layout_constraintTop_toBottomOf="@+id/filterByGenresTitle"
+            tools:itemCount="4"
             tools:listitem="@layout/genre_filter_item" />
 
         <TextView
             android:id="@+id/clearAllButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_0.75x"
+            android:layout_marginBottom="@dimen/spacing_2.5x"
             android:background="@drawable/rounded_outlined_transparent_background"
             android:paddingHorizontal="@dimen/spacing_3x"
             android:paddingVertical="@dimen/spacing_0.75x"

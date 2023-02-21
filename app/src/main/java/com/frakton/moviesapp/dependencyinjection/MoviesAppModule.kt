@@ -1,27 +1,27 @@
 package com.frakton.moviesapp.dependencyinjection
 
+import android.content.Context
 import com.frakton.moviesapp.data.retrofit.MoviesApiService
 import com.frakton.moviesapp.data.retrofit.MoviesApiSource
 import com.frakton.moviesapp.data.retrofit.RetrofitHelper
+import com.frakton.moviesapp.db.DatabaseBuilder
+import com.frakton.moviesapp.db.MovieAppDatabase
 import com.frakton.moviesapp.domain.interactors.GetMovieDetailsInteractor
 import com.frakton.moviesapp.domain.interactors.GetMovieTrailerVideosInteractor
 import com.frakton.moviesapp.domain.interactors.GetMoviesInteractor
 import com.frakton.moviesapp.domain.interactors.SearchMovieInteractor
-import com.frakton.moviesapp.domain.mappers.MovieDetailsMapper
-import com.frakton.moviesapp.domain.mappers.MovieTrailerVideosMapper
-import com.frakton.moviesapp.domain.mappers.MoviesMapper
+import com.frakton.moviesapp.domain.mappers.*
 import com.frakton.moviesapp.domain.pagingsources.MoviePagingSource
 import com.frakton.moviesapp.domain.pagingsources.SearchMoviePagingSource
+import com.frakton.moviesapp.domain.repositories.FiltersRepository
 import com.frakton.moviesapp.domain.repositories.MovieDetailsRepository
 import com.frakton.moviesapp.domain.repositories.MoviesRepository
-import com.frakton.moviesapp.domain.usecases.GetMovieDetailsUseCase
-import com.frakton.moviesapp.domain.usecases.GetMovieTrailerVideosUseCase
-import com.frakton.moviesapp.domain.usecases.GetMoviesUseCase
-import com.frakton.moviesapp.domain.usecases.SearchMovieUseCase
+import com.frakton.moviesapp.domain.usecases.*
 import com.frakton.moviesapp.ui.viewmodels.MoviesViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -84,6 +84,14 @@ object MoviesAppModule {
 
     @Provides
     @Singleton
+    fun provideFiltersDBModelMapper(): FiltersDBModelMapper = FiltersDBModelMapper()
+
+    @Provides
+    @Singleton
+    fun provideMovieFiltersModelMapper(): MovieFiltersModelMapper = MovieFiltersModelMapper()
+
+    @Provides
+    @Singleton
     fun provideMovieRepository(
         moviesPagingSource: MoviePagingSource,
         searchMoviePagingSourceFactory: SearchMoviePagingSource.Factory
@@ -112,6 +120,20 @@ object MoviesAppModule {
 
     @Provides
     @Singleton
+    fun provideFiltersRepository(
+        moviesAppDB: MovieAppDatabase,
+        filtersDBModelMapper: FiltersDBModelMapper,
+        movieFiltersModelMapper: MovieFiltersModelMapper
+    ): FiltersRepository {
+        return FiltersRepository(
+            moviesAppDB = moviesAppDB,
+            filtersDBModelMapper = filtersDBModelMapper,
+            movieFiltersModelMapper = movieFiltersModelMapper
+        )
+    }
+
+    @Provides
+    @Singleton
     fun provideGetMoviesUseCase(moviesRepository: MoviesRepository): GetMoviesUseCase {
         return GetMoviesUseCase(moviesRepository = moviesRepository)
     }
@@ -131,6 +153,18 @@ object MoviesAppModule {
 
     @Provides
     @Singleton
+    fun provideGetFiltersUseCase(filtersRepository: FiltersRepository): GetFiltersUseCase {
+        return GetFiltersUseCase(filtersRepository = filtersRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUpdateFiltersUseCase(filtersRepository: FiltersRepository): UpdateFiltersUseCase {
+        return UpdateFiltersUseCase(filtersRepository = filtersRepository)
+    }
+
+    @Provides
+    @Singleton
     fun provideGetMovieTrailerVideosUseCase(moviesDetailsRepository: MovieDetailsRepository):
             GetMovieTrailerVideosUseCase {
         return GetMovieTrailerVideosUseCase(movieDetailsRepository = moviesDetailsRepository)
@@ -139,11 +173,14 @@ object MoviesAppModule {
     @Provides
     @Singleton
     fun provideMoviesViewModel(
-        getMoviesUseCase: GetMoviesUseCase, searchMovieUseCase: SearchMovieUseCase
+        getMoviesUseCase: GetMoviesUseCase,
+        searchMovieUseCase: SearchMovieUseCase,
+        getFiltersUseCase: GetFiltersUseCase
     ): MoviesViewModel {
         return MoviesViewModel(
             getMoviesUseCase = getMoviesUseCase,
-            searchMovieUseCase = searchMovieUseCase
+            searchMovieUseCase = searchMovieUseCase,
+            getFiltersUseCase = getFiltersUseCase
         )
     }
 
@@ -170,4 +207,9 @@ object MoviesAppModule {
             moviesMapper = moviesMapper
         )
     }
+
+    @Provides
+    @Singleton
+    fun provideMoviesAppDatabaseInstance(@ApplicationContext context: Context): MovieAppDatabase =
+        DatabaseBuilder.getInstance(context)
 }

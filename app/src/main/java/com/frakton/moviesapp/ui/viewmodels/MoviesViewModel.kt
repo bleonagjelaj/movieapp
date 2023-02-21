@@ -5,8 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.frakton.moviesapp.data.retrofit.models.request.MovieFilters
 import com.frakton.moviesapp.domain.MovieParams
 import com.frakton.moviesapp.domain.models.MovieModel
+import com.frakton.moviesapp.domain.usecases.GetFiltersUseCase
 import com.frakton.moviesapp.domain.usecases.GetMoviesUseCase
 import com.frakton.moviesapp.domain.usecases.SearchMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,14 +19,21 @@ import javax.inject.Inject
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
     private val getMoviesUseCase: GetMoviesUseCase,
-    private val searchMovieUseCase: SearchMovieUseCase
+    private val searchMovieUseCase: SearchMovieUseCase,
+    private val getFiltersUseCase: GetFiltersUseCase
 ) : ViewModel() {
     private val _movieData = MutableLiveData<PagingData<MovieModel>>()
     val movieData: MutableLiveData<PagingData<MovieModel>> = _movieData
 
     fun loadMovies() =
         viewModelScope.launch {
-            getMoviesUseCase()
+            var movieFilters: MovieFilters? = null
+
+            getFiltersUseCase().collect { movieFiltersResponse ->
+                movieFilters = movieFiltersResponse
+            }
+
+            getMoviesUseCase(movieFilters)
                 .cachedIn(this)
                 .collect { moviesPagingData ->
                     _movieData.value = moviesPagingData

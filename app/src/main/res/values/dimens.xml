@@ -15,13 +15,16 @@
     <dimen name="spacing_3.5x">28dp</dimen>
     <dimen name="spacing_3.75x">30dp</dimen>
     <dimen name="spacing_minus_3.75x">-30dp</dimen>
+    <dimen name="spacing_4x">32dp</dimen>
     <dimen name="spacing_4.5x">36dp</dimen>
     <dimen name="spacing_5x">40dp</dimen>
     <dimen name="spacing_7x">56dp</dimen>
     <dimen name="spacing_7.5x">60dp</dimen>
     <dimen name="spacing_8x">64dp</dimen>
+    <dimen name="spacing_8.5x">68dp</dimen>
     <dimen name="spacing_8.75x">70dp</dimen>
     <dimen name="spacing_9x">72dp</dimen>
+    <dimen name="spacing_9.25x">74dp</dimen>
     <dimen name="spacing_9.5x">76dp</dimen>
     <dimen name="movie_genres_text_size">22sp</dimen>
     <dimen name="text_large">18sp</dimen>
@@ -33,9 +36,9 @@
     <dimen name="default_pager_dot_thickness">3dp</dimen>
     <dimen name="filter_button_padding">3dp</dimen>
     <dimen name="filter_title_text_size">14sp</dimen>
-    <dimen name="filter_spinner_width">150dp</dimen>
+    <dimen name="filter_spinner_width">160dp</dimen>
     <dimen name="filter_spinner_height">36dp</dimen>
-    <dimen name="filters_container_height">580dp</dimen>
-    <dimen name="filters_container_width">300dp</dimen>
+    <dimen name="filters_container_height">590dp</dimen>
+    <dimen name="filters_container_width">340dp</dimen>
     <dimen name="line_height">1dp</dimen>
 </resources>

@@ -6,12 +6,19 @@
     <string name="max_rating">/10</string>
     <string name="production">Production:</string>
     <string name="budget">Budget:</string>
-    <string name="revenue">Revenue:</string>
-    <string name="release_date">Release Date:</string>
+    <string name="revenue_title">Revenue:</string>
+    <string name="revenue">Revenue</string>
+    <string name="release_date_title">Release Date:</string>
+    <string name="release_date">Release Date</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sort_by">sort by</string>
     <string name="filter_by_year">filter by year</string>
     <string name="clear_all">Clear All</string>
     <string name="ascending">ascending</string>
     <string name="descending">descending</string>
+    <string name="filter_by_genres">filter by genres</string>
+    <string name="all_years">All years</string>
+    <string name="popularity">Popularity</string>
+    <string name="vote_average">Vote average</string>
+    <string name="movie_title">Movie title</string>
 </resources>
