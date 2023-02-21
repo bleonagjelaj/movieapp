@@ -6,6 +6,7 @@ import com.frakton.moviesapp.data.retrofit.MoviesApiSource
 import com.frakton.moviesapp.data.retrofit.RetrofitHelper
 import com.frakton.moviesapp.db.DatabaseBuilder
 import com.frakton.moviesapp.db.MovieAppDatabase
+import com.frakton.moviesapp.db.dao.FiltersDao
 import com.frakton.moviesapp.domain.interactors.GetMovieDetailsInteractor
 import com.frakton.moviesapp.domain.interactors.GetMovieTrailerVideosInteractor
 import com.frakton.moviesapp.domain.interactors.GetMoviesInteractor
@@ -121,12 +122,12 @@ object MoviesAppModule {
     @Provides
     @Singleton
     fun provideFiltersRepository(
-        moviesAppDB: MovieAppDatabase,
+        filtersDao: FiltersDao,
         filtersDBModelMapper: FiltersDBModelMapper,
         movieFiltersModelMapper: MovieFiltersModelMapper
     ): FiltersRepository {
         return FiltersRepository(
-            moviesAppDB = moviesAppDB,
+            filtersDao = filtersDao,
             filtersDBModelMapper = filtersDBModelMapper,
             movieFiltersModelMapper = movieFiltersModelMapper
         )
@@ -172,6 +173,13 @@ object MoviesAppModule {
 
     @Provides
     @Singleton
+    fun provideGetFiltersInitialStateUseCase(filtersRepository: FiltersRepository):
+            GetFiltersInitialStateUseCase {
+        return GetFiltersInitialStateUseCase(filtersRepository = filtersRepository)
+    }
+
+    @Provides
+    @Singleton
     fun provideMoviesViewModel(
         getMoviesUseCase: GetMoviesUseCase,
         searchMovieUseCase: SearchMovieUseCase,
@@ -212,4 +220,8 @@ object MoviesAppModule {
     @Singleton
     fun provideMoviesAppDatabaseInstance(@ApplicationContext context: Context): MovieAppDatabase =
         DatabaseBuilder.getInstance(context)
+
+    @Provides
+    @Singleton
+    fun provideFiltersDao(moviesAppDB: MovieAppDatabase): FiltersDao = moviesAppDB.FiltersDao()
 }

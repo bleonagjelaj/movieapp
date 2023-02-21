@@ -8,6 +8,6 @@ import androidx.room.PrimaryKey
 data class Filters(
     @PrimaryKey val id: Int=5,
     @ColumnInfo(name = "sortByFilter") val sortBy: String?,
-    @ColumnInfo(name = "filterByYear") val filterByYear: String?,
+    @ColumnInfo(name = "filterByYear") val filterByYear: Int?,
     @ColumnInfo(name = "filterByGenres") val filterByGenres: String?
 )

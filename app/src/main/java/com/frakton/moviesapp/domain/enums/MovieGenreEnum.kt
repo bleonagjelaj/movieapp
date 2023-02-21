@@ -1,8 +1,9 @@
 package com.frakton.moviesapp.domain.enums
 
 import com.frakton.moviesapp.R
+import com.frakton.moviesapp.domain.models.GenreFilterModel
 
-enum class MovieGenreEnum(val genreId: Int, val genre: String, val icon: Int) {
+enum class MovieGenreEnum(val genreId: Int, val genreName: String, val icon: Int) {
     Action(28, "Action", R.drawable.ic_action),
     Adventure(12, "Adventure", R.drawable.ic_adventure),
     Animation(16, "Animation", R.drawable.ic_animation),
@@ -24,9 +25,21 @@ enum class MovieGenreEnum(val genreId: Int, val genre: String, val icon: Int) {
     Western(37, "Western", R.drawable.ic_western);
 
     companion object {
-        fun getGenreById(id: Int) = values().firstOrNull { it.genreId == id }?.genre
+        fun getGenreById(id: Int) = values().firstOrNull { it.genreId == id }?.genreName
 
-        fun getGenresFilters() =
-            values().filter { it != Family && it != Music && it != TV_Movie }
+        fun getGenresFilters(): List<GenreFilterModel> {
+            val genres = arrayListOf<GenreFilterModel>()
+            values().filter { it != Family && it != Music && it != TV_Movie }.forEach { genre ->
+                genres.add(
+                    GenreFilterModel(
+                        id = genre.genreId,
+                        name = genre.genreName,
+                        icon = genre.icon,
+                        isChecked = false
+                    )
+                )
+            }
+            return genres
+        }
     }
 }

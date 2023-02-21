@@ -3,7 +3,7 @@ package com.frakton.moviesapp.domain.repositories
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.frakton.moviesapp.data.retrofit.models.request.MovieFilters
+import com.frakton.moviesapp.db.tables.Filters
 import com.frakton.moviesapp.domain.models.MovieModel
 import com.frakton.moviesapp.domain.pagingsources.MoviePagingSource
 import com.frakton.moviesapp.domain.pagingsources.SearchMoviePagingSource
@@ -17,7 +17,7 @@ class MoviesRepository @Inject constructor(
 ) {
     private val TAG = "MoviesRepository"
 
-    fun getMoviesFromApi(filterRequest: MovieFilters? = null): Flow<PagingData<MovieModel>> {
+    fun getMoviesFromApi(filterRequest: Filters? = null): Flow<PagingData<MovieModel>> {
         filterRequest?.let { moviesPagingSource.setMoviesRequest(it) }
         return Pager(
             config = getPagingConfig(),

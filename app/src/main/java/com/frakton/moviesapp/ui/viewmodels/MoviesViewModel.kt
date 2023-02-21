@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.frakton.moviesapp.data.retrofit.models.request.MovieFilters
+import com.frakton.moviesapp.db.tables.Filters
 import com.frakton.moviesapp.domain.MovieParams
 import com.frakton.moviesapp.domain.models.MovieModel
 import com.frakton.moviesapp.domain.usecases.GetFiltersUseCase
@@ -27,7 +27,7 @@ class MoviesViewModel @Inject constructor(
 
     fun loadMovies() =
         viewModelScope.launch {
-            var movieFilters: MovieFilters? = null
+            var movieFilters: Filters? = null
 
             getFiltersUseCase().collect { movieFiltersResponse ->
                 movieFilters = movieFiltersResponse

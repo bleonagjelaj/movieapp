@@ -1,43 +1,33 @@
 package com.frakton.moviesapp.domain.mappers
 
-import com.frakton.moviesapp.data.retrofit.models.request.MovieFilters
 import com.frakton.moviesapp.db.tables.Filters
-import com.frakton.moviesapp.util.EMPTY
+import com.frakton.moviesapp.domain.models.MovieFiltersModel
 
 class FiltersDBModelMapper {
-    fun map(filters: Filters?): MovieFilters {
-        return MovieFilters(
-            sortBy = filters?.sortBy,
-            filterByYear = getYearFromYearString(filters?.filterByYear),
-            filterByGenres = filters?.filterByGenres ?: String.EMPTY
+    fun map(filters: Filters?): MovieFiltersModel {
+        return MovieFiltersModel(
+            sortBy = getSortByValue(filters?.sortBy),
+            ordering = getOrderingValue(filters?.sortBy),
+            filterByYear = filters?.filterByYear?.toString(),
+            filterByGenres = getFiltersAsList(filters?.filterByGenres)
         )
     }
 
-    private fun getFiltersAsList(filterByGenres: String): List<Int> {
-        val filtersList = arrayListOf<Int>()
-        filterByGenres.split(",").forEach { genreString ->
-            filtersList.add(genreString.toInt())
-        }
-        return filtersList
+    private fun getOrderingValue(sortBy: String?): String? {
+        return sortBy?.split(".")?.get(1)
     }
 
-    private fun getFiltersAsString(filterByGenres: List<Int>): String {
-        var filtersString = ""
-        filterByGenres.forEachIndexed { index, genre ->
-            if (index == 0) {
-                filtersString += genre
-            } else {
-                filtersString += ",$genre"
+    private fun getSortByValue(sortBy: String?): String? {
+        return sortBy?.split(".")?.get(0)
+    }
+
+    private fun getFiltersAsList(filterByGenres: String?): List<Int> {
+        val filtersList = arrayListOf<Int>()
+        if(filterByGenres?.isNotBlank() == true) {
+            filterByGenres.split(",").forEach { genreString ->
+                filtersList.add(genreString.toInt())
             }
         }
-        return filtersString
-    }
-
-    private fun getYearFromYearString(filterByYear: String?): Int? {
-        return try {
-            filterByYear?.toInt()
-        } catch (exception: NumberFormatException) {
-            null
-        }
+        return filtersList
     }
 }

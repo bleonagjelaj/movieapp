@@ -3,7 +3,7 @@ package com.frakton.moviesapp.domain.pagingsources
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.frakton.moviesapp.data.retrofit.models.request.GetMoviesRequest
-import com.frakton.moviesapp.data.retrofit.models.request.MovieFilters
+import com.frakton.moviesapp.db.tables.Filters
 import com.frakton.moviesapp.domain.interactors.GetMoviesInteractor
 import com.frakton.moviesapp.domain.mappers.MoviesMapper
 import com.frakton.moviesapp.domain.models.MovieModel
@@ -13,7 +13,7 @@ class MoviePagingSource @Inject constructor(
     private val getMoviesInteractor: GetMoviesInteractor,
     private val moviesMapper: MoviesMapper
 ) : PagingSource<Int, MovieModel>() {
-    private var moviesRequest: MovieFilters? = null
+    private var moviesRequest: Filters? = null
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieModel> {
         return try {
@@ -35,7 +35,7 @@ class MoviePagingSource @Inject constructor(
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
         }
 
-    fun setMoviesRequest(moviesRequest: MovieFilters) {
+    fun setMoviesRequest(moviesRequest: Filters) {
         this.moviesRequest = moviesRequest
     }
 }
