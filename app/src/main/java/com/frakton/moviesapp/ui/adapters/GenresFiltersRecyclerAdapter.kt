@@ -32,6 +32,7 @@ class GenresFiltersRecyclerAdapter :
         genresList.forEach {
             it.isChecked = it.id in genresValue
         }
+        notifyDataSetChanged()
     }
 
     fun getCheckedGenres(): List<Int> {
@@ -40,6 +41,13 @@ class GenresFiltersRecyclerAdapter :
             checkedGenres.add(checkedGenre.id)
         }
         return checkedGenres
+    }
+
+    fun clearAllCheckmarks() {
+        genresList.forEach {
+            it.isChecked = false
+        }
+        notifyDataSetChanged()
     }
 
     inner class GenresFiltersViewHolder(private val genreFilterItemBinding: GenreFilterItemBinding) :

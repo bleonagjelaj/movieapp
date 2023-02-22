@@ -153,7 +153,12 @@ class FilterFragment : Fragment() {
     }
 
     private fun resetFilters() {
-        //TODO update UI
+        binding.filterByYearSpinner.setSelection(yearsList.lastIndex)
+        binding.sortBySpinner.setSelection(0)
+        genresAdapter.clearAllCheckmarks()
+        if (binding.orderingIcon.text == getString(R.string.ascending)) {
+            toggleOrderingIcon()
+        }
     }
 
     private fun getOrderingAbbr() =
