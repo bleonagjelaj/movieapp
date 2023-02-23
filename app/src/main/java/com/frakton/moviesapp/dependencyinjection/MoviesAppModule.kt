@@ -18,7 +18,6 @@ import com.frakton.moviesapp.domain.repositories.FiltersRepository
 import com.frakton.moviesapp.domain.repositories.MovieDetailsRepository
 import com.frakton.moviesapp.domain.repositories.MoviesRepository
 import com.frakton.moviesapp.domain.usecases.*
-import com.frakton.moviesapp.ui.viewmodels.MoviesViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -176,20 +175,6 @@ object MoviesAppModule {
     fun provideGetFiltersInitialStateUseCase(filtersRepository: FiltersRepository):
             GetFiltersInitialStateUseCase {
         return GetFiltersInitialStateUseCase(filtersRepository = filtersRepository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideMoviesViewModel(
-        getMoviesUseCase: GetMoviesUseCase,
-        searchMovieUseCase: SearchMovieUseCase,
-        getFiltersUseCase: GetFiltersUseCase
-    ): MoviesViewModel {
-        return MoviesViewModel(
-            getMoviesUseCase = getMoviesUseCase,
-            searchMovieUseCase = searchMovieUseCase,
-            getFiltersUseCase = getFiltersUseCase
-        )
     }
 
     @Provides

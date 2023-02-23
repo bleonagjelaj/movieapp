@@ -126,7 +126,7 @@ class FilterFragment : Fragment() {
         binding.root.setOnClickListener {
             viewModel.updateFilters(
                 MovieFiltersModel(
-                    sortBy = binding.sortBySpinner.selectedItem.toString(),
+                    sortBy = getSortFilterId(),
                     ordering = getOrderingAbbr(),
                     filterByYear = binding.filterByYearSpinner.selectedItem.toString(),
                     filterByGenres = genresAdapter.getCheckedGenres()
@@ -142,7 +142,7 @@ class FilterFragment : Fragment() {
         binding.clearAllButton.setOnClickListener {
             viewModel.updateFilters(
                 MovieFiltersModel(
-                    sortBy = SortFiltersEnum.POPULARITY_ASC.filterId,
+                    sortBy = SortFiltersEnum.POPULARITY.filterId,
                     ordering = getString(R.string.desc),
                     filterByYear = null,
                     filterByGenres = listOf()
@@ -151,6 +151,12 @@ class FilterFragment : Fragment() {
             resetFilters()
         }
     }
+
+    private fun getSortFilterId() = SortFiltersEnum.getFilterIdByName(
+        filterName = binding.sortBySpinner.selectedItem.toString(),
+        context = requireContext()
+    )
+
 
     private fun resetFilters() {
         binding.filterByYearSpinner.setSelection(yearsList.lastIndex)

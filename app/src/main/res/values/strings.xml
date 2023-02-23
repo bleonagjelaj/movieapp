@@ -19,7 +19,7 @@
     <string name="filter_by_genres">filter by genres</string>
     <string name="all_years">All years</string>
     <string name="popularity">Popularity</string>
-    <string name="vote_average">Vote average</string>
+    <string name="rating">Rating</string>
     <string name="movie_title">Movie title</string>
     <string name="asc">asc</string>
     <string name="desc">desc</string>
