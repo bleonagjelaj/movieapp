@@ -21,13 +21,13 @@ class FiltersDBModelMapper {
         return sortBy?.split(".")?.get(0)
     }
 
-    private fun getFiltersAsList(filterByGenres: String?): List<Int> {
+    private fun getFiltersAsList(filterByGenres: String?): List<Int>? {
         val filtersList = arrayListOf<Int>()
         if(filterByGenres?.isNotBlank() == true) {
             filterByGenres.split(",").forEach { genreString ->
                 filtersList.add(genreString.toInt())
             }
         }
-        return filtersList
+        return filtersList.ifEmpty { null }
     }
 }

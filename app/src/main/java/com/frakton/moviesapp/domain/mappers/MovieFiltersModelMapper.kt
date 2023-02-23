@@ -20,15 +20,15 @@ class MovieFiltersModelMapper {
         }
     }
 
-    private fun getFiltersAsString(filterByGenres: List<Int>): String {
+    private fun getFiltersAsString(filterByGenres: List<Int>?): String? {
         var filtersString = ""
-        filterByGenres.forEachIndexed { index, genre ->
+        filterByGenres?.forEachIndexed { index, genre ->
             if (index == 0) {
                 filtersString += genre
             } else {
                 filtersString += ",$genre"
             }
         }
-        return filtersString
+        return filtersString.ifBlank { null }
     }
 }

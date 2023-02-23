@@ -18,7 +18,12 @@ enum class SortFiltersEnum(val filterStringRes: Int, val filterId: String) {
             return sortFilterStringResources
         }
 
-        fun getFilterIdByName(filterName: String, context: Context) =
+        fun getSortFilterIdByName(filterName: String, context: Context) =
             values().firstOrNull { context.getString(it.filterStringRes) == filterName }?.filterId
+
+        fun getSortFilterNameFromId(filterId: String?, context: Context) =
+            values().firstOrNull { it.filterId == filterId }?.filterStringRes?.let { filterStringRes ->
+                context.getString(filterStringRes)
+            }
     }
 }

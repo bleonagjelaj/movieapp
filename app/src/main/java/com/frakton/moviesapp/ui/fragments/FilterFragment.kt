@@ -1,6 +1,7 @@
 package com.frakton.moviesapp.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,7 +51,7 @@ class FilterFragment : Fragment() {
     private fun observeViewModel() {
         viewModel.filtersData.observe(this.viewLifecycleOwner) { movieFilters ->
             setFiltersValues(
-                sortByValue = movieFilters.sortBy,
+                sortByValue = getSortFilterName(movieFilters.sortBy),
                 yearValue = movieFilters.filterByYear,
                 ordering = movieFilters.ordering,
                 genresValue = movieFilters.filterByGenres
@@ -58,13 +59,20 @@ class FilterFragment : Fragment() {
         }
     }
 
+    private fun getSortFilterName(filterId: String?) =
+        SortFiltersEnum.getSortFilterNameFromId(
+            filterId = filterId,
+            context = requireContext()
+        )
+
     private fun setFiltersValues(
         sortByValue: String?,
         yearValue: String?,
         ordering: String?,
-        genresValue: List<Int>
+        genresValue: List<Int>?
     ) {
         val sortByValuePosition = sortByList.indexOfFirst { it == sortByValue }
+        Log.d("belonatag", "setFiltersValues: $sortByValue, $sortByValuePosition")
         if (sortByValuePosition != -1) {
             binding.sortBySpinner.setSelection(sortByValuePosition)
         }
@@ -75,7 +83,7 @@ class FilterFragment : Fragment() {
         if (ordering == getString(R.string.desc)) {
             toggleOrderingIcon()
         }
-        genresAdapter.updateStatus(genresValue)
+        genresValue?.let { genresAdapter.updateStatus(it) }
     }
 
     private fun setupGenresFiltersRecyclerView() {
@@ -145,14 +153,14 @@ class FilterFragment : Fragment() {
                     sortBy = SortFiltersEnum.POPULARITY.filterId,
                     ordering = getString(R.string.desc),
                     filterByYear = null,
-                    filterByGenres = listOf()
+                    filterByGenres = null
                 )
             )
             resetFilters()
         }
     }
 
-    private fun getSortFilterId() = SortFiltersEnum.getFilterIdByName(
+    private fun getSortFilterId() = SortFiltersEnum.getSortFilterIdByName(
         filterName = binding.sortBySpinner.selectedItem.toString(),
         context = requireContext()
     )
