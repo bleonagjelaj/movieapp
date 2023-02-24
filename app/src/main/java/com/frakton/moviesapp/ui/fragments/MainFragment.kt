@@ -8,6 +8,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.paging.LoadState
 import com.frakton.moviesapp.R
@@ -54,7 +55,10 @@ class MainFragment : Fragment() {
 
     private fun setClickListeners() {
         binding.filterButton.setOnClickListener {
-            findNavController(this).navigate(R.id.action_mainFragment_to_filterFragment)
+            findNavController(this).navigate(
+                MainFragmentDirections.actionMainFragmentToFilterFragment(),
+                NavOptions.Builder().setLaunchSingleTop(true).build()
+            )
         }
     }
 
@@ -91,7 +95,9 @@ class MainFragment : Fragment() {
             binding.movieViewPager.adapter = moviesViewPagerAdapter
             if (moviePagingData != null) {
                 binding.errorMessage.gone()
-                moviesViewPagerAdapter.submitData(lifecycle, moviePagingData)
+                lifecycleScope.launch {
+                    moviesViewPagerAdapter.submitData(moviePagingData)
+                }
             } else {
                 onLoadingMoviesError(errorMessage = getString(R.string.no_results))
             }

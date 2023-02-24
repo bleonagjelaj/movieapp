@@ -15,10 +15,8 @@ class MoviesRepository @Inject constructor(
     private val moviesPagingSource: MoviePagingSource,
     private val searchMoviePagingSourceFactory: SearchMoviePagingSource.Factory
 ) {
-    private val TAG = "MoviesRepository"
-
-    fun getMoviesFromApi(filterRequest: Filters? = null): Flow<PagingData<MovieModel>> {
-        filterRequest?.let { moviesPagingSource.setMoviesRequest(it) }
+    fun getMoviesFromApi(filtersRequest: Filters? = null): Flow<PagingData<MovieModel>> {
+        filtersRequest?.let { moviesPagingSource.setMoviesRequest(it) }
         return Pager(
             config = getPagingConfig(),
             pagingSourceFactory = { moviesPagingSource },
@@ -31,7 +29,8 @@ class MoviesRepository @Inject constructor(
             config = getPagingConfig(),
             pagingSourceFactory = {
                 searchMoviePagingSourceFactory.createSearchMoviePagingSource(movieTitle)
-            }, initialKey = Constants.MOVIE_PAGER_INITIAL_KEY
+            },
+            initialKey = Constants.MOVIE_PAGER_INITIAL_KEY
         ).flow
     }
 
