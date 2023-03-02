@@ -8,7 +8,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.paging.LoadState
 import com.frakton.moviesapp.R
@@ -30,34 +29,43 @@ class MainFragment : Fragment() {
     private val viewModel: MoviesViewModel by viewModels()
     private lateinit var moviesViewPagerAdapter: MoviesViewPagerAdapter
     private val DELAY_WHILE_SEARCHING = 500L
+    private var rootView: ViewGroup? = null
+    private var isFirstLoad = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentMainBinding.inflate(inflater, container, false)
-        return binding.root
+    ): View? {
+        if (rootView == null) {
+            binding = FragmentMainBinding.inflate(inflater, container, false)
+            rootView = binding.root
+            isFirstLoad = true
+        } else {
+            isFirstLoad = false
+        }
+        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setListeners()
-        viewModel.loadMovies()
+        if (isFirstLoad) {
+            setListeners()
+            viewModel.loadMovies()
+        }
     }
 
     private fun setListeners() {
         setMoviesViewPagerLoadListener()
-        setSearchListeners()
         setViewModelObservers()
         setClickListeners()
+        setSearchListeners()
     }
 
     private fun setClickListeners() {
         binding.filterButton.setOnClickListener {
             findNavController(this).navigate(
-                MainFragmentDirections.actionMainFragmentToFilterFragment(),
-                NavOptions.Builder().setLaunchSingleTop(true).build()
+                MainFragmentDirections.actionMainFragmentToFilterFragment()
             )
         }
     }
@@ -83,6 +91,7 @@ class MainFragment : Fragment() {
                 )
             }
         }
+        binding.movieViewPager.adapter = moviesViewPagerAdapter
     }
 
     private fun startMovieDetailsFragment(movieId: Long) {
@@ -92,7 +101,6 @@ class MainFragment : Fragment() {
 
     private fun setViewModelObservers() {
         viewModel.movieData.observe(viewLifecycleOwner) { moviePagingData ->
-            binding.movieViewPager.adapter = moviesViewPagerAdapter
             if (moviePagingData != null) {
                 binding.errorMessage.gone()
                 lifecycleScope.launch {
