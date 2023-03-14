@@ -23,7 +23,7 @@ class FiltersDBModelMapper {
 
     private fun getFiltersAsList(filterByGenres: String?): List<Int>? {
         val filtersList = arrayListOf<Int>()
-        if(filterByGenres?.isNotBlank() == true) {
+        if (filterByGenres?.isNotBlank() == true) {
             filterByGenres.split(",").forEach { genreString ->
                 filtersList.add(genreString.toInt())
             }

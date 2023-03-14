@@ -69,7 +69,6 @@ class GenresFiltersRecyclerAdapter :
                     checkmark.gone()
                 }
             }
-
         }
 
         override fun onClick(v: View?) {

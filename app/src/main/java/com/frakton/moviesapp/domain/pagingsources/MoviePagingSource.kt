@@ -1,6 +1,5 @@
 package com.frakton.moviesapp.domain.pagingsources
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.frakton.moviesapp.data.retrofit.models.request.GetMoviesRequest
