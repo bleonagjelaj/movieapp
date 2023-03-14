@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
@@ -26,7 +27,7 @@ import retrofit2.HttpException
 @AndroidEntryPoint
 class MainFragment : Fragment() {
     private var binding: FragmentMainBinding? = null
-    private val viewModel: MoviesViewModel by viewModels()
+    private val viewModel: MoviesViewModel by activityViewModels()
     private lateinit var moviesViewPagerAdapter: MoviesViewPagerAdapter
     private val DELAY_WHILE_SEARCHING = 500L
     private var isFirstLoad = false
@@ -74,8 +75,11 @@ class MainFragment : Fragment() {
                 startMovieDetailsFragment(movieId)
             }
         }
-        moviesViewPagerAdapter =
-            MoviesViewPagerAdapter(movieItemClickCallback = movieItemClickCallback)
+        if(isFirstLoad) {
+            moviesViewPagerAdapter =
+                MoviesViewPagerAdapter(movieItemClickCallback = movieItemClickCallback)
+            binding?.movieViewPager?.adapter = moviesViewPagerAdapter
+        }
         moviesViewPagerAdapter.addLoadStateListener {
             val currentState = it.refresh
             if (currentState is LoadState.Error) {
@@ -89,7 +93,6 @@ class MainFragment : Fragment() {
                 )
             }
         }
-        binding?.movieViewPager?.adapter = moviesViewPagerAdapter
     }
 
     private fun startMovieDetailsFragment(movieId: Long) {
