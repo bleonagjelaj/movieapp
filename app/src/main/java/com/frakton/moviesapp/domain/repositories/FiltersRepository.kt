@@ -22,8 +22,12 @@ class FiltersRepository @Inject constructor(
         emit(filtersDBModelMapper.map(filtersDao.getFilters()))
     }
 
-    suspend fun updateFilters(movieFilters: MovieFiltersModel) {
-        filtersDao.deleteAll()
-        filtersDao.insertFilters(movieFiltersModelMapper.map(movieFilters))
+    suspend fun updateFilters(newMovieFilters: MovieFiltersModel) {
+        getFiltersFromDB().collect { oldMovieFilters ->
+            if(oldMovieFilters != movieFiltersModelMapper.map(newMovieFilters)) {
+                filtersDao.deleteAll()
+                filtersDao.insertFilters(movieFiltersModelMapper.map(newMovieFilters))
+            }
+        }
     }
 }

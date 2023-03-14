@@ -1,7 +1,6 @@
 package com.frakton.moviesapp.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,7 +71,6 @@ class FilterFragment : Fragment() {
         genresValue: List<Int>?
     ) {
         val sortByValuePosition = sortByList.indexOfFirst { it == sortByValue }
-        Log.d("belonatag", "setFiltersValues: $sortByValue, $sortByValuePosition")
         if (sortByValuePosition != -1) {
             binding.sortBySpinner.setSelection(sortByValuePosition)
         }
