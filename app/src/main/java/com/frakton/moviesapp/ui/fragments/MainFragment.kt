@@ -25,11 +25,10 @@ import retrofit2.HttpException
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
-    private lateinit var binding: FragmentMainBinding
+    private var binding: FragmentMainBinding? = null
     private val viewModel: MoviesViewModel by viewModels()
     private lateinit var moviesViewPagerAdapter: MoviesViewPagerAdapter
     private val DELAY_WHILE_SEARCHING = 500L
-    private var rootView: ViewGroup? = null
     private var isFirstLoad = false
 
     override fun onCreateView(
@@ -37,20 +36,19 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (rootView == null) {
+        if (binding == null) {
             binding = FragmentMainBinding.inflate(inflater, container, false)
-            rootView = binding.root
             isFirstLoad = true
         } else {
             isFirstLoad = false
         }
-        return rootView
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setListeners()
         if (isFirstLoad) {
-            setListeners()
             viewModel.loadMovies()
         }
     }
@@ -63,7 +61,7 @@ class MainFragment : Fragment() {
     }
 
     private fun setClickListeners() {
-        binding.filterButton.setOnClickListener {
+        binding?.filterButton?.setOnClickListener {
             findNavController(this).navigate(
                 MainFragmentDirections.actionMainFragmentToFilterFragment()
             )
@@ -91,7 +89,7 @@ class MainFragment : Fragment() {
                 )
             }
         }
-        binding.movieViewPager.adapter = moviesViewPagerAdapter
+        binding?.movieViewPager?.adapter = moviesViewPagerAdapter
     }
 
     private fun startMovieDetailsFragment(movieId: Long) {
@@ -102,7 +100,7 @@ class MainFragment : Fragment() {
     private fun setViewModelObservers() {
         viewModel.movieData.observe(viewLifecycleOwner) { moviePagingData ->
             if (moviePagingData != null) {
-                binding.errorMessage.gone()
+                binding?.errorMessage?.gone()
                 lifecycleScope.launch {
                     moviesViewPagerAdapter.submitData(moviePagingData)
                 }
@@ -113,13 +111,13 @@ class MainFragment : Fragment() {
     }
 
     private fun onLoadingMoviesError(errorMessage: String?) {
-        binding.errorMessage.visible()
-        binding.errorMessage.text = errorMessage
+        binding?.errorMessage?.visible()
+        binding?.errorMessage?.text = errorMessage
     }
 
     private fun setSearchListeners() {
         var searchJob: Job? = null
-        binding.movieSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding?.movieSearch?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
