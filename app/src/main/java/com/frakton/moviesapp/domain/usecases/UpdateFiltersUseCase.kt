@@ -8,7 +8,7 @@ import javax.inject.Inject
 class UpdateFiltersUseCase @Inject constructor(
     private val filtersRepository: FiltersRepository
 ) : UseCases.UpdateFilters {
-    override suspend operator fun invoke(movieFilters: MovieFiltersModel) {
-        filtersRepository.updateFilters(movieFilters)
+    override suspend operator fun invoke(movieFilters: MovieFiltersModel): Boolean {
+        return filtersRepository.updateFilters(movieFilters)
     }
 }

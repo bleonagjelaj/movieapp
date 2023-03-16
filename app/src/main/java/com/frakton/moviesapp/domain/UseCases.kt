@@ -31,6 +31,6 @@ interface UseCases {
     }
 
     interface UpdateFilters {
-        suspend fun invoke(movieFilters: MovieFiltersModel)
+        suspend fun invoke(movieFilters: MovieFiltersModel): Boolean
     }
 }

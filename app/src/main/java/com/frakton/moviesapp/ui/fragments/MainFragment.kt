@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.paging.LoadState
@@ -75,7 +74,7 @@ class MainFragment : Fragment() {
                 startMovieDetailsFragment(movieId)
             }
         }
-        if(isFirstLoad) {
+        if (isFirstLoad) {
             moviesViewPagerAdapter =
                 MoviesViewPagerAdapter(movieItemClickCallback = movieItemClickCallback)
             binding?.movieViewPager?.adapter = moviesViewPagerAdapter
@@ -101,7 +100,7 @@ class MainFragment : Fragment() {
     }
 
     private fun setViewModelObservers() {
-        viewModel.movieData.observe(viewLifecycleOwner) { moviePagingData ->
+        viewModel.movieData.observe(requireActivity()) { moviePagingData ->
             if (moviePagingData != null) {
                 binding?.errorMessage?.gone()
                 lifecycleScope.launch {

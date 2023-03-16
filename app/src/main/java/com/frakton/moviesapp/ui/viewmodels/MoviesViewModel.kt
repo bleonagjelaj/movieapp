@@ -7,10 +7,9 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.frakton.moviesapp.db.tables.Filters
 import com.frakton.moviesapp.domain.MovieParams
+import com.frakton.moviesapp.domain.models.MovieFiltersModel
 import com.frakton.moviesapp.domain.models.MovieModel
-import com.frakton.moviesapp.domain.usecases.GetFiltersUseCase
-import com.frakton.moviesapp.domain.usecases.GetMoviesUseCase
-import com.frakton.moviesapp.domain.usecases.SearchMovieUseCase
+import com.frakton.moviesapp.domain.usecases.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,10 +19,15 @@ import javax.inject.Inject
 class MoviesViewModel @Inject constructor(
     private val getMoviesUseCase: GetMoviesUseCase,
     private val searchMovieUseCase: SearchMovieUseCase,
-    private val getFiltersUseCase: GetFiltersUseCase
+    private val getFiltersUseCase: GetFiltersUseCase,
+    private val getFiltersInitialStateUseCase: GetFiltersInitialStateUseCase,
+    private val updateFiltersUseCase: UpdateFiltersUseCase
 ) : ViewModel() {
     private val _movieData = MutableLiveData<PagingData<MovieModel>>()
     val movieData: MutableLiveData<PagingData<MovieModel>> = _movieData
+
+    private val _filtersData: MutableLiveData<MovieFiltersModel> = MutableLiveData()
+    val filtersData = _filtersData
 
     fun loadMovies() =
         viewModelScope.launch {
@@ -48,4 +52,21 @@ class MoviesViewModel @Inject constructor(
                     _movieData.value = searchMoviePagingData
                 }
         }
+
+    fun getFilters() {
+        viewModelScope.launch {
+            getFiltersInitialStateUseCase().collect { movieFilters ->
+                _filtersData.value = movieFilters
+            }
+        }
+    }
+
+    fun updateFilters(filters: MovieFiltersModel) {
+        viewModelScope.launch {
+            val filtersGotUpdated = updateFiltersUseCase(filters)
+            if (filtersGotUpdated) {
+                loadMovies()
+            }
+        }
+    }
 }

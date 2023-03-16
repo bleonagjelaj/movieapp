@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.frakton.moviesapp.R
@@ -14,14 +14,14 @@ import com.frakton.moviesapp.databinding.FragmentFilterBinding
 import com.frakton.moviesapp.domain.enums.SortFiltersEnum
 import com.frakton.moviesapp.domain.models.MovieFiltersModel
 import com.frakton.moviesapp.ui.adapters.GenresFiltersRecyclerAdapter
-import com.frakton.moviesapp.ui.viewmodels.FilterMoviesViewModel
+import com.frakton.moviesapp.ui.viewmodels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 @AndroidEntryPoint
 class FilterFragment : Fragment() {
     private lateinit var binding: FragmentFilterBinding
-    private val viewModel: FilterMoviesViewModel by viewModels()
+    private val viewModel: MoviesViewModel by activityViewModels()
     private lateinit var sortByList: List<String>
     private val yearsList = arrayListOf<String>()
     private lateinit var genresAdapter: GenresFiltersRecyclerAdapter
@@ -48,7 +48,7 @@ class FilterFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.filtersData.observe(this.viewLifecycleOwner) { movieFilters ->
+        viewModel.filtersData.observe(requireActivity()) { movieFilters ->
             setFiltersValues(
                 sortByValue = getSortFilterName(movieFilters.sortBy),
                 yearValue = movieFilters.filterByYear,
