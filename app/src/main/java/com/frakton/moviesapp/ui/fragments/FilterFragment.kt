@@ -62,8 +62,10 @@ class FilterFragment : Fragment() {
             setFilterByYearSpinnerSelection(selectionPosition)
         }
 
-        viewModel.shouldToggleOrdering.observe(requireActivity()) {
-            binding.orderingIcon.toggleOrderingIcon(requireContext())
+        viewModel.shouldToggleOrdering.observe(requireActivity()) { orderingValue ->
+            if (orderingValue != getOrderingAbbr()) {
+                binding.orderingIcon.toggleOrderingIcon(requireContext())
+            }
         }
 
         viewModel.genresData.observe(requireActivity()) { genresList ->

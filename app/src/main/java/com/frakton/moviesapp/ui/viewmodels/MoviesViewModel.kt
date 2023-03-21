@@ -48,7 +48,7 @@ class MoviesViewModel @Inject constructor(
     private val _filterByYearSpinnerSelection: MutableLiveData<Int> = MutableLiveData()
     val filterByYearSpinnerSelection = _filterByYearSpinnerSelection
 
-    private val _shouldToggleOrdering: MutableLiveData<Boolean> = MutableLiveData()
+    private val _shouldToggleOrdering: MutableLiveData<String> = MutableLiveData()
     val shouldToggleOrdering = _shouldToggleOrdering
 
     fun loadMovies(shouldReload: Boolean = false) =
@@ -83,7 +83,7 @@ class MoviesViewModel @Inject constructor(
             getFiltersInitialStateUseCase().collect { movieFilters ->
                 setSortBySpinnerSelection(context, movieFilters.sortBy)
                 setFilterByYearSpinnerSelection(movieFilters.filterByYear)
-                setOrderingIconStatus(context, movieFilters.ordering)
+                setOrderingIconStatus(movieFilters.ordering)
                 setGenresList(movieFilters.filterByGenres)
             }
         }
@@ -93,10 +93,8 @@ class MoviesViewModel @Inject constructor(
         genresValue?.let { _genresData.value = it }
     }
 
-    private fun setOrderingIconStatus(context: Context, ordering: String?) {
-        if (ordering == context.getString(R.string.desc)) {
-            _shouldToggleOrdering.value = true
-        }
+    private fun setOrderingIconStatus(ordering: String?) {
+        ordering?.let { _shouldToggleOrdering.value = it }
     }
 
     private fun setFilterByYearSpinnerSelection(filterByYearValue: String?) {
