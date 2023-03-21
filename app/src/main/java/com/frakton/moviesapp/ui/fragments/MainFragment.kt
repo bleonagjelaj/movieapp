@@ -29,7 +29,6 @@ class MainFragment : Fragment() {
     private val viewModel: MoviesViewModel by activityViewModels()
     private lateinit var moviesViewPagerAdapter: MoviesViewPagerAdapter
     private val DELAY_WHILE_SEARCHING = 500L
-    private var isFirstLoad = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,9 +37,6 @@ class MainFragment : Fragment() {
     ): View? {
         if (binding == null) {
             binding = FragmentMainBinding.inflate(inflater, container, false)
-            isFirstLoad = true
-        } else {
-            isFirstLoad = false
         }
         return binding?.root
     }
@@ -48,9 +44,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
-        if (isFirstLoad) {
-            viewModel.loadMovies()
-        }
+        viewModel.loadMovies()
     }
 
     private fun setListeners() {
@@ -74,11 +68,9 @@ class MainFragment : Fragment() {
                 startMovieDetailsFragment(movieId)
             }
         }
-        if (isFirstLoad) {
-            moviesViewPagerAdapter =
-                MoviesViewPagerAdapter(movieItemClickCallback = movieItemClickCallback)
-            binding?.movieViewPager?.adapter = moviesViewPagerAdapter
-        }
+        moviesViewPagerAdapter =
+            MoviesViewPagerAdapter(movieItemClickCallback = movieItemClickCallback)
+        binding?.movieViewPager?.adapter = moviesViewPagerAdapter
         moviesViewPagerAdapter.addLoadStateListener {
             val currentState = it.refresh
             if (currentState is LoadState.Error) {
@@ -144,7 +136,7 @@ class MainFragment : Fragment() {
         lifecycleScope.launch {
             delay(DELAY_WHILE_SEARCHING)
             if (newText.isNullOrBlank()) {
-                viewModel.loadMovies()
+                viewModel.loadMovies(shouldReload = true)
             } else if (newText.count() > 2) {
                 viewModel.searchMovies(newText)
             }

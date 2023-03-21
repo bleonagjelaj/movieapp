@@ -27,6 +27,7 @@ class MoviesViewModel @Inject constructor(
     private val getFiltersInitialStateUseCase: GetFiltersInitialStateUseCase,
     private val updateFiltersUseCase: UpdateFiltersUseCase
 ) : ViewModel() {
+    private var isFirstLoad = true
     private val yearsList = arrayListOf<String>()
 
     private val _movieData = MutableLiveData<PagingData<MovieModel>>()
@@ -50,19 +51,22 @@ class MoviesViewModel @Inject constructor(
     private val _shouldToggleOrdering: MutableLiveData<Boolean> = MutableLiveData()
     val shouldToggleOrdering = _shouldToggleOrdering
 
-    fun loadMovies() =
+    fun loadMovies(shouldReload: Boolean = false) =
         viewModelScope.launch {
-            var movieFilters: Filters? = null
+            if (isFirstLoad || shouldReload) {
+                var movieFilters: Filters? = null
 
-            getFiltersUseCase().collect { movieFiltersResponse ->
-                movieFilters = movieFiltersResponse
-            }
-
-            getMoviesUseCase(movieFilters)
-                .cachedIn(this)
-                .collect { moviesPagingData ->
-                    _movieData.value = moviesPagingData
+                getFiltersUseCase().collect { movieFiltersResponse ->
+                    movieFilters = movieFiltersResponse
                 }
+
+                getMoviesUseCase(movieFilters)
+                    .cachedIn(this)
+                    .collect { moviesPagingData ->
+                        _movieData.value = moviesPagingData
+                    }
+                isFirstLoad = false
+            }
         }
 
     fun searchMovies(movieTitle: String) =
@@ -113,9 +117,7 @@ class MoviesViewModel @Inject constructor(
     fun updateFilters(filters: MovieFiltersModel) {
         viewModelScope.launch {
             val filtersGotUpdated = updateFiltersUseCase(filters)
-            if (filtersGotUpdated) {
-                loadMovies()
-            }
+            loadMovies(shouldReload = filtersGotUpdated)
         }
     }
 
