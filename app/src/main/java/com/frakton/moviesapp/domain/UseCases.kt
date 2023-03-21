@@ -23,7 +23,7 @@ interface UseCases {
         BaseUseCase<MovieParams.GetMovieDetailsParams, Flow<TrailersVideosModel>>
 
     interface GetFilters {
-        suspend fun invoke(): Flow<Filters>
+        suspend fun invoke(): Flow<Filters?>
     }
 
     interface GetFiltersInitialState {

@@ -121,7 +121,7 @@ object MoviesAppModule {
     @Provides
     @Singleton
     fun provideFiltersRepository(
-        filtersDao: FiltersDao,
+        filtersDao: FiltersDao?,
         filtersDBModelMapper: FiltersDBModelMapper,
         movieFiltersModelMapper: MovieFiltersModelMapper
     ): FiltersRepository {
@@ -203,10 +203,10 @@ object MoviesAppModule {
 
     @Provides
     @Singleton
-    fun provideMoviesAppDatabaseInstance(@ApplicationContext context: Context): MovieAppDatabase =
+    fun provideMoviesAppDatabaseInstance(@ApplicationContext context: Context): MovieAppDatabase? =
         DatabaseBuilder.getInstance(context)
 
     @Provides
     @Singleton
-    fun provideFiltersDao(moviesAppDB: MovieAppDatabase): FiltersDao = moviesAppDB.FiltersDao()
+    fun provideFiltersDao(moviesAppDB: MovieAppDatabase?): FiltersDao? = moviesAppDB?.FiltersDao()
 }

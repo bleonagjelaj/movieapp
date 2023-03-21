@@ -9,5 +9,5 @@ import javax.inject.Inject
 class GetFiltersUseCase @Inject constructor(
     private val filtersRepository: FiltersRepository
 ) : UseCases.GetFilters {
-    override suspend operator fun invoke(): Flow<Filters> = filtersRepository.getFiltersFromDB()
+    override suspend operator fun invoke(): Flow<Filters?> = filtersRepository.getFiltersFromDB()
 }
