@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/spacing_4x"
+    android:gravity="center_vertical"
+    android:paddingHorizontal="@dimen/spacing_1x"
+    android:textColor="@color/white"
+    android:textSize="@dimen/text_medium"
+    android:textStyle="bold"
+    tools:text="Spinner Item" />

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.paging.LoadState
@@ -25,8 +25,8 @@ import retrofit2.HttpException
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
-    private lateinit var binding: FragmentMainBinding
-    private val viewModel: MoviesViewModel by viewModels()
+    private var binding: FragmentMainBinding? = null
+    private val viewModel: MoviesViewModel by activityViewModels()
     private lateinit var moviesViewPagerAdapter: MoviesViewPagerAdapter
     private val DELAY_WHILE_SEARCHING = 500L
 
@@ -34,9 +34,11 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentMainBinding.inflate(inflater, container, false)
-        return binding.root
+    ): View? {
+        if (binding == null) {
+            binding = FragmentMainBinding.inflate(inflater, container, false)
+        }
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,8 +49,17 @@ class MainFragment : Fragment() {
 
     private fun setListeners() {
         setMoviesViewPagerLoadListener()
-        setSearchListeners()
         setViewModelObservers()
+        setClickListeners()
+        setSearchListeners()
+    }
+
+    private fun setClickListeners() {
+        binding?.filterButton?.setOnClickListener {
+            findNavController(this).navigate(
+                MainFragmentDirections.actionMainFragmentToFilterFragment()
+            )
+        }
     }
 
     private fun setMoviesViewPagerLoadListener() {
@@ -59,6 +70,7 @@ class MainFragment : Fragment() {
         }
         moviesViewPagerAdapter =
             MoviesViewPagerAdapter(movieItemClickCallback = movieItemClickCallback)
+        binding?.movieViewPager?.adapter = moviesViewPagerAdapter
         moviesViewPagerAdapter.addLoadStateListener {
             val currentState = it.refresh
             if (currentState is LoadState.Error) {
@@ -80,11 +92,12 @@ class MainFragment : Fragment() {
     }
 
     private fun setViewModelObservers() {
-        viewModel.movieData.observe(viewLifecycleOwner) { moviePagingData ->
-            binding.movieViewPager.adapter = moviesViewPagerAdapter
+        viewModel.movieData.observe(requireActivity()) { moviePagingData ->
             if (moviePagingData != null) {
-                binding.errorMessage.gone()
-                moviesViewPagerAdapter.submitData(lifecycle, moviePagingData)
+                binding?.errorMessage?.gone()
+                lifecycleScope.launch {
+                    moviesViewPagerAdapter.submitData(moviePagingData)
+                }
             } else {
                 onLoadingMoviesError(errorMessage = getString(R.string.no_results))
             }
@@ -92,13 +105,13 @@ class MainFragment : Fragment() {
     }
 
     private fun onLoadingMoviesError(errorMessage: String?) {
-        binding.errorMessage.visible()
-        binding.errorMessage.text = errorMessage
+        binding?.errorMessage?.visible()
+        binding?.errorMessage?.text = errorMessage
     }
 
     private fun setSearchListeners() {
         var searchJob: Job? = null
-        binding.movieSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding?.movieSearch?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -123,7 +136,7 @@ class MainFragment : Fragment() {
         lifecycleScope.launch {
             delay(DELAY_WHILE_SEARCHING)
             if (newText.isNullOrBlank()) {
-                viewModel.loadMovies()
+                viewModel.loadMovies(shouldReload = true)
             } else if (newText.count() > 2) {
                 viewModel.searchMovies(newText)
             }

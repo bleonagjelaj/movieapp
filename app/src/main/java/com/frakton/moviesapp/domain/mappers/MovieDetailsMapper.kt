@@ -51,5 +51,5 @@ class MovieDetailsMapper {
     private fun getMoviePosterPath(posterPath: String?) = "${Constants.MOVIES_IMAGE_URL}$posterPath"
 
     private fun getMovieReleaseYearFromDate(releaseDate: String?) =
-        if (releaseDate != null) "(${releaseDate.getYearFromDate()})" else String.EMPTY
+        if (!releaseDate.isNullOrBlank()) "(${releaseDate.getYearFromDate()})" else String.EMPTY
 }

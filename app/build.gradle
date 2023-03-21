@@ -41,6 +41,7 @@ android {
 dependencies {
     def lifecycle_version = "2.5.1"
     def nav_version = "2.5.3"
+    def room_db_version = "2.5.0"
 
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.0'
@@ -101,6 +102,11 @@ dependencies {
 
     //Youtube Api Data v3
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
+
+    //Room database
+    implementation "androidx.room:room-runtime:$room_db_version"
+    kapt "androidx.room:room-compiler:$room_db_version"
+    implementation "androidx.room:room-ktx:$room_db_version"
 }
 
 kapt {

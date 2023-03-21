@@ -145,12 +145,12 @@ class MovieDetailsFragment : Fragment(), TrailerItemClickCallback {
                 movieDetailsModel.budget
             )
             revenueText.text = viewModel.formatMovieDetailText(
-                getString(R.string.revenue),
+                getString(R.string.revenue_title),
                 String.TWO_CHAR_SPACE,
                 movieDetailsModel.revenue
             )
             releaseDateText.text = viewModel.formatMovieDetailText(
-                getString(R.string.release_date),
+                getString(R.string.release_date_title),
                 String.TWO_CHAR_SPACE,
                 movieDetailsModel.releaseDate
             )
