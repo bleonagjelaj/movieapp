@@ -15,6 +15,7 @@ import com.frakton.moviesapp.domain.enums.SortFiltersEnum
 import com.frakton.moviesapp.domain.models.MovieFiltersModel
 import com.frakton.moviesapp.ui.adapters.GenresFiltersRecyclerAdapter
 import com.frakton.moviesapp.ui.viewmodels.MoviesViewModel
+import com.frakton.moviesapp.util.toggleOrderingIcon
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -70,24 +71,28 @@ class FilterFragment : Fragment() {
         ordering: String?,
         genresValue: List<Int>?
     ) {
-        val sortByValuePosition = sortByList.indexOfFirst { it == sortByValue }
-        if (sortByValuePosition != -1) {
-            binding.sortBySpinner.setSelection(sortByValuePosition)
+        with(binding) {
+            val sortByValuePosition = sortByList.indexOfFirst { it == sortByValue }
+            if (sortByValuePosition != -1) {
+                sortBySpinner.setSelection(sortByValuePosition)
+            }
+            val filterByYearValuePosition = yearsList.indexOfFirst { it == yearValue }
+            filterByYearSpinner.setSelection(
+                if (filterByYearValuePosition != -1) filterByYearValuePosition else yearsList.lastIndex
+            )
+            if (ordering == getString(R.string.desc)) {
+                orderingIcon.toggleOrderingIcon(requireContext())
+            }
+            genresValue?.let { genresAdapter.updateStatus(it) }
         }
-        val filterByYearValuePosition = yearsList.indexOfFirst { it == yearValue }
-        binding.filterByYearSpinner.setSelection(
-            if (filterByYearValuePosition != -1) filterByYearValuePosition else yearsList.lastIndex
-        )
-        if (ordering == getString(R.string.desc)) {
-            toggleOrderingIcon()
-        }
-        genresValue?.let { genresAdapter.updateStatus(it) }
     }
 
     private fun setupGenresFiltersRecyclerView() {
         genresAdapter = GenresFiltersRecyclerAdapter()
-        binding.genresRecyclerView.adapter = genresAdapter
-        binding.genresRecyclerView.layoutManager = GridLayoutManager(requireContext(), 4)
+        with(binding.genresRecyclerView) {
+            adapter = genresAdapter
+            layoutManager = GridLayoutManager(requireContext(), 4)
+        }
     }
 
     private fun setSpinners() {
@@ -125,36 +130,40 @@ class FilterFragment : Fragment() {
     }
 
     private fun setClickListeners() {
-        binding.orderingIcon.setOnClickListener {
-            toggleOrderingIcon()
-        }
+        with(binding) {
+            with(orderingIcon) {
+                setOnClickListener {
+                    toggleOrderingIcon(requireContext())
+                }
+            }
 
-        binding.root.setOnClickListener {
-            viewModel.updateFilters(
-                MovieFiltersModel(
-                    sortBy = getSortFilterId(),
-                    ordering = getOrderingAbbr(),
-                    filterByYear = binding.filterByYearSpinner.selectedItem.toString(),
-                    filterByGenres = genresAdapter.getCheckedGenres()
+            root.setOnClickListener {
+                viewModel.updateFilters(
+                    MovieFiltersModel(
+                        sortBy = getSortFilterId(),
+                        ordering = getOrderingAbbr(),
+                        filterByYear = filterByYearSpinner.selectedItem.toString(),
+                        filterByGenres = genresAdapter.getCheckedGenres()
+                    )
                 )
-            )
-            findNavController().navigateUp()
-        }
+                findNavController().navigateUp()
+            }
 
-        binding.filterElementsContainer.setOnClickListener {
-            //do nothing here
-        }
+            filterElementsContainer.setOnClickListener {
+                //do nothing here
+            }
 
-        binding.clearAllButton.setOnClickListener {
-            viewModel.updateFilters(
-                MovieFiltersModel(
-                    sortBy = SortFiltersEnum.POPULARITY.filterId,
-                    ordering = getString(R.string.desc),
-                    filterByYear = null,
-                    filterByGenres = null
+            clearAllButton.setOnClickListener {
+                viewModel.updateFilters(
+                    MovieFiltersModel(
+                        sortBy = SortFiltersEnum.POPULARITY.filterId,
+                        ordering = getString(R.string.desc),
+                        filterByYear = null,
+                        filterByGenres = null
+                    )
                 )
-            )
-            resetFilters()
+                resetFilters()
+            }
         }
     }
 
@@ -163,37 +172,20 @@ class FilterFragment : Fragment() {
         context = requireContext()
     )
 
-
     private fun resetFilters() {
-        binding.filterByYearSpinner.setSelection(yearsList.lastIndex)
-        binding.sortBySpinner.setSelection(0)
-        genresAdapter.clearAllCheckmarks()
-        if (binding.orderingIcon.text == getString(R.string.ascending)) {
-            toggleOrderingIcon()
+        with(binding) {
+            filterByYearSpinner.setSelection(yearsList.lastIndex)
+            sortBySpinner.setSelection(0)
+            genresAdapter.clearAllCheckmarks()
+            with(orderingIcon) {
+                if (text == getString(R.string.ascending)) {
+                    toggleOrderingIcon(requireContext())
+                }
+            }
         }
     }
 
     private fun getOrderingAbbr() =
         if (binding.orderingIcon.text == getString(R.string.ascending)) getString(R.string.asc)
         else getString(R.string.desc)
-
-    private fun toggleOrderingIcon() {
-        if (binding.orderingIcon.text == getString(R.string.ascending)) {
-            binding.orderingIcon.text = getString(R.string.descending)
-            binding.orderingIcon.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                0,
-                0,
-                R.drawable.ic_descending
-            )
-        } else {
-            binding.orderingIcon.text = getString(R.string.ascending)
-            binding.orderingIcon.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                0,
-                0,
-                R.drawable.ic_ascending
-            )
-        }
-    }
 }
