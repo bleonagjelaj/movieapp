@@ -17,14 +17,11 @@ import com.frakton.moviesapp.ui.adapters.GenresFiltersRecyclerAdapter
 import com.frakton.moviesapp.ui.viewmodels.MoviesViewModel
 import com.frakton.moviesapp.util.toggleOrderingIcon
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class FilterFragment : Fragment() {
     private lateinit var binding: FragmentFilterBinding
     private val viewModel: MoviesViewModel by activityViewModels()
-    private lateinit var sortByList: List<String>
-    private val yearsList = arrayListOf<String>()
     private lateinit var genresAdapter: GenresFiltersRecyclerAdapter
 
     override fun onCreateView(
@@ -45,47 +42,40 @@ class FilterFragment : Fragment() {
         setupGenresFiltersRecyclerView()
         setClickListeners()
         observeViewModel()
-        viewModel.getFilters()
+        viewModel.getFilters(requireContext())
     }
 
     private fun observeViewModel() {
-        viewModel.filtersData.observe(requireActivity()) { movieFilters ->
-            setFiltersValues(
-                sortByValue = getSortFilterName(movieFilters.sortBy),
-                yearValue = movieFilters.filterByYear,
-                ordering = movieFilters.ordering,
-                genresValue = movieFilters.filterByGenres
-            )
+        viewModel.sortByData.observe(requireActivity()) { sortByList ->
+            setSortBySpinner(sortByList)
+        }
+
+        viewModel.yearsData.observe(requireActivity()) { yearsList ->
+            setFilterByYearSpinner(yearsList)
+        }
+
+        viewModel.sortBySpinnerSelection.observe(requireActivity()) { selectionPosition ->
+            setSortBySpinnerSelection(selectionPosition)
+        }
+
+        viewModel.filterByYearSpinnerSelection.observe(requireActivity()) { selectionPosition ->
+            setFilterByYearSpinnerSelection(selectionPosition)
+        }
+
+        viewModel.shouldToggleOrdering.observe(requireActivity()) {
+            binding.orderingIcon.toggleOrderingIcon(requireContext())
+        }
+
+        viewModel.genresData.observe(requireActivity()) { genresList ->
+            genresAdapter.updateStatus(genresList)
         }
     }
 
-    private fun getSortFilterName(filterId: String?) =
-        SortFiltersEnum.getSortFilterNameFromId(
-            filterId = filterId,
-            context = requireContext()
-        )
+    private fun setSortBySpinnerSelection(selectionPosition: Int) =
+        binding.sortBySpinner.setSelection(selectionPosition)
 
-    private fun setFiltersValues(
-        sortByValue: String?,
-        yearValue: String?,
-        ordering: String?,
-        genresValue: List<Int>?
-    ) {
-        with(binding) {
-            val sortByValuePosition = sortByList.indexOfFirst { it == sortByValue }
-            if (sortByValuePosition != -1) {
-                sortBySpinner.setSelection(sortByValuePosition)
-            }
-            val filterByYearValuePosition = yearsList.indexOfFirst { it == yearValue }
-            filterByYearSpinner.setSelection(
-                if (filterByYearValuePosition != -1) filterByYearValuePosition else yearsList.lastIndex
-            )
-            if (ordering == getString(R.string.desc)) {
-                orderingIcon.toggleOrderingIcon(requireContext())
-            }
-            genresValue?.let { genresAdapter.updateStatus(it) }
-        }
-    }
+    private fun setFilterByYearSpinnerSelection(selectionPosition: Int) =
+        binding.filterByYearSpinner.setSelection(selectionPosition)
 
     private fun setupGenresFiltersRecyclerView() {
         genresAdapter = GenresFiltersRecyclerAdapter()
@@ -96,12 +86,13 @@ class FilterFragment : Fragment() {
     }
 
     private fun setSpinners() {
-        setSortBySpinner()
-        setFilterByYearSpinner()
+        with(requireContext()) {
+            viewModel.setSortByList(this)
+            viewModel.setFilterByYearList(this)
+        }
     }
 
-    private fun setSortBySpinner() {
-        sortByList = SortFiltersEnum.getSortFilters(requireContext())
+    private fun setSortBySpinner(sortByList: List<String>) {
         val sortSpinnerArrayAdapter: ArrayAdapter<String> = ArrayAdapter(
             requireContext(),
             R.layout.spinner_item,
@@ -113,11 +104,7 @@ class FilterFragment : Fragment() {
         }
     }
 
-    private fun setFilterByYearSpinner() {
-        for (year in 1900..Calendar.getInstance().get(Calendar.YEAR)) {
-            yearsList.add(year.toString())
-        }
-        yearsList.add(getString(R.string.all_years))
+    private fun setFilterByYearSpinner(yearsList: List<String>) {
         val yearsSpinnerArrayAdapter: ArrayAdapter<String> = ArrayAdapter(
             requireContext(),
             R.layout.spinner_item,
@@ -174,7 +161,7 @@ class FilterFragment : Fragment() {
 
     private fun resetFilters() {
         with(binding) {
-            filterByYearSpinner.setSelection(yearsList.lastIndex)
+            filterByYearSpinner.setSelection(viewModel.getYearsListDefaultValue())
             sortBySpinner.setSelection(0)
             genresAdapter.clearAllCheckmarks()
             with(orderingIcon) {
