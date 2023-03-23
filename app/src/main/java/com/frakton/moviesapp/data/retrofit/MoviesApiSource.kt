@@ -22,4 +22,7 @@ class MoviesApiSource @Inject constructor(private val moviesApiService: MoviesAp
 
     suspend fun getMovieTrailerVideos(request: GetMovieDetailsRequest) =
         moviesApiService.getMovieTrailerVideos(request.movieId)
+
+    suspend fun getGenres() =
+        moviesApiService.getGenresList()
 }

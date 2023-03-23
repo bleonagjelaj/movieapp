@@ -19,5 +19,5 @@ object DatabaseBuilder {
         context,
         MovieAppDatabase::class.java,
         "movieAppDatabase"
-    ).build()
+    ).fallbackToDestructiveMigration().build()
 }

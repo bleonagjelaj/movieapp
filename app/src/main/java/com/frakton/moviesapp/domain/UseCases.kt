@@ -3,10 +3,7 @@ package com.frakton.moviesapp.domain
 import androidx.paging.PagingData
 import com.frakton.moviesapp.db.tables.Filters
 import com.frakton.moviesapp.domain.base.BaseUseCase
-import com.frakton.moviesapp.domain.models.MovieDetailsModel
-import com.frakton.moviesapp.domain.models.MovieFiltersModel
-import com.frakton.moviesapp.domain.models.MovieModel
-import com.frakton.moviesapp.domain.models.TrailersVideosModel
+import com.frakton.moviesapp.domain.models.*
 import kotlinx.coroutines.flow.Flow
 
 interface UseCases {
@@ -32,5 +29,13 @@ interface UseCases {
 
     interface UpdateFilters {
         suspend fun invoke(movieFilters: MovieFiltersModel): Boolean
+    }
+
+    interface GetGenres {
+        suspend fun invoke(): Flow<List<GenresModel>>
+    }
+
+    interface UpdateGenres {
+        suspend fun invoke(genresList: List<GenresModel>)
     }
 }

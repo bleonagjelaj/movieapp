@@ -7,14 +7,13 @@ import com.frakton.moviesapp.data.retrofit.RetrofitHelper
 import com.frakton.moviesapp.db.DatabaseBuilder
 import com.frakton.moviesapp.db.MovieAppDatabase
 import com.frakton.moviesapp.db.dao.FiltersDao
-import com.frakton.moviesapp.domain.interactors.GetMovieDetailsInteractor
-import com.frakton.moviesapp.domain.interactors.GetMovieTrailerVideosInteractor
-import com.frakton.moviesapp.domain.interactors.GetMoviesInteractor
-import com.frakton.moviesapp.domain.interactors.SearchMovieInteractor
+import com.frakton.moviesapp.db.dao.GenresDao
+import com.frakton.moviesapp.domain.interactors.*
 import com.frakton.moviesapp.domain.mappers.*
 import com.frakton.moviesapp.domain.pagingsources.MoviePagingSource
 import com.frakton.moviesapp.domain.pagingsources.SearchMoviePagingSource
 import com.frakton.moviesapp.domain.repositories.FiltersRepository
+import com.frakton.moviesapp.domain.repositories.GenresRepository
 import com.frakton.moviesapp.domain.repositories.MovieDetailsRepository
 import com.frakton.moviesapp.domain.repositories.MoviesRepository
 import com.frakton.moviesapp.domain.usecases.*
@@ -72,6 +71,12 @@ object MoviesAppModule {
 
     @Provides
     @Singleton
+    fun provideGetGenresInteractor(moviesApiSource: MoviesApiSource): GetGenresInteractor {
+        return GetGenresInteractor(moviesApiSource)
+    }
+
+    @Provides
+    @Singleton
     fun provideMoviesMapper(): MoviesMapper = MoviesMapper()
 
     @Provides
@@ -89,6 +94,14 @@ object MoviesAppModule {
     @Provides
     @Singleton
     fun provideMovieFiltersModelMapper(): MovieFiltersModelMapper = MovieFiltersModelMapper()
+
+    @Provides
+    @Singleton
+    fun provideGenresMapper(): GenresMapper = GenresMapper()
+
+    @Provides
+    @Singleton
+    fun provideGenresDBModelMapper(): GenresDBModelMapper = GenresDBModelMapper()
 
     @Provides
     @Singleton
@@ -130,6 +143,17 @@ object MoviesAppModule {
             filtersDBModelMapper = filtersDBModelMapper,
             movieFiltersModelMapper = movieFiltersModelMapper
         )
+    }
+
+    @Provides
+    @Singleton
+    fun provideGenresRepository(
+        getGenresInteractor: GetGenresInteractor,
+        genresMapper: GenresMapper,
+        genresDBModelMapper: GenresDBModelMapper,
+        genresDao: GenresDao?
+    ): GenresRepository {
+        return GenresRepository(getGenresInteractor, genresMapper, genresDBModelMapper, genresDao)
     }
 
     @Provides
@@ -179,6 +203,12 @@ object MoviesAppModule {
 
     @Provides
     @Singleton
+    fun provideGetGenresUseCase(genresRepository: GenresRepository): GetGenresUseCase {
+        return GetGenresUseCase(genresRepository)
+    }
+
+    @Provides
+    @Singleton
     fun provideMoviesPagingSource(
         getMoviesInteractor: GetMoviesInteractor,
         moviesMapper: MoviesMapper
@@ -209,4 +239,8 @@ object MoviesAppModule {
     @Provides
     @Singleton
     fun provideFiltersDao(moviesAppDB: MovieAppDatabase?): FiltersDao? = moviesAppDB?.FiltersDao()
+
+    @Provides
+    @Singleton
+    fun provideGenresDao(moviesAppDB: MovieAppDatabase?): GenresDao? = moviesAppDB?.GenresDao()
 }
