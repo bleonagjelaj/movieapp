@@ -19,12 +19,15 @@ class MoviePagingSource @Inject constructor(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieModel> {
         val position = params.key ?: Constants.MOVIE_PAGER_INITIAL_KEY
         return try {
-            val response = getMoviesInteractor.invoke(
+            val response = arrayListOf<MovieModel>()
+            getMoviesInteractor.invoke(
                 GetMoviesRequest(
                     page = position,
                     movieFilters = movieFilters
                 )
-            ).results.map(moviesMapper::map)
+            ).results.forEach {
+                response.add(moviesMapper.map(it))
+            }
             LoadResult.Page(
                 data = response,
                 prevKey = if (position == 1) null else position - 1,

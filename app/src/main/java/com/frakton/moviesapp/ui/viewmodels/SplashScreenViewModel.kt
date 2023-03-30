@@ -14,13 +14,13 @@ import javax.inject.Inject
 class SplashScreenViewModel @Inject constructor(
     private val getGenresUseCase: GetGenresUseCase,
     private val updateGenresUseCase: UpdateGenresUseCase
-): ViewModel() {
+) : ViewModel() {
     private val _gotGenresFromApi = MutableLiveData<Boolean>()
     val gotGenresFromApi = _gotGenresFromApi
 
     fun getGenres() = viewModelScope.launch {
         try {
-            getGenresUseCase().collect{ genresList ->
+            getGenresUseCase().collect { genresList ->
                 updateGenresUseCase(genresList)
             }
             _gotGenresFromApi.value = true

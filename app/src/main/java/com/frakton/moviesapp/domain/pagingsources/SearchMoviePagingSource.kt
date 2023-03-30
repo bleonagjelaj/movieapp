@@ -16,9 +16,17 @@ class SearchMoviePagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieModel> {
         return try {
             val position = params.key ?: 1
-            val response = searchMovieInteractor.invoke(SearchMovieRequest(position, movieTitle))
+            val response = arrayListOf<MovieModel>()
+            searchMovieInteractor.invoke(
+                SearchMovieRequest(
+                    page = position,
+                    movieTitle = movieTitle
+                )
+            ).results.forEach {
+                response.add(moviesMapper.map(it))
+            }
             LoadResult.Page(
-                data = response.results.map(moviesMapper::map),
+                data = response,
                 prevKey = if (position == 1) null else position - 1,
                 nextKey = position + 1
             )

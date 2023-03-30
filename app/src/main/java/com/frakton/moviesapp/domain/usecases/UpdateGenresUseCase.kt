@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class UpdateGenresUseCase @Inject constructor(
     private val genresRepository: GenresRepository
-): UseCases.UpdateGenres {
+) : UseCases.UpdateGenres {
     override suspend operator fun invoke(genresList: List<GenresModel>) =
         genresRepository.updateGenres(genresList)
 }

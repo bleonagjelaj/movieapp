@@ -38,4 +38,8 @@ interface UseCases {
     interface UpdateGenres {
         suspend fun invoke(genresList: List<GenresModel>)
     }
+
+    interface GetGenresFromDB {
+        suspend fun invoke(): Flow<List<GenreFilterModel>>
+    }
 }

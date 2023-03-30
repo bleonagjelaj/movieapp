@@ -10,6 +10,7 @@ import com.frakton.moviesapp.R
 import com.frakton.moviesapp.db.tables.Filters
 import com.frakton.moviesapp.domain.MovieParams
 import com.frakton.moviesapp.domain.enums.SortFiltersEnum
+import com.frakton.moviesapp.domain.models.GenreFilterModel
 import com.frakton.moviesapp.domain.models.MovieFiltersModel
 import com.frakton.moviesapp.domain.models.MovieModel
 import com.frakton.moviesapp.domain.usecases.*
@@ -25,7 +26,8 @@ class MoviesViewModel @Inject constructor(
     private val searchMovieUseCase: SearchMovieUseCase,
     private val getFiltersUseCase: GetFiltersUseCase,
     private val getFiltersInitialStateUseCase: GetFiltersInitialStateUseCase,
-    private val updateFiltersUseCase: UpdateFiltersUseCase
+    private val updateFiltersUseCase: UpdateFiltersUseCase,
+    private val getGenresFromDBUseCase: GetGenresFromDBUseCase
 ) : ViewModel() {
     private var isFirstLoad = true
     private val yearsList = arrayListOf<String>()
@@ -41,6 +43,9 @@ class MoviesViewModel @Inject constructor(
 
     private val _genresData: MutableLiveData<List<Int>> = MutableLiveData()
     val genresData = _genresData
+
+    private val _genreFiltersData: MutableLiveData<List<GenreFilterModel>> = MutableLiveData()
+    val genreFiltersData = _genreFiltersData
 
     private val _sortBySpinnerSelection: MutableLiveData<Int> = MutableLiveData()
     val sortBySpinnerSelection = _sortBySpinnerSelection
@@ -146,4 +151,12 @@ class MoviesViewModel @Inject constructor(
             filterId = filterId,
             context = context
         )
+
+    fun getGenres() {
+        viewModelScope.launch {
+            getGenresFromDBUseCase().collect { genresList ->
+                _genreFiltersData.value = genresList
+            }
+        }
+    }
 }

@@ -77,7 +77,8 @@ object MoviesAppModule {
 
     @Provides
     @Singleton
-    fun provideMoviesMapper(): MoviesMapper = MoviesMapper()
+    fun provideMoviesMapper(getGenresFromDBUseCase: GetGenresFromDBUseCase): MoviesMapper =
+        MoviesMapper(getGenresFromDBUseCase)
 
     @Provides
     @Singleton
@@ -205,6 +206,12 @@ object MoviesAppModule {
     @Singleton
     fun provideGetGenresUseCase(genresRepository: GenresRepository): GetGenresUseCase {
         return GetGenresUseCase(genresRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetGenresFromDBUseCase(genresRepository: GenresRepository): GetGenresFromDBUseCase {
+        return GetGenresFromDBUseCase(genresRepository)
     }
 
     @Provides

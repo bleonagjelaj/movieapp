@@ -42,6 +42,7 @@ class FilterFragment : Fragment() {
         setupGenresFiltersRecyclerView()
         setClickListeners()
         observeViewModel()
+        viewModel.getGenres()
         viewModel.getFilters(requireContext())
     }
 
@@ -66,6 +67,10 @@ class FilterFragment : Fragment() {
             if (orderingValue != getOrderingAbbr()) {
                 binding.orderingIcon.toggleOrderingIcon(requireContext())
             }
+        }
+
+        viewModel.genreFiltersData.observe(requireActivity()) { genreFiltersList ->
+            genresAdapter.setData(genreFiltersList)
         }
 
         viewModel.genresData.observe(requireActivity()) { genresList ->

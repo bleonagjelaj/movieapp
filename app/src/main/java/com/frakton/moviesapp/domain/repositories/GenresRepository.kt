@@ -5,6 +5,7 @@ import com.frakton.moviesapp.db.tables.Genres
 import com.frakton.moviesapp.domain.interactors.GetGenresInteractor
 import com.frakton.moviesapp.domain.mappers.GenresDBModelMapper
 import com.frakton.moviesapp.domain.mappers.GenresMapper
+import com.frakton.moviesapp.domain.models.GenreFilterModel
 import com.frakton.moviesapp.domain.models.GenresModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -20,15 +21,19 @@ class GenresRepository @Inject constructor(
         emit(genresMapper.map(getGenresInteractor.invoke(null)))
     }
 
-    suspend fun getGenresFromDB(): Flow<Genres?> = flow {
+    private suspend fun getGenresFromDB(): Flow<Genres?> = flow {
         emit(genresDao?.getGenres())
     }
 
+    suspend fun getGenresListFromDb(): Flow<List<GenreFilterModel>> = flow {
+        emit(genresDBModelMapper.mapToList(genresDao?.getGenres()))
+    }
+
     suspend fun updateGenres(newGenresData: List<GenresModel>) {
-        getGenresFromDB().collect{ oldGenresData ->
-            if(oldGenresData != genresDBModelMapper.map(newGenresData)) {
+        getGenresFromDB().collect { oldGenresData ->
+            if (oldGenresData != genresDBModelMapper.mapToJson(newGenresData)) {
                 genresDao?.deleteAll()
-                genresDao?.insertGenres(genresDBModelMapper.map(newGenresData))
+                genresDao?.insertGenres(genresDBModelMapper.mapToJson(newGenresData))
             }
         }
     }

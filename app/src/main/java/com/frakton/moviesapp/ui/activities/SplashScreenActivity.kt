@@ -20,7 +20,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         viewModel.gotGenresFromApi.observe(this) { gotGenresFromApi ->
-            if(gotGenresFromApi) {
+            if (gotGenresFromApi) {
                 startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
                 finish()
             } else {

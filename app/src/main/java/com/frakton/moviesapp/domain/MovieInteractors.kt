@@ -18,5 +18,5 @@ interface MovieInteractors {
     interface GetMovieTrailerVideos :
         BaseInputOutputInteractor<GetMovieDetailsRequest, MovieTrailerVideosResponse>
 
-    interface GetGenres: BaseInputOutputInteractor<Unit?, GenreResponse>
+    interface GetGenres : BaseInputOutputInteractor<Unit?, GenreResponse>
 }

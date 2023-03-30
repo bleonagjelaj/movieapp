@@ -8,6 +8,6 @@ import javax.inject.Inject
 
 class GetGenresUseCase @Inject constructor(
     private val genresRepository: GenresRepository
-): UseCases.GetGenres {
+) : UseCases.GetGenres {
     override suspend operator fun invoke(): Flow<List<GenresModel>> = genresRepository.getGenres()
 }
