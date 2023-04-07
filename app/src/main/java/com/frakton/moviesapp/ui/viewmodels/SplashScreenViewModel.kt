@@ -1,6 +1,5 @@
 package com.frakton.moviesapp.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -25,7 +24,6 @@ class SplashScreenViewModel @Inject constructor(
             }
             _gotGenresFromApi.value = true
         } catch (exception: Exception) {
-            Log.d("belonatag", "getGenres: $exception")
             _gotGenresFromApi.value = false
         }
     }
