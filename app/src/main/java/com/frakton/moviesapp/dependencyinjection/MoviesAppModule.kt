@@ -270,7 +270,7 @@ object MoviesAppModule {
 
     @Singleton
     @Provides
-    fun provideGenresModelJsonAdapter(
+    fun provideGenresModelListJsonAdapter(
         moshi: Moshi,
         genresModelListParameterizedType: ParameterizedType
     ): JsonAdapter<List<GenresModel>> = moshi.adapter(genresModelListParameterizedType)
