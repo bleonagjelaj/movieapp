@@ -6,19 +6,17 @@ import com.frakton.moviesapp.db.tables.Genres
 import com.frakton.moviesapp.domain.enums.MovieGenreEnum
 import com.frakton.moviesapp.domain.models.GenreFilterModel
 import com.frakton.moviesapp.domain.models.GenresModel
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.squareup.moshi.JsonAdapter
+import javax.inject.Inject
 
-class GenresDBModelMapper {
+class GenresDBModelMapper @Inject constructor(
+    private val genresModelListJsonAdapter: JsonAdapter<List<GenresModel>>
+) {
     private val TAG = "GenresDBModelMapper"
-    private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-    private val type = Types.newParameterizedType(List::class.java, GenresModel::class.java)
-    private val adapter = moshi.adapter<List<GenresModel>>(type)
 
     fun mapToJson(genresModelList: List<GenresModel>): Genres {
         return try {
-            Genres(genres = adapter.toJson(genresModelList))
+            Genres(genres = genresModelListJsonAdapter.toJson(genresModelList))
         } catch (exception: Exception) {
             Log.d(TAG, "mapping list to Json exception: $exception")
             Genres(genres = "")
@@ -48,7 +46,7 @@ class GenresDBModelMapper {
     }
 
     private fun getGenresListFromJson(genres: Genres?) =
-        genres?.genres?.let { adapter.fromJson(it) }
+        genres?.genres?.let { genresModelListJsonAdapter.fromJson(it) }
 
     private fun genresToHide() = listOf(
         MovieGenreEnum.Family.genreName,

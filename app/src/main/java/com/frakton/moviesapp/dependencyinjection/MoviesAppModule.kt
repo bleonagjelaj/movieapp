@@ -10,6 +10,7 @@ import com.frakton.moviesapp.db.dao.FiltersDao
 import com.frakton.moviesapp.db.dao.GenresDao
 import com.frakton.moviesapp.domain.interactors.*
 import com.frakton.moviesapp.domain.mappers.*
+import com.frakton.moviesapp.domain.models.GenresModel
 import com.frakton.moviesapp.domain.pagingsources.MoviePagingSource
 import com.frakton.moviesapp.domain.pagingsources.SearchMoviePagingSource
 import com.frakton.moviesapp.domain.repositories.FiltersRepository
@@ -17,11 +18,16 @@ import com.frakton.moviesapp.domain.repositories.GenresRepository
 import com.frakton.moviesapp.domain.repositories.MovieDetailsRepository
 import com.frakton.moviesapp.domain.repositories.MoviesRepository
 import com.frakton.moviesapp.domain.usecases.*
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import java.lang.reflect.ParameterizedType
 import javax.inject.Singleton
 
 @Module
@@ -102,7 +108,9 @@ object MoviesAppModule {
 
     @Provides
     @Singleton
-    fun provideGenresDBModelMapper(): GenresDBModelMapper = GenresDBModelMapper()
+    fun provideGenresDBModelMapper(
+        genresModelJsonAdapter: JsonAdapter<List<GenresModel>>
+    ): GenresDBModelMapper = GenresDBModelMapper(genresModelJsonAdapter)
 
     @Provides
     @Singleton
@@ -250,4 +258,20 @@ object MoviesAppModule {
     @Provides
     @Singleton
     fun provideGenresDao(moviesAppDB: MovieAppDatabase?): GenresDao? = moviesAppDB?.GenresDao()
+
+    @Provides
+    @Singleton
+    fun provideMoshi() = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+
+    @Provides
+    @Singleton
+    fun provideGenresModelListParameterizedType() =
+        Types.newParameterizedType(List::class.java, GenresModel::class.java)
+
+    @Singleton
+    @Provides
+    fun provideGenresModelJsonAdapter(
+        moshi: Moshi,
+        genresModelListParameterizedType: ParameterizedType
+    ) = moshi.adapter<List<GenresModel>>(genresModelListParameterizedType)
 }
