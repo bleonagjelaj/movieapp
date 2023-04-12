@@ -9,4 +9,6 @@ object Constants {
     const val YOUTUBE_API_KEY = "AIzaSyDLJKKSdBPYi-Qm08ZOftmYKKwmwET7taI"
     const val YOUTUBE_THUMBNAILS_URL = "https://img.youtube.com/vi/"
     const val DEFAULT_VIDEO_THUMBNAIL_POSTFIX = "/hqdefault.jpg"
+    const val FILTERS_TABLE_ID: Int = 5
+    const val GENRES_TABLE_ID = 9
 }

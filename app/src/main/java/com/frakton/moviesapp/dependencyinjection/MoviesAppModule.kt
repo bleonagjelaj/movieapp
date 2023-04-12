@@ -261,11 +261,11 @@ object MoviesAppModule {
 
     @Provides
     @Singleton
-    fun provideMoshi() = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+    fun provideMoshi(): Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
     @Provides
     @Singleton
-    fun provideGenresModelListParameterizedType() =
+    fun provideGenresModelListParameterizedType(): ParameterizedType =
         Types.newParameterizedType(List::class.java, GenresModel::class.java)
 
     @Singleton
@@ -273,5 +273,5 @@ object MoviesAppModule {
     fun provideGenresModelJsonAdapter(
         moshi: Moshi,
         genresModelListParameterizedType: ParameterizedType
-    ) = moshi.adapter<List<GenresModel>>(genresModelListParameterizedType)
+    ): JsonAdapter<List<GenresModel>> = moshi.adapter(genresModelListParameterizedType)
 }
