@@ -7,6 +7,7 @@ import com.frakton.moviesapp.domain.models.MovieDetailsModel
 import com.frakton.moviesapp.util.Constants
 import com.frakton.moviesapp.util.EMPTY
 import com.frakton.moviesapp.util.getYearFromDate
+import com.frakton.moviesapp.util.roundToOneDecimalPlace
 
 class MovieDetailsMapper {
     fun map(movieDetailsDataModel: MovieDetailsResponse): MovieDetailsModel {
@@ -17,7 +18,7 @@ class MovieDetailsMapper {
             posterPath = getMoviePosterPath(
                 movieDetailsDataModel.posterPath ?: movieDetailsDataModel.backdropPath
             ),
-            rating = movieDetailsDataModel.voteAverage?.toFloat() ?: 0F,
+            rating = getRatingFormatted(movieDetailsDataModel),
             description = movieDetailsDataModel.overview ?: String.EMPTY,
             genres = getMovieGenresString(movieDetailsDataModel.genres),
             productionCompany = getProductionCompanyString(
@@ -29,13 +30,20 @@ class MovieDetailsMapper {
         )
     }
 
+    private fun getRatingFormatted(movieDetailsDataModel: MovieDetailsResponse) =
+        movieDetailsDataModel.voteAverage?.toFloat()?.roundToOneDecimalPlace() ?: 0F
+
     private fun getBudgetString(budget: Long?) =
         "$$budget"
 
     private fun getProductionCompanyString(productionCompanies: List<ProductionCompany>?): String {
         var productionCompanyString = ""
-        productionCompanies?.forEach { productionCompany ->
-            productionCompanyString += " ${productionCompany.name}"
+        productionCompanies?.forEachIndexed { index, productionCompany ->
+            if(index == 0) {
+                productionCompanyString += "${productionCompany.name}"
+            } else {
+                productionCompanyString += ", ${productionCompany.name}"
+            }
         }
         return productionCompanyString
     }
