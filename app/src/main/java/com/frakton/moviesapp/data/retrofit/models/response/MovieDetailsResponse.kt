@@ -1,7 +1,9 @@
 package com.frakton.moviesapp.data.retrofit.models.response
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class MovieDetailsResponse(
     @Json(name = "id")
     val movieId: Long,

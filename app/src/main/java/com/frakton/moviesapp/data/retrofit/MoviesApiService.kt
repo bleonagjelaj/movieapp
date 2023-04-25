@@ -1,5 +1,6 @@
 package com.frakton.moviesapp.data.retrofit
 
+import com.frakton.moviesapp.data.retrofit.models.response.GenreResponse
 import com.frakton.moviesapp.data.retrofit.models.response.MovieDetailsResponse
 import com.frakton.moviesapp.data.retrofit.models.response.MovieTrailerVideosResponse
 import com.frakton.moviesapp.data.retrofit.models.response.MoviesResponse
@@ -27,4 +28,7 @@ interface MoviesApiService {
 
     @GET("/3/movie/{movie_id}/videos")
     suspend fun getMovieTrailerVideos(@Path("movie_id") movieId: Long): MovieTrailerVideosResponse
+
+    @GET("/3/genre/movie/list")
+    suspend fun getGenresList(): GenreResponse
 }

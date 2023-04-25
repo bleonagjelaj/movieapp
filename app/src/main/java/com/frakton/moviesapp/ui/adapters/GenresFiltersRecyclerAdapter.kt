@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.frakton.moviesapp.databinding.GenreFilterItemBinding
-import com.frakton.moviesapp.domain.enums.MovieGenreEnum
 import com.frakton.moviesapp.domain.models.GenreFilterModel
 import com.frakton.moviesapp.util.gone
 import com.frakton.moviesapp.util.visible
@@ -14,7 +13,7 @@ import com.frakton.moviesapp.util.visible
 class GenresFiltersRecyclerAdapter :
     RecyclerView.Adapter<GenresFiltersRecyclerAdapter.GenresFiltersViewHolder>() {
 
-    val genresList = MovieGenreEnum.getGenresFilters()
+    var genresList = arrayListOf<GenreFilterModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenresFiltersViewHolder {
         val binding =
@@ -27,6 +26,11 @@ class GenresFiltersRecyclerAdapter :
     }
 
     override fun getItemCount() = genresList.size
+
+    fun setData(genres: List<GenreFilterModel>) {
+        genresList = genres as ArrayList<GenreFilterModel>
+        notifyDataSetChanged()
+    }
 
     fun updateStatus(genresValue: List<Int>) {
         genresList.forEach {
