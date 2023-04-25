@@ -6,8 +6,7 @@ import com.frakton.moviesapp.domain.mappers.MovieDetailsMapper
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
-class GetMovieTest {
-
+class GetMovieByIdTest {
     @Test
     fun `test getting and mapping movie details by movie ID`() {
         val movie = runBlocking {
