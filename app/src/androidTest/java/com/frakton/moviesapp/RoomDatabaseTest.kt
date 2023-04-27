@@ -46,20 +46,24 @@ class RoomDatabaseTest : TestCase() {
 
     @Test
     fun testDeletionOnFiltersTable() = runBlocking {
+        assertNull(getFiltersData())
         val filter = Filters(
             id = Constants.FILTERS_TABLE_ID,
             sortBy = null, filterByYear = 2005,
             filterByGenres = null
         )
         filtersDao?.insertFilters(filter)
+        assertNotNull(getFiltersData())
         filtersDao?.deleteAll()
         assertNull(getFiltersData())
     }
 
     @Test
     fun testDeletionOnGenresTable() = runBlocking {
+        assertNull(getGenresData())
         val genresString = "TestGenre"
         genresDao?.insertGenres(Genres(Constants.GENRES_TABLE_ID, genresString))
+        assertNotNull(getGenresData())
         genresDao?.deleteAll()
         assertNull(getGenresData())
     }
@@ -67,6 +71,7 @@ class RoomDatabaseTest : TestCase() {
     @Test
     fun testInsertionOnFiltersTable() = runBlocking {
         filtersDao?.deleteAll()
+        assertNull(getFiltersData())
         val testFilter = MovieFiltersModel(
             sortBy = "popularity",
             ordering = "asc",
@@ -85,6 +90,7 @@ class RoomDatabaseTest : TestCase() {
     @Test
     fun testInsertionOnGenresTable() = runBlocking {
         genresDao?.deleteAll()
+        assertNull(getGenresData())
         val genresString = "TestGenre"
         genresDao?.insertGenres(Genres(Constants.GENRES_TABLE_ID, genresString))
         val genresFromDB = getGenresData()?.genres
