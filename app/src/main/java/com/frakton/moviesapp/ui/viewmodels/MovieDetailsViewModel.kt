@@ -11,6 +11,7 @@ import com.frakton.moviesapp.domain.usecases.GetMovieDetailsUseCase
 import com.frakton.moviesapp.domain.usecases.GetMovieTrailerVideosUseCase
 import com.frakton.moviesapp.util.makeTextBiggerAndBold
 import com.frakton.moviesapp.util.makeTextBold
+import com.frakton.moviesapp.util.makeTextGray
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -38,9 +39,14 @@ class MovieDetailsViewModel @Inject constructor(
     fun formatRatingNumberText(ratingNumber: Float, maxRating: String): SpannableStringBuilder =
         ratingNumber.toString().makeTextBiggerAndBold().append(maxRating)
 
-    fun formatMovieDetailText(
+    fun formatMovieTitleText(
         detailTitle: String, separator: String, detailText: String
     ): SpannableStringBuilder = detailTitle.makeTextBold().append(separator).append(detailText)
+
+    fun formatMovieDetailText(
+        detailTitle: String, separator: String, detailText: String
+    ): SpannableStringBuilder =
+        detailTitle.makeTextBold().append(separator).append(detailText.makeTextGray())
 
     fun getMovieTrailerVideos(movieId: Long) {
         viewModelScope.launch {

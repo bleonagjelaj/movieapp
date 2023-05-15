@@ -121,7 +121,7 @@ class MovieDetailsFragment : Fragment(), TrailerItemClickCallback {
 
     private fun showMovieDetails(movieDetailsModel: MovieDetailsModel) {
         with(binding) {
-            movieTitle.text = viewModel.formatMovieDetailText(
+            movieTitle.text = viewModel.formatMovieTitleText(
                 movieDetailsModel.title,
                 String.NEW_LINE,
                 movieDetailsModel.releaseYear

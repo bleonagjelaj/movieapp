@@ -151,7 +151,7 @@
         <TextView
             android:id="@+id/productionText"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="@dimen/spacing_3x"
             android:layout_marginHorizontal="@dimen/spacing_2x"
             android:layout_marginTop="@dimen/spacing_1.25x"
             android:background="@drawable/overline"
@@ -167,7 +167,7 @@
         <TextView
             android:id="@+id/budgetText"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="@dimen/spacing_3x"
             android:layout_marginHorizontal="@dimen/spacing_2x"
             android:layout_marginTop="@dimen/spacing_0.75x"
             android:background="@drawable/overline"
@@ -183,7 +183,7 @@
         <TextView
             android:id="@+id/revenueText"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="@dimen/spacing_3x"
             android:layout_marginHorizontal="@dimen/spacing_2x"
             android:layout_marginTop="@dimen/spacing_0.75x"
             android:background="@drawable/overline"
@@ -199,7 +199,7 @@
         <TextView
             android:id="@+id/releaseDateText"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="@dimen/spacing_3x"
             android:layout_marginHorizontal="@dimen/spacing_2x"
             android:layout_marginTop="@dimen/spacing_0.75x"
             android:layout_marginBottom="@dimen/spacing_3.75x"
