@@ -35,7 +35,7 @@ class MoviesMapper @Inject constructor(
                 if (!genreName.isNullOrEmpty()) {
                     genresString += genreName
                     if (genreIds.lastIndex != i) {
-                        genresString += " | "
+                        genresString += " / "
                     }
                 }
             }
