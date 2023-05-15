@@ -13,6 +13,7 @@ class GenresDBModelMapper @Inject constructor(
     private val genresModelListJsonAdapter: JsonAdapter<List<GenresModel>>
 ) {
     private val TAG = "GenresDBModelMapper"
+    private val scienceFictionGenreName = "Science Fiction"
 
     fun mapToJson(genresModelList: List<GenresModel>): Genres {
         return try {
@@ -29,11 +30,12 @@ class GenresDBModelMapper @Inject constructor(
             getGenresListFromJson(genres)
                 ?.filter { !genresToHide().contains(it.name) }
                 ?.forEach { genresModel ->
+                    val genreName = getGenreName(genresModel.name)
                     genresList.add(
                         GenreFilterModel(
                             id = genresModel.id,
-                            name = genresModel.name,
-                            icon = getGenreIcon(genresModel.name),
+                            name = genreName,
+                            icon = getGenreIcon(genreName),
                             isChecked = false
                         )
                     )
@@ -44,6 +46,10 @@ class GenresDBModelMapper @Inject constructor(
             emptyList()
         }
     }
+
+    private fun getGenreName(name: String) =
+        if (name == scienceFictionGenreName) MovieGenreEnum.Science_Fiction.genreName else name
+
 
     private fun getGenresListFromJson(genres: Genres?) =
         genres?.genres?.let { genresModelListJsonAdapter.fromJson(it) }

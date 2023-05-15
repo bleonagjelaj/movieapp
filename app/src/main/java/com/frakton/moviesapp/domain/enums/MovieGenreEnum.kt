@@ -24,6 +24,6 @@ enum class MovieGenreEnum(val genreName: String, val icon: Int) {
     Western("Western", R.drawable.ic_western);
 
     companion object {
-        fun getGenreIconByName(name: String) = values().firstOrNull { it.name == name }?.icon
+        fun getGenreIconByName(name: String) = values().firstOrNull { it.genreName == name }?.icon
     }
 }
