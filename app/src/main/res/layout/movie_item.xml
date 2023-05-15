@@ -57,8 +57,9 @@
         android:textAlignment="textStart"
         android:textColor="@color/white"
         android:textSize="@dimen/movie_genres_text_size"
+        android:layout_marginTop="@dimen/spacing_1x"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/movieRating"
+        app:layout_constraintTop_toBottomOf="@+id/moviePublishDateText"
         tools:text="Action / Adventure / Animation / Dra" />
 </androidx.constraintlayout.widget.ConstraintLayout>
