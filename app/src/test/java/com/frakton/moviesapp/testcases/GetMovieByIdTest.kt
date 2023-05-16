@@ -1,6 +1,6 @@
 package com.frakton.moviesapp.testcases
 
-import com.frakton.moviesapp.data.firstMovie
+import com.frakton.moviesapp.data.superMarioMovie
 import com.frakton.moviesapp.data.retrofit.RetrofitHelper
 import com.frakton.moviesapp.domain.mappers.MovieDetailsMapper
 import kotlinx.coroutines.runBlocking
@@ -11,10 +11,10 @@ class GetMovieByIdTest {
     fun `test getting and mapping movie details by movie ID`() {
         val movie = runBlocking {
             MovieDetailsMapper().map(
-                RetrofitHelper.getMoviesApiService().getMovieWithId(firstMovie.value.id)
+                RetrofitHelper.getMoviesApiService().getMovieWithId(superMarioMovie.value.id)
             )
         }
-        with(firstMovie.value) {
+        with(superMarioMovie.value) {
             assert(id == movie.id)
             assert(title == movie.title)
             assert(rating == movie.rating)

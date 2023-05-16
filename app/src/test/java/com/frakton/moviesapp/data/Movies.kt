@@ -1,8 +1,10 @@
 package com.frakton.moviesapp.data
 
 import com.frakton.moviesapp.domain.models.MovieDetailsModel
+import com.frakton.moviesapp.domain.models.TrailerDetails
+import com.frakton.moviesapp.domain.models.TrailersVideosModel
 
-val firstMovie = lazy {
+val superMarioMovie = lazy {
     MovieDetailsModel(
         id = 502356,
         title = "The Super Mario Bros. Movie",
@@ -18,5 +20,28 @@ val firstMovie = lazy {
         productionCompany = "Universal Pictures, Illumination, Nintendo",
         genres = listOf("Animation", "Adventure", "Family", "Fantasy", "Comedy"),
         releaseYear = "(2023)"
+    )
+}
+
+val ratatouilleMovieTrailers = lazy {
+    TrailersVideosModel(
+        movieId = 2062,
+        trailerVideos = listOf(
+            TrailerDetails(
+                key = "NgsQ8mVkN8w",
+                thumbnailPath= "https://img.youtube.com/vi/NgsQ8mVkN8w/hqdefault.jpg",
+                site = "YouTube"
+            ),
+            TrailerDetails(
+                key = "-tNqfcZKn6k",
+                thumbnailPath= "https://img.youtube.com/vi/-tNqfcZKn6k/hqdefault.jpg",
+                site = "YouTube"
+            ),
+            TrailerDetails(
+                key = "ppPrfCdu8VM",
+                thumbnailPath= "https://img.youtube.com/vi/ppPrfCdu8VM/hqdefault.jpg",
+                site = "YouTube"
+            )
+        )
     )
 }

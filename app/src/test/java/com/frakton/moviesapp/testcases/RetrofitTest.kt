@@ -1,6 +1,6 @@
 package com.frakton.moviesapp.testcases
 
-import com.frakton.moviesapp.data.firstMovie
+import com.frakton.moviesapp.data.superMarioMovie
 import com.frakton.moviesapp.data.retrofit.MoviesApiService
 import com.frakton.moviesapp.data.retrofit.RetrofitHelper
 import com.frakton.moviesapp.util.Constants.MOVIES_API_BASE_URL
@@ -47,9 +47,9 @@ class RetrofitTest {
     @Test
     fun `test Get Movie By Id API endpoint`() {
         val getMovieWithIdResponse = runBlocking {
-            moviesApiService.getMovieWithId(firstMovie.value.id)
+            moviesApiService.getMovieWithId(superMarioMovie.value.id)
         }
-        assert(getMovieWithIdResponse.movieId == firstMovie.value.id)
+        assert(getMovieWithIdResponse.movieId == superMarioMovie.value.id)
     }
 
     @Test
@@ -63,7 +63,7 @@ class RetrofitTest {
     @Test
     fun `test`() {
         val getMovieTrailerVideosResponse = runBlocking {
-            moviesApiService.getMovieTrailerVideos(firstMovie.value.id)
+            moviesApiService.getMovieTrailerVideos(superMarioMovie.value.id)
         }
         assert(getMovieTrailerVideosResponse.results.isNotEmpty())
     }
