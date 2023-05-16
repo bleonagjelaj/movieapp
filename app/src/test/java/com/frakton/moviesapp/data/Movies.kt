@@ -1,5 +1,7 @@
 package com.frakton.moviesapp.data
 
+import com.frakton.moviesapp.data.retrofit.models.response.MovieDataModel
+import com.frakton.moviesapp.data.retrofit.models.response.MoviesResponse
 import com.frakton.moviesapp.domain.models.MovieDetailsModel
 import com.frakton.moviesapp.domain.models.TrailerDetails
 import com.frakton.moviesapp.domain.models.TrailersVideosModel
@@ -29,19 +31,102 @@ val ratatouilleMovieTrailers = lazy {
         trailerVideos = listOf(
             TrailerDetails(
                 key = "NgsQ8mVkN8w",
-                thumbnailPath= "https://img.youtube.com/vi/NgsQ8mVkN8w/hqdefault.jpg",
+                thumbnailPath = "https://img.youtube.com/vi/NgsQ8mVkN8w/hqdefault.jpg",
                 site = "YouTube"
             ),
             TrailerDetails(
                 key = "-tNqfcZKn6k",
-                thumbnailPath= "https://img.youtube.com/vi/-tNqfcZKn6k/hqdefault.jpg",
+                thumbnailPath = "https://img.youtube.com/vi/-tNqfcZKn6k/hqdefault.jpg",
                 site = "YouTube"
             ),
             TrailerDetails(
                 key = "ppPrfCdu8VM",
-                thumbnailPath= "https://img.youtube.com/vi/ppPrfCdu8VM/hqdefault.jpg",
+                thumbnailPath = "https://img.youtube.com/vi/ppPrfCdu8VM/hqdefault.jpg",
                 site = "YouTube"
             )
         )
+    )
+}
+
+val searchForWolfOfWallStreet = lazy {
+    MoviesResponse(
+        page = 1,
+        results = listOf(
+            MovieDataModel(
+                adult = false,
+                backdropPath = "/7Nwnmyzrtd0FkcRyPqmdzTPppQa.jpg",
+                genreIds = listOf(
+                    80,
+                    18,
+                    35
+                ),
+                id = 106646,
+                originalLanguage = "en",
+                originalTitle = "The Wolf of Wall Street",
+                overview = "A New York stockbroker refuses to cooperate in a large securities fraud case involving corruption on Wall Street, corporate banking world and mob infiltration. Based on Jordan Belfort's autobiography.",
+                popularity = 118.152,
+                posterPath = "/34m2tygAYBGqA9MXKhRDtzYd4MR.jpg",
+                releaseDate = "2013-12-25",
+                title = "The Wolf of Wall Street",
+                video = false,
+                voteAverage = 8.036F,
+                voteCount = 21561
+            ),
+            MovieDataModel(
+                adult = false,
+                backdropPath = "/k0OuFXdGRJ1krCkUF4MdbyX0alv.jpg",
+                genreIds = listOf(18),
+                id = 423766,
+                originalLanguage = "en",
+                originalTitle = "The Wolf of Wall Street",
+                overview = "A ruthless stockbroker sells short in the copper business and ruins the life of his " +
+                        "friends by ruining their finances.",
+                popularity = 2.575,
+                posterPath = "/ueUAIuI5TH9LPA8NpJCOjlopz57.jpg",
+                releaseDate = "1929-02-09",
+                title = "The Wolf of Wall Street",
+                video = false,
+                voteAverage = 9.5F,
+                voteCount = 1
+            ),
+            MovieDataModel(
+                adult = false,
+                backdropPath = "/dIG6YYmo7JVfRIJqEDVLSzPPkXP.jpg",
+                genreIds = listOf(
+                    99,
+                    80
+                ),
+                id = 646967,
+                originalLanguage = "en",
+                originalTitle = "The PM, the Playboy and the Wolf of Wall Street",
+                overview = "Investigative reporters examine the 1MDB scandal, tracing money from the Wolf of Wall " +
+                        "Street all the way to the Malaysian Prime Minister.",
+                popularity = 2.152,
+                posterPath = "/bJnML8e7qXbaWrAO41f7J0VIZF.jpg",
+                releaseDate = "2019-10-21",
+                title = "The PM, the Playboy and the Wolf of Wall Street",
+                video = false,
+                voteAverage = 0.0F,
+                voteCount = 0
+            ),
+            MovieDataModel(
+                adult = false,
+                backdropPath = null,
+                genreIds = listOf(80),
+                id = 633593,
+                originalLanguage = "ja",
+                originalTitle = "新網走番外地　吹雪のはぐれ狼",
+                overview = "",
+                popularity = 0.6,
+                posterPath = "/uL4CJRCaf7o74owuHqL2i5A86ov.jpg",
+                releaseDate = "1970-12-30",
+                title = "New Prison Walls of Abashiri: Stray Wolf in Snow",
+                video = false,
+                voteAverage = 0.0F,
+                voteCount = 0
+            )
+        ),
+        totalPages = 1,
+        totalResults = 4
     )
 }
