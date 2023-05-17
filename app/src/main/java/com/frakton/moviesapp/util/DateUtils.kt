@@ -1,15 +1,14 @@
 package com.frakton.moviesapp.util
 
-import java.text.SimpleDateFormat
-
-val baseDateFormat = SimpleDateFormat("yyyy-mm-dd")
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 fun String.formatDateString(): String {
-    val parsedDate = baseDateFormat.parse(this)
-    return SimpleDateFormat("MMM yyyy").format(parsedDate)
+    val formatter = DateTimeFormatter.ofPattern("MMM yyyy")
+    return LocalDate.parse(this).format(formatter)
 }
 
 fun String.getYearFromDate(): String {
-    val parsedDate = baseDateFormat.parse(this)
-    return SimpleDateFormat("yyyy").format(parsedDate)
+    val formatter = DateTimeFormatter.ofPattern("yyyy")
+    return LocalDate.parse(this).format(formatter)
 }
