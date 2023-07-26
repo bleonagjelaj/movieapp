@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace 'com.frakton.moviesapp'
+    namespace 'com.bleonahasanaj.moviesapp'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.frakton.moviesapp"
+        applicationId "com.bleonahasanaj.moviesapp"
         minSdk 21
         targetSdk 33
         versionCode 1
