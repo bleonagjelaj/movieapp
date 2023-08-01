@@ -11,6 +11,7 @@ import com.bleonahasanaj.moviesapp.domain.usecases.GetMovieDetailsUseCase
 import com.bleonahasanaj.moviesapp.domain.usecases.GetMovieTrailerVideosUseCase
 import com.bleonahasanaj.moviesapp.util.makeTextBiggerAndBold
 import com.bleonahasanaj.moviesapp.util.makeTextBold
+import com.bleonahasanaj.moviesapp.util.makeTextGray
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
