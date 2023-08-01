@@ -41,11 +41,13 @@ data class MovieDetailsResponse(
     val voteCount: Long?
 )
 
+@JsonClass(generateAdapter = true)
 data class Genre(
     val id: Long?,
     val name: String?
 )
 
+@JsonClass(generateAdapter = true)
 data class ProductionCompany(
     val id: Long?,
     @Json(name = "logo_path")
